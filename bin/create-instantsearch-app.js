@@ -18,7 +18,7 @@ program
   .option('--app-id <appId>', 'The application ID')
   .option('--api-key <apiKey>', 'The Algolia search API key')
   .option('--index-name <indexName>', 'The main index of your search')
-  .option('--main-attribute <attributeName>', 'The main text attribute of your index')
+  .option('--main-attribute <attributeName>', 'The main searchable attribute of your index')
   .action(function(dest, options) {
     opts = options;
     targetFolderName = dest;
@@ -36,7 +36,7 @@ let prompts = [
   {name: 'appId', description: 'Application ID'.blue, required: true},
   {name: 'apiKey', description: 'Search API key'.blue, required: true},
   {name: 'indexName', description: 'Index name'.blue, required: true},
-  {name: 'attributeName', description: 'Main text attribute'.blue, required: false},
+  {name: 'attributeName', description: 'Main searchable attribute'.blue, required: false},
 ];
 
 prompt.message = '';
