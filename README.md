@@ -33,5 +33,5 @@ create-instantsearch-app [name-of-your-new-app]
 With yarn you don't have an install step, just use:
 
 ```sh
-yarn create instantsearch-app
+yarn create instantsearch-app [name-of-your-new-app]
 ```
