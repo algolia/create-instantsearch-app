@@ -37,20 +37,26 @@ function checkAppPath(path) {
   }
 }
 
+function camelCase(string) {
+  return string.replace(/-([a-z])/g, str => str[1].toUpperCase());
+}
+
 function getOptionsFromArguments(rawArgs) {
   let argIndex = 0;
 
   return rawArgs.reduce((allArgs, currentArg) => {
     argIndex++;
 
-    const argumentName = currentArg.split('--')[1];
+    if (!currentArg.startsWith('--')) {
+      return allArgs;
+    }
+
+    const argumentName = camelCase(currentArg.split('--')[1]);
     const argumentValue = rawArgs[argIndex];
 
     return {
       ...allArgs,
-      ...(currentArg.startsWith('--') && {
-        [argumentName]: argumentValue,
-      }),
+      [argumentName]: argumentValue,
     };
   }, {});
 }
@@ -62,11 +68,9 @@ function isQuestionAsked({ question, args }) {
       if (question.validate && question.validate(args[optionName])) {
         return false;
       }
-    } else {
+    } else if (!question.validate) {
       // Skip if the question is optional and not given in the command
-      if (!question.validate) {
-        return false;
-      }
+      return false;
     }
   }
 
@@ -94,4 +98,5 @@ module.exports = {
   isQuestionAsked,
   isYarnAvailable,
   getLatestInstantSearchVersion,
+  camelCase,
 };
