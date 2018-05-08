@@ -6,25 +6,30 @@
   "author": "Algolia inc.",
   "license": "MIT",
   "bin": {
-    "create-instantsearch-app": "bin/create-instantsearch-app.js"
+    "create-instantsearch-app": "index.js"
   },
   "scripts": {
+    "start": "node index",
+    "test": "jest",
     "format": "prettier --write *.{js,md,json}"
   },
   "engines": {
     "node": ">= 7.6"
   },
   "dependencies": {
-    "algoliasearch": "^3.24.9",
-    "colors": "^1.1.2",
-    "commander": "^2.11.0",
-    "jstransformer-handlebars": "^1.0.0",
+    "chalk": "^2.4.1",
+    "commander": "^2.15.1",
+    "inquirer": "^5.2.0",
+    "jstransformer-handlebars": "^1.1.0",
     "metalsmith": "^2.3.0",
-    "metalsmith-in-place": "^2.0.1",
-    "prompt": "^1.0.0"
+    "metalsmith-in-place": "^4.1.1",
+    "metalsmith-rename": "^1.0.0",
+    "prompt": "^1.0.0",
+    "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
-    "prettier": "^1.10.2"
+    "jest": "^22.4.3",
+    "prettier": "^1.12.1"
   },
   "repository": {
     "type": "git",
