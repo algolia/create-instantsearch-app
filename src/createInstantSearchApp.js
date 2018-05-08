@@ -34,6 +34,8 @@ program
     '--main-attribute <mainAttribute>',
     'The main searchable attribute of your index'
   )
+  .option('--template <template>', 'The InstantSearch template to use')
+  .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
     cdPath = dest;
     appPath = path.join(__dirname, dest);
@@ -146,18 +148,20 @@ try {
   const installCommand = packageManager === 'yarn' ? 'yarn' : 'npm install';
   let hasInstalledDependencies = false;
 
-  try {
-    console.log();
-    console.log('📦  Installing dependencies...');
-    console.log();
+  if (program.installation) {
+    try {
+      console.log();
+      console.log('📦  Installing dependencies...');
+      console.log();
 
-    installDependencies({ appPath, initialDirectory, installCommand });
+      installDependencies({ appPath, initialDirectory, installCommand });
 
-    hasInstalledDependencies = true;
-  } catch (err) {
-    console.warn(
-      '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
-    );
+      hasInstalledDependencies = true;
+    } catch (err) {
+      console.warn(
+        '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
+      );
+    }
   }
 
   console.log();
