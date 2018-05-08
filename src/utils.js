@@ -37,6 +37,42 @@ function checkAppPath(path) {
   }
 }
 
+function getOptionsFromArguments(rawArgs) {
+  let argIndex = 0;
+
+  return rawArgs.reduce((allArgs, currentArg) => {
+    argIndex++;
+
+    const argumentName = currentArg.split('--')[1];
+    const argumentValue = rawArgs[argIndex];
+
+    return {
+      ...allArgs,
+      ...(currentArg.startsWith('--') && {
+        [argumentName]: argumentValue,
+      }),
+    };
+  }, {});
+}
+
+function isQuestionAsked({ question, args }) {
+  for (const optionName in args) {
+    if (question.name === optionName) {
+      // Skip if the arg in the command is valid
+      if (question.validate && question.validate(args[optionName])) {
+        return false;
+      }
+    } else {
+      // Skip if the question is optional and not given in the command
+      if (!question.validate) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 function isYarnAvailable() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
@@ -54,6 +90,8 @@ function getLatestInstantSearchVersion() {
 module.exports = {
   checkAppName,
   checkAppPath,
+  getOptionsFromArguments,
+  isQuestionAsked,
   isYarnAvailable,
   getLatestInstantSearchVersion,
 };
