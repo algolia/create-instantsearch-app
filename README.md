@@ -1,33 +1,25 @@
-# create-instantsearch-app
+# Create InstantSearch App
 
-Start your next instantsearch app in a ms ⚡️
+> Start your InstantSearch app in a ms ⚡️
 
-`create-instantsearch-app` is a command line utility that helps you quick start your next search app using [Algolia InstantSearch.js](https://community.algolia.com/instantsearch.js/v2).
+`create-instantsearch-app` is a command line utility that helps you quick start your InstantSearch app using any [Algolia](https://algolia.com) InstantSearch flavor ([InstantSearch.js](https://github.com/algolia/instantsearch.js), [React InstantSearch](https://github.com/algolia/react-instantsearch), [Vue InstantSearch](https://github.com/algolia/vue-instantsearch) and [Angular InstantSearch](https://github.com/algolia/angular-instantsearch)).
 
-## Usage
+## Get started
 
-`create-instantsearch-app` is a node based tool, in order to use you need node and npm installed on your computer. Have a look at their documentation to [get started](https://docs.npmjs.com/getting-started/installing-node) or use [nvm](https://github.com/creationix/nvm) (advanced)
-
-We recommend to use Yarn as an alternative to NPM for handling dependencies in Node projects because it offers some nice integration with CLI tools like `create-instantsearch-app`.
-
-### Using NPM
-
-Installation:
+_You'll need Node >= 7.6 on your local development machine._
 
 ```sh
-npm install -g create-instantsearch-app
+npx create-instantsearch-app my-app
+cd my-app
+npm start
 ```
 
-Create a new project:
+Open http://localhost:3000 to see you app.
+
+---
+
+Alternatively, you can use [Yarn](https://http://yarnpkg.com):
 
 ```sh
-create-instantsearch-app [name-of-your-new-app]
-```
-
-### Using Yarn
-
-With yarn you don't have an install step, just use:
-
-```sh
-yarn create instantsearch-app [name-of-your-new-app]
+yarn create instantsearch-app my-app
 ```
