@@ -1,3 +1,3 @@
-const createInstantSearchApp = require('./src/create-instantsearch-app');
+const createInstantSearchApp = require('./src/createInstantSearchApp');
 
 module.exports = createInstantSearchApp;
