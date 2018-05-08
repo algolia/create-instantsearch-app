@@ -44,8 +44,6 @@ function isYarnAvailable() {
   } catch (err) {
     return false;
   }
-
-  return isYarnInstalled;
 }
 
 function getLatestInstantSearchVersion() {
