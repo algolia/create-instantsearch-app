@@ -173,3 +173,17 @@ describe('isQuestionAsked', () => {
     })
   ).toBe(false);
 });
+
+describe('camelCase', () => {
+  test('with single word', () => {
+    expect(utils.camelCase('test')).toBe('test');
+  });
+
+  test('with caret-separated word', () => {
+    expect(utils.camelCase('app-id')).toBe('appId');
+  });
+
+  test('with caret-separated twice word', () => {
+    expect(utils.camelCase('instant-search-js')).toBe('instantSearchJs');
+  });
+});
