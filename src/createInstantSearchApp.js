@@ -33,7 +33,7 @@ program
   )
   .action(dest => {
     cdPath = dest;
-    appPath = path.join(__dirname, dest);
+    appPath = path.resolve(dest);
   })
   .parse(process.argv);
 
