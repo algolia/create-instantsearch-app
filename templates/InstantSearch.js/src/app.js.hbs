@@ -1,0 +1,26 @@
+/* global instantsearch */
+
+const search = instantsearch({
+  appId: '{{appId}}',
+  apiKey: '{{apiKey}}',
+  indexName: '{{indexName}}',
+});
+
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#searchBox',
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#hits',
+    {{#if mainAttribute}}
+    templates: {
+      item: '<div class="hit">\{{{_highlightResult.{{mainAttribute}}.value}}}</div>'
+    },
+    {{/if}}
+  })
+);
+
+search.start();

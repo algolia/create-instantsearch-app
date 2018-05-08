@@ -1,0 +1,41 @@
+body {
+  font-family: helvetica, arial, sans-serif;
+}
+
+em {
+  background: cyan;
+  font-style: normal;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.twoColumns {
+  display: grid;
+  grid-template-columns: 20% 75%;
+  grid-gap: 5%;
+}
+
+.ais-hits {
+  display: grid;
+  grid-template-columns: 47.5% 47.5%;
+  grid-gap: 5%;
+}
+
+.ais-hits--item {
+  background: #efefef;
+  margin-bottom: 0.5em;
+  padding: 1em;
+  min-height: 100px;
+}
+
+#searchBox {
+  margin-bottom: 2em;
+}
+
+#pagination {
+  margin: 0 auto;
+  text-align: center;
+}

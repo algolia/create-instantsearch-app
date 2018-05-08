@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@{{instantsearchVersion}}/dist/instantsearch.min.css">
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@{{instantsearchVersion}}/dist/instantsearch-theme-algolia.min.css">
+	  <link rel="stylesheet" href="./src/app.css">
+
+    <title>{{name}}</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <details open>
+        <h1>{{name}}</h1>
+
+        <p>Fully working InstantSearch.js template for creating test cases, examples and demos.</p>
+        <p><strong>Start editing the `src/app.js` file</strong> and see changes happening.</p>
+
+        <p>Available on CodeSandbox at <a href="https://codesandbox.io/s/github/algolia/create-instantsearch-app/tree/templates/build/InstantSearch.js">https://codesandbox.io/s/github/algolia/create-instantsearch-app/tree/templates/build/InstantSearch.js</a></p>
+      </details>
+
+      <div id="searchBox"></div>
+
+      <div class="twoColumns">
+        <div id="brand"></div>
+        <div id="hits"></div>
+      </div>
+
+      <div id="pagination"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@{{instantsearchVersion}}/dist/instantsearch.min.js"></script>
+    <script src="./src/app.js"></script>
+  </body>
+</html>
+
