@@ -12,6 +12,8 @@ const installDependencies = require('../tasks/installDependencies');
 const {
   checkAppName,
   checkAppPath,
+  getOptionsFromArguments,
+  isQuestionAsked,
   isYarnAvailable,
   getLatestInstantSearchVersion,
 } = require('./utils');
@@ -19,6 +21,7 @@ const { version } = require('../package.json');
 
 let cdPath;
 let appPath;
+let options = {};
 
 program
   .version(version)
@@ -31,9 +34,10 @@ program
     '--main-attribute <mainAttribute>',
     'The main searchable attribute of your index'
   )
-  .action(dest => {
+  .action((dest, opts) => {
     cdPath = dest;
     appPath = path.join(__dirname, dest);
+    options = opts;
   })
   .parse(process.argv);
 
@@ -66,6 +70,7 @@ const templates = fs
   .map(name => path.join(templatesFolder, name))
   .filter(source => fs.lstatSync(source).isDirectory())
   .map(source => path.basename(source));
+const optionsFromArguments = getOptionsFromArguments(options.rawArgs);
 
 const questions = [
   {
@@ -102,8 +107,11 @@ const questions = [
     name: 'template',
     message: 'InstantSearch template',
     choices: templates,
+    validate(input) {
+      return templates.includes(input);
+    },
   },
-];
+].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
 const appName = path.basename(appPath);
 const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
@@ -120,7 +128,8 @@ try {
   console.log(`Creating a new InstantSearch app in ${chalk.green(cdPath)}.`);
   console.log();
 
-  const answers = await inquirer.prompt(questions);
+  const promptAnswers = await inquirer.prompt(questions);
+  const answers = { ...optionsFromArguments, ...promptAnswers };
 
   const config = {
     ...answers,
