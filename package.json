@@ -19,10 +19,12 @@
     "node": ">= 7.6"
   },
   "dependencies": {
+    "algoliasearch": "^3.27.1",
     "chalk": "^2.4.1",
     "commander": "^2.15.1",
     "inquirer": "^5.2.0",
     "jstransformer-handlebars": "^1.1.0",
+    "latest-semver": "^1.0.0",
     "metalsmith": "^2.3.0",
     "metalsmith-in-place": "^4.1.1",
     "metalsmith-rename": "^1.0.0",
