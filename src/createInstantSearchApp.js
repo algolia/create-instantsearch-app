@@ -12,6 +12,8 @@ const installDependencies = require('../tasks/installDependencies');
 const {
   checkAppName,
   checkAppPath,
+  getOptionsFromArguments,
+  isQuestionAsked,
   isYarnAvailable,
   getLatestInstantSearchVersion,
 } = require('./utils');
@@ -19,6 +21,7 @@ const { version } = require('../package.json');
 
 let cdPath;
 let appPath;
+let options = {};
 
 program
   .version(version)
@@ -31,8 +34,11 @@ program
     '--main-attribute <mainAttribute>',
     'The main searchable attribute of your index'
   )
-  .action(dest => {
+  .option('--template <template>', 'The InstantSearch template to use')
+  .option('--no-installation', 'Ignore dependency installation')
+  .action((dest, opts) => {
     cdPath = dest;
+    options = opts;
     appPath = path.resolve(dest);
   })
   .parse(process.argv);
@@ -66,6 +72,7 @@ const templates = fs
   .map(name => path.join(templatesFolder, name))
   .filter(source => fs.lstatSync(source).isDirectory())
   .map(source => path.basename(source));
+const optionsFromArguments = getOptionsFromArguments(options.rawArgs);
 
 const questions = [
   {
@@ -102,8 +109,11 @@ const questions = [
     name: 'template',
     message: 'InstantSearch template',
     choices: templates,
+    validate(input) {
+      return templates.includes(input);
+    },
   },
-];
+].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
 const appName = path.basename(appPath);
 const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
@@ -120,7 +130,8 @@ try {
   console.log(`Creating a new InstantSearch app in ${chalk.green(cdPath)}.`);
   console.log();
 
-  const answers = await inquirer.prompt(questions);
+  const promptAnswers = await inquirer.prompt(questions);
+  const answers = { ...optionsFromArguments, ...promptAnswers };
 
   const config = {
     ...answers,
@@ -137,18 +148,20 @@ try {
   const installCommand = packageManager === 'yarn' ? 'yarn' : 'npm install';
   let hasInstalledDependencies = false;
 
-  try {
-    console.log();
-    console.log('📦  Installing dependencies...');
-    console.log();
+  if (program.installation) {
+    try {
+      console.log();
+      console.log('📦  Installing dependencies...');
+      console.log();
 
-    installDependencies({ appPath, initialDirectory, installCommand });
+      installDependencies({ appPath, initialDirectory, installCommand });
 
-    hasInstalledDependencies = true;
-  } catch (err) {
-    console.warn(
-      '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
-    );
+      hasInstalledDependencies = true;
+    } catch (err) {
+      console.warn(
+        '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
+      );
+    }
   }
 
   console.log();
