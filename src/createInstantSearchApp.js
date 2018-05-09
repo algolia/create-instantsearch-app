@@ -103,6 +103,7 @@ const questions = [
     type: 'input',
     name: 'mainAttribute',
     message: 'Main searchable attribute',
+    suffix: ` ${chalk.whiteBright('(optional)')}`,
   },
   {
     type: 'list',
