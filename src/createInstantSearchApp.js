@@ -38,8 +38,8 @@ program
   .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
     cdPath = dest;
-    appPath = path.join(__dirname, dest);
     options = opts;
+    appPath = path.resolve(dest);
   })
   .parse(process.argv);
 
