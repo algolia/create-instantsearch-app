@@ -6,19 +6,22 @@ const process = require('process');
 const program = require('commander');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
+const latestSemver = require('latest-semver');
 
 const buildApp = require('../tasks/buildApp');
 const installDependencies = require('../tasks/installDependencies');
+const fetchLibraryVersions = require('../tasks/fetchLibraryVersions');
 const {
   checkAppName,
   checkAppPath,
   getOptionsFromArguments,
   isQuestionAsked,
   isYarnAvailable,
-  getLatestInstantSearchVersion,
+  getLibraryName,
 } = require('./utils');
 const { version } = require('../package.json');
 
+const fallbackLibraryVersion = '1.0.0';
 let cdPath;
 let appPath;
 let options = {};
@@ -114,6 +117,45 @@ const questions = [
       return templates.includes(input);
     },
   },
+  {
+    type: 'list',
+    name: 'libraryVersion',
+    message: answers => `${answers.template} version`,
+    choices: async answers => {
+      const libraryName = getLibraryName(answers.template);
+
+      try {
+        const versions = await fetchLibraryVersions(libraryName);
+        const latestStableVersion = latestSemver(versions);
+
+        return [
+          new inquirer.Separator('Latest stable version'),
+          latestStableVersion,
+          new inquirer.Separator('All versions'),
+          ...versions,
+        ];
+      } catch (err) {
+        console.log();
+        console.error(
+          chalk.red(
+            `Cannot fetch versions for library "${chalk.cyan(libraryName)}".`
+          )
+        );
+        console.log();
+        console.log(
+          `Fallback to ${chalk.cyan(
+            fallbackLibraryVersion
+          )}, please upgrade the dependency after generating the app.`
+        );
+        console.log();
+
+        return [
+          new inquirer.Separator('Available versions'),
+          fallbackLibraryVersion,
+        ];
+      }
+    },
+  },
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
 const appName = path.basename(appPath);
@@ -127,6 +169,17 @@ try {
   process.exit(1);
 }
 
+async function getDefaultLibraryVersion(libraryName) {
+  try {
+    const versions = await fetchLibraryVersions(libraryName);
+    const latestStableVersion = latestSemver(versions);
+
+    return latestStableVersion;
+  } catch (err) {
+    return fallbackLibraryVersion;
+  }
+}
+
 (async function() {
   console.log(`Creating a new InstantSearch app in ${chalk.green(cdPath)}.`);
   console.log();
@@ -138,9 +191,9 @@ try {
     ...answers,
     appName,
     appPath,
-    template: answers.template,
-    instantsearchVersion: getLatestInstantSearchVersion(),
-    mainAttribute: answers.mainAttribute,
+    libraryVersion:
+      answers.libraryVersion ||
+      (await getDefaultLibraryVersion(getLibraryName(answers.template))),
   };
 
   await buildApp(config);
