@@ -159,6 +159,8 @@ try {
 
       hasInstalledDependencies = true;
     } catch (err) {
+      console.log();
+      console.log();
       console.warn(
         '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
       );
