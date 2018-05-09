@@ -182,5 +182,5 @@ try {
 
   console.log(`  ${chalk.cyan(`${packageManager} start`)}`);
   console.log();
-  console.log('Start building something awesome ⚡️');
+  console.log('⚡️  Start building something awesome!');
 })();
