@@ -28,8 +28,11 @@
     <div id="searchBox"></div>
 
     <div class="twoColumns">
-      <div id="brand"></div>
-      <div id="hits"></div>
+      {{#each facets}}
+      <div id="{{this}}-list">
+      {{/each}}
+
+      <div id="hits">
     </div>
 
     <div id="pagination"></div>
