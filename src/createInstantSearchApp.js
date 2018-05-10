@@ -34,6 +34,7 @@ program
     '--main-attribute <mainAttribute>',
     'The main searchable attribute of your index'
   )
+  .option('--facets <facets>', 'The attributes for faceting')
   .option('--template <template>', 'The InstantSearch template to use')
   .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
@@ -106,6 +107,17 @@ const questions = [
     suffix: ` ${chalk.whiteBright('(optional)')}`,
   },
   {
+    type: 'input',
+    name: 'facets',
+    message: 'Attributes for faceting',
+    suffix: ` ${chalk.whiteBright('(optional)')}`,
+    transformer: attributesForFaceting =>
+      `[ ${attributesForFaceting
+        .split(',')
+        .map(x => x.trim())
+        .join(', ')} ]`,
+  },
+  {
     type: 'list',
     name: 'template',
     message: 'InstantSearch template',
@@ -141,6 +153,7 @@ try {
     template: answers.template,
     instantsearchVersion: getLatestInstantSearchVersion(),
     mainAttribute: answers.mainAttribute,
+    facets: answers.facets.split(',').map(x => x.trim()),
   };
 
   await buildApp(config);
