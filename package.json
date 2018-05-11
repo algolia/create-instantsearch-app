@@ -11,7 +11,7 @@
   "scripts": {
     "start": "node index",
     "test": "jest",
-    "test:e2e": "./tasks/e2e-installs.sh",
+    "test:e2e": "./scripts/e2e-installs.sh",
     "lint": "eslint .",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write *.{js,md,json}"
