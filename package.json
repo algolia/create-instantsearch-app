@@ -10,8 +10,8 @@
   },
   "scripts": {
     "start": "node index",
-    "test": "jest",
-    "test:e2e": "./scripts/e2e-installs.sh",
+    "test": "jest ./src",
+    "test:e2e:installs": "jest './scripts/e2e-installs.test.js'",
     "lint": "eslint .",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write *.{js,md,json}"
