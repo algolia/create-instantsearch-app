@@ -81,6 +81,13 @@ function getLibraryName(name) {
   return name.toLowerCase().replace(/ /g, '-');
 }
 
+function getTemplateName(appName) {
+  return appName
+    .toLocaleLowerCase()
+    .replace(/\./g, '')
+    .replace(/ /g, '-');
+}
+
 function isYarnAvailable() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
@@ -97,5 +104,6 @@ module.exports = {
   isQuestionAsked,
   isYarnAvailable,
   camelCase,
+  getTemplateName,
   getLibraryName,
 };

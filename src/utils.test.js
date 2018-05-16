@@ -188,6 +188,30 @@ describe('camelCase', () => {
   });
 });
 
+describe('getTemplateName', () => {
+  test('InstantSearch.js', () => {
+    expect(utils.getTemplateName('InstantSearch.js')).toBe('instantsearchjs');
+  });
+
+  test('Vue InstantSearch', () => {
+    expect(utils.getTemplateName('Vue InstantSearch')).toBe(
+      'vue-instantsearch'
+    );
+  });
+
+  test('React InstantSearch', () => {
+    expect(utils.getTemplateName('React InstantSearch')).toBe(
+      'react-instantsearch'
+    );
+  });
+  
+  test('Angular InstantSearch', () => {
+    expect(utils.getTemplateName('Angular InstantSearch')).toBe(
+      'angular-instantsearch'
+    );
+  });
+});
+
 describe('getLibraryName', () => {
   test('InstantSearch.js', () => {
     expect(utils.getLibraryName('InstantSearch.js')).toBe('instantsearch.js');
@@ -198,7 +222,7 @@ describe('getLibraryName', () => {
       'react-instantsearch'
     );
   });
-
+  
   test('Vue InstantSearch', () => {
     expect(utils.getLibraryName('Vue InstantSearch')).toBe('vue-instantsearch');
   });
@@ -206,6 +230,6 @@ describe('getLibraryName', () => {
   test('Angular InstantSearch', () => {
     expect(utils.getLibraryName('Angular InstantSearch')).toBe(
       'angular-instantsearch'
-    );
+    );      
   });
 });
