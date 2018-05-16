@@ -91,6 +91,13 @@ function getLatestInstantSearchVersion() {
   return '2.7.0';
 }
 
+function getTemplateName(appName) {
+  return appName
+    .toLocaleLowerCase()
+    .replace(/\./g, '')
+    .replace(/ /g, '-');
+}
+
 module.exports = {
   checkAppName,
   checkAppPath,
@@ -99,4 +106,5 @@ module.exports = {
   isYarnAvailable,
   getLatestInstantSearchVersion,
   camelCase,
+  getTemplateName,
 };

@@ -187,3 +187,27 @@ describe('camelCase', () => {
     expect(utils.camelCase('instant-search-js')).toBe('instantSearchJs');
   });
 });
+
+describe('getTemplateName', () => {
+  test('InstantSearch.js', () => {
+    expect(utils.getTemplateName('InstantSearch.js')).toBe('instantsearchjs');
+  });
+
+  test('Vue InstantSearch', () => {
+    expect(utils.getTemplateName('Vue InstantSearch')).toBe(
+      'vue-instantsearch'
+    );
+  });
+
+  test('React InstantSearch', () => {
+    expect(utils.getTemplateName('React InstantSearch')).toBe(
+      'react-instantsearch'
+    );
+  });
+
+  test('Angular InstantSearch', () => {
+    expect(utils.getTemplateName('Angular InstantSearch')).toBe(
+      'angular-instantsearch'
+    );
+  });
+});
