@@ -77,6 +77,10 @@ function isQuestionAsked({ question, args }) {
   return true;
 }
 
+function getLibraryName(name) {
+  return name.toLowerCase().replace(/ /g, '-');
+}
+
 function isYarnAvailable() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
@@ -86,17 +90,12 @@ function isYarnAvailable() {
   }
 }
 
-function getLatestInstantSearchVersion() {
-  // TODO: get from a template package.json
-  return '2.7.0';
-}
-
 module.exports = {
   checkAppName,
   checkAppPath,
   getOptionsFromArguments,
   isQuestionAsked,
   isYarnAvailable,
-  getLatestInstantSearchVersion,
   camelCase,
+  getLibraryName,
 };
