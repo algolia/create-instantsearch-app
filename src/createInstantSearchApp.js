@@ -141,7 +141,7 @@ const questions = [
         const latestStableVersion = latestSemver(versions);
 
         return [
-          new inquirer.Separator('Latest stable version'),
+          new inquirer.Separator('Latest stable version (recommended)'),
           latestStableVersion,
           new inquirer.Separator('All versions'),
           ...versions,
