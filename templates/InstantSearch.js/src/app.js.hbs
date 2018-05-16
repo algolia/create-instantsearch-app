@@ -17,9 +17,25 @@ search.addWidget(
     container: '#hits',
     {{#if mainAttribute}}
     templates: {
-      item: '<div class="hit">\{{{_highlightResult.{{mainAttribute}}.value}}}</div>'
+      item: '<div class="hit">\{{{_highlightResult.{{mainAttribute}}.value}}}</div>',
     },
     {{/if}}
+  })
+);
+
+{{#each facets}}
+search.addWidget(
+  instantsearch.widgets.refinementList({
+    container: '#{{this}}-list',
+    attributeName: '{{this}}',
+  })
+);
+
+{{/each}}
+
+search.addWidget(
+  instantsearch.widgets.pagination({
+    container: '#pagination',
   })
 );
 

@@ -37,6 +37,7 @@ program
     '--main-attribute <mainAttribute>',
     'The main searchable attribute of your index'
   )
+  .option('--facets <facets>', 'The attributes for faceting')
   .option('--template <template>', 'The InstantSearch template to use')
   .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
@@ -107,6 +108,17 @@ const questions = [
     name: 'mainAttribute',
     message: 'Main searchable attribute',
     suffix: ` ${chalk.whiteBright('(optional)')}`,
+  },
+  {
+    type: 'input',
+    name: 'facets',
+    message: 'Attributes for faceting',
+    suffix: ` ${chalk.whiteBright('(optional)')}`,
+    transformer: attributesForFaceting =>
+      `[ ${attributesForFaceting
+        .split(',')
+        .map(x => x.trim())
+        .join(', ')} ]`,
   },
   {
     type: 'list',
@@ -194,6 +206,7 @@ async function getDefaultLibraryVersion(libraryName) {
     libraryVersion:
       answers.libraryVersion ||
       (await getDefaultLibraryVersion(getLibraryName(answers.template))),
+    facets: answers.facets.split(',').map(x => x.trim()),
   };
 
   await buildApp(config);
