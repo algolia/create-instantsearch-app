@@ -11,28 +11,32 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@{{libraryVersion}}/dist/instantsearch.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@{{libraryVersion}}/dist/instantsearch-theme-algolia.min.css">
+  <link rel="stylesheet" href="./src/index.css">
   <link rel="stylesheet" href="./src/app.css">
 
   <title>{{appName}}</title>
 </head>
 
 <body>
+  <header class="header">
+    <h1 class="header-title">
+      <a href="/">{{appName}}</a>
+    </h1>
+    <p class="header-subtitle">using InstantSearch.js</p>
+  </header>
+
   <div class="container">
-    <header>
-      <h1>{{appName}}</h1>
-      <p>Welcome to InstantSearch.js.</p>
-    </header>
+    <div class="container-app">
+      <div class="filters">
+        {{#each facets}}
+        <div id="{{this}}-list"></div>
+        {{/each}}
+      </div>
 
-    <p>Start editing <code>src/app.js</code> and see changes happening!</p>
-
-    <div id="searchBox"></div>
-
-    <div class="twoColumns">
-      {{#each facets}}
-      <div id="{{this}}-list">
-      {{/each}}
-
-      <div id="hits">
+      <div class="search-container">
+        <div id="searchBox"></div>
+        <div id="hits"></div>
+      </div>
     </div>
 
     <div id="pagination"></div>
