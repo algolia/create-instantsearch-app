@@ -77,18 +77,8 @@ function isQuestionAsked({ question, args }) {
   return true;
 }
 
-function isYarnAvailable() {
-  try {
-    execSync('yarnpkg --version', { stdio: 'ignore' });
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-
-function getLatestInstantSearchVersion() {
-  // TODO: get from a template package.json
-  return '2.7.0';
+function getLibraryName(name) {
+  return name.toLowerCase().replace(/ /g, '-');
 }
 
 function getTemplateName(appName) {
@@ -98,13 +88,22 @@ function getTemplateName(appName) {
     .replace(/ /g, '-');
 }
 
+function isYarnAvailable() {
+  try {
+    execSync('yarnpkg --version', { stdio: 'ignore' });
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 module.exports = {
   checkAppName,
   checkAppPath,
   getOptionsFromArguments,
   isQuestionAsked,
   isYarnAvailable,
-  getLatestInstantSearchVersion,
   camelCase,
   getTemplateName,
+  getLibraryName,
 };

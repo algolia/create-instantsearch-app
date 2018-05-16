@@ -204,10 +204,32 @@ describe('getTemplateName', () => {
       'react-instantsearch'
     );
   });
-
+  
   test('Angular InstantSearch', () => {
     expect(utils.getTemplateName('Angular InstantSearch')).toBe(
       'angular-instantsearch'
     );
+  });
+});
+
+describe('getLibraryName', () => {
+  test('InstantSearch.js', () => {
+    expect(utils.getLibraryName('InstantSearch.js')).toBe('instantsearch.js');
+  });
+
+  test('React InstantSearch', () => {
+    expect(utils.getLibraryName('React InstantSearch')).toBe(
+      'react-instantsearch'
+    );
+  });
+  
+  test('Vue InstantSearch', () => {
+    expect(utils.getLibraryName('Vue InstantSearch')).toBe('vue-instantsearch');
+  });
+
+  test('Angular InstantSearch', () => {
+    expect(utils.getLibraryName('Angular InstantSearch')).toBe(
+      'angular-instantsearch'
+    );      
   });
 });
