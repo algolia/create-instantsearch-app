@@ -1,18 +1,41 @@
-body {
-  font-family: helvetica, arial, sans-serif;
-}
-
 em {
   background: cyan;
   font-style: normal;
 }
 
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  padding: 2rem;
+  background-image: linear-gradient(284deg, #fcb43a, #fedd4e);
+  color: #fff;
 }
 
-.twoColumns {
+.header-title {
+  font-size: 2.8rem;
+  font-weight: normal;
+}
+
+.header-subtitle {
+  font-size: 1.4rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.container-intro {
+  text-align: center;
+  font-size: 1.2rem;
+  padding-bottom: 1rem;
+}
+
+.container-app {
   display: grid;
   grid-template-columns: 20% 75%;
   grid-gap: 5%;
@@ -21,21 +44,22 @@ em {
 .ais-hits {
   display: grid;
   grid-template-columns: 47.5% 47.5%;
-  grid-gap: 5%;
+  grid-gap: 1rem;
 }
 
 .ais-hits--item {
-  background: #efefef;
-  margin-bottom: 0.5em;
-  padding: 1em;
   min-height: 100px;
+  padding: 1rem;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.16);
 }
 
 #searchBox {
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
 }
 
 #pagination {
-  margin: 0 auto;
+  margin: 2rem auto;
   text-align: center;
 }
