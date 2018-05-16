@@ -1,7 +1,16 @@
 const fs = require('fs');
+const path = require('path');
 const execSync = require('child_process').execSync;
+const walkSync = require('walk-sync');
+const { getTemplateName } = require('../src/utils');
 
-describe('End-to-end installations', () => {
+const templatesFolder = path.join(__dirname, '../templates');
+const templates = fs
+  .readdirSync(templatesFolder)
+  .map(name => path.join(templatesFolder, name))
+  .filter(source => fs.lstatSync(source).isDirectory());
+
+describe('Installation', () => {
   let temporaryDirectory;
   let appPath;
 
@@ -108,6 +117,76 @@ describe('End-to-end installations', () => {
       }).toThrow();
 
       expect(fs.existsSync(`${appPath}/file`)).toBe(true);
+    });
+  });
+});
+
+describe('Snapshots', () => {
+  templates.forEach(templatePath => {
+    const templateName = path.basename(templatePath);
+
+    describe(templateName, () => {
+      let temporaryDirectory;
+      let appPath;
+      let generatedFiles;
+
+      beforeAll(() => {
+        temporaryDirectory = execSync(
+          'mktemp -d 2>/dev/null || mktemp -d -t "appPath"'
+        )
+          .toString()
+          .trim();
+
+        appPath = `${temporaryDirectory}/${getTemplateName(templateName)}`;
+      });
+
+      afterAll(() => {
+        execSync(`rm -rf "${temporaryDirectory}"`);
+      });
+
+      beforeEach(() => {
+        execSync(
+          `yarn start ${appPath} \
+              --app-id appId \
+              --api-key apiKey \
+              --index-name indexName \
+              --template "${templateName}" \
+              --no-installation`,
+          { stdio: 'ignore' }
+        );
+
+        const ignoredFiles = fs
+          .readFileSync(`${appPath}/.gitignore`)
+          .toString()
+          .split('\n')
+          .filter(line => !line.startsWith('#'))
+          .filter(Boolean)
+          .concat('.DS_Store');
+
+        generatedFiles = walkSync(appPath, {
+          directories: false,
+          ignore: ignoredFiles,
+        });
+      });
+
+      afterEach(() => {
+        execSync(`rm -rf "${appPath}"`);
+      });
+
+      test('Folder structure', () => {
+        expect(generatedFiles).toMatchSnapshot();
+      });
+
+      test('File content', () => {
+        generatedFiles.forEach(filePath => {
+          const fileContent = fs
+            .readFileSync(`${appPath}/${filePath}`)
+            .toString()
+            .trim();
+
+          expect(fileContent).toMatchSnapshot(filePath);
+        });
+      });
     });
   });
 });
