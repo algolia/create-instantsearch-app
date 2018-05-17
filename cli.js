@@ -8,21 +8,17 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
 
-const buildApp = require('../tasks/buildApp');
-const installDependencies = require('../tasks/installDependencies');
-const fetchLibraryVersions = require('../tasks/fetchLibraryVersions');
+const createInstantSearchApp = require('./src');
 const {
-  checkAppName,
-  checkAppPath,
   getOptionsFromArguments,
   isQuestionAsked,
-  isYarnAvailable,
   getLibraryName,
+  fetchLibraryVersions,
 } = require('./utils');
 const { version } = require('../package.json');
 
 const fallbackLibraryVersion = '1.0.0';
-let cdPath;
+// let cdPath;
 let appPath;
 let options = {};
 
@@ -41,9 +37,9 @@ program
   .option('--template <template>', 'The InstantSearch template to use')
   .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
-    cdPath = dest;
+    appPath = dest;
     options = opts;
-    appPath = path.resolve(dest);
+    // appPath = path.resolve(dest);
   })
   .parse(process.argv);
 
@@ -161,83 +157,54 @@ const questions = [
   },
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
-const appName = path.basename(appPath);
-const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
-
-try {
-  checkAppName(appName);
-  checkAppPath(appPath);
-} catch (err) {
-  console.log(err.message);
-  process.exit(1);
-}
-
-async function getDefaultLibraryVersion(libraryName) {
-  try {
-    const versions = await fetchLibraryVersions(libraryName);
-    const latestStableVersion = latestSemver(versions);
-
-    return latestStableVersion;
-  } catch (err) {
-    return fallbackLibraryVersion;
-  }
-}
-
 (async function() {
-  console.log(`Creating a new InstantSearch app in ${chalk.green(cdPath)}.`);
+  console.log(`Creating a new InstantSearch app in ${chalk.green(appPath)}.`);
   console.log();
 
   const promptAnswers = await inquirer.prompt(questions);
-  const answers = { ...optionsFromArguments, ...promptAnswers };
+  const config = { ...optionsFromArguments, ...promptAnswers };
 
-  const config = {
-    ...answers,
-    appName,
-    appPath,
-    libraryVersion:
-      answers.libraryVersion ||
-      (await getDefaultLibraryVersion(getLibraryName(answers.template))),
-    facets: answers.facets.split(',').map(x => x.trim()),
-  };
+  // console.log();
+  // console.log('📦  Installing dependencies...');
+  // console.log();
 
-  await buildApp(config);
+  const result = await createInstantSearchApp(
+    path.resolves(appPath),
+    config
+  ).catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
 
-  const initialDirectory = process.cwd();
-  const installCommand = packageManager === 'yarn' ? 'yarn' : 'npm install';
-  let hasInstalledDependencies = false;
+  console.log('createInstantSearchApp', result);
 
-  if (program.installation) {
-    try {
-      console.log();
-      console.log('📦  Installing dependencies...');
-      console.log();
-
-      installDependencies({ appPath, initialDirectory, installCommand });
-
-      hasInstalledDependencies = true;
-    } catch (err) {
-      console.log();
-      console.log();
-      console.warn(
-        '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
-      );
-    }
+  if (!result.info.hasInstalledDependencies) {
+    console.log();
+    console.log();
+    console.warn(
+      '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
+    );
   }
+
+  const installCommand =
+    options.packageManager === 'yarn' ? 'yarn' : 'npm install';
 
   console.log();
   console.log(
-    `🎉  Created ${chalk.bold.cyan(appName)} at ${chalk.green(cdPath)}.`
+    `🎉  Created ${chalk.bold.cyan(result.config.name)} at ${chalk.green(
+      result.config.path
+    )}.`
   );
   console.log();
   console.log('Begin by typing:');
   console.log();
-  console.log(`  ${chalk.cyan('cd')} ${cdPath}`);
+  console.log(`  ${chalk.cyan('cd')} ${appPath}`);
 
-  if (hasInstalledDependencies === false) {
+  if (result.info.hasInstalledDependencies === false) {
     console.log(`  ${chalk.cyan(`${installCommand}`)}`);
   }
 
-  console.log(`  ${chalk.cyan(`${packageManager} start`)}`);
+  console.log(`  ${chalk.cyan(`${result.info.packageManager} start`)}`);
   console.log();
   console.log('⚡️  Start building something awesome!');
 })();

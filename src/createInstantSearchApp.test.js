@@ -56,15 +56,42 @@ describe('Config', () => {
 
       expect(createApp).not.toThrow();
     });
+
+    test('with unvalid name', () => {
+      const createApp = () =>
+        createInstantSearchApp('/tmp/test-app', {
+          name: './WrongNpmName',
+          template: 'InstantSearch.js',
+        });
+
+      expect(createApp).toThrowErrorMatchingSnapshot();
+    });
   });
 
   describe('buildApp', () => {
-    test('gets called', () => {
-      createInstantSearchApp('/tmp/test-app', {
+    test('gets called', async () => {
+      await createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
+        libraryVersion: '2.0.0',
       });
 
       expect(buildAppSpy).toHaveBeenCalledTimes(1);
+      expect(buildAppSpy).toHaveBeenCalledWith({
+        path: '/tmp/test-app',
+        name: 'test-app',
+        template: 'InstantSearch.js',
+        installation: true,
+        libraryVersion: '2.0.0',
+        silent: false,
+      });
+
+      expect(installDependenciesSpy).toHaveBeenCalledTimes(1);
+      expect(installDependenciesSpy).toHaveBeenCalledWith(
+        '/tmp/test-app',
+        expect.objectContaining({
+          silent: false,
+        })
+      );
     });
   });
 

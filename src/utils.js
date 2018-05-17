@@ -13,6 +13,8 @@ function checkAppName(name) {
       )}" because of npm naming restrictions.`
     );
   }
+
+  return true;
 }
 
 function checkAppPath(path) {
