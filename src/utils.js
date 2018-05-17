@@ -35,6 +35,8 @@ function checkAppPath(path) {
       );
     }
   }
+
+  return true;
 }
 
 function camelCase(string) {

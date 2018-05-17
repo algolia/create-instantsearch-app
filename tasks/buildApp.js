@@ -10,7 +10,7 @@ module.exports = function buildApp(config) {
   return new Promise((resolve, reject) => {
     metalsmith(__dirname)
       .source(templatePath)
-      .destination(config.appPath)
+      .destination(config.path)
       .metadata(config)
       .use(
         // Add the `.hbs` extension to any templating files that need
