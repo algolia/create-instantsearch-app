@@ -10,15 +10,16 @@ const latestSemver = require('latest-semver');
 
 const createInstantSearchApp = require('./src');
 const {
+  checkAppPath,
+  checkAppName,
   getOptionsFromArguments,
   isQuestionAsked,
   getLibraryName,
   fetchLibraryVersions,
-} = require('./utils');
-const { version } = require('../package.json');
+} = require('./src/utils');
+const { version } = require('./package.json');
 
 const fallbackLibraryVersion = '1.0.0';
-// let cdPath;
 let appPath;
 let options = {};
 
@@ -39,7 +40,6 @@ program
   .action((dest, opts) => {
     appPath = dest;
     options = opts;
-    // appPath = path.resolve(dest);
   })
   .parse(process.argv);
 
@@ -66,7 +66,17 @@ if (!appPath) {
   process.exit(1);
 }
 
-const templatesFolder = path.join(__dirname, '../templates');
+const appName = path.basename(appPath);
+
+try {
+  checkAppPath(appPath);
+  checkAppName(appName);
+} catch (err) {
+  console.error(err);
+  process.exit(1);
+}
+
+const templatesFolder = path.join(__dirname, './templates');
 const templates = fs
   .readdirSync(templatesFolder)
   .map(name => path.join(templatesFolder, name))
@@ -164,21 +174,20 @@ const questions = [
   const promptAnswers = await inquirer.prompt(questions);
   const config = { ...optionsFromArguments, ...promptAnswers };
 
-  // console.log();
-  // console.log('📦  Installing dependencies...');
-  // console.log();
+  if (program.installation) {
+    console.log();
+    console.log('📦  Installing dependencies...');
+    console.log();
+  }
 
-  const result = await createInstantSearchApp(
-    path.resolves(appPath),
-    config
-  ).catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+  const app = await createInstantSearchApp(path.resolve(appPath), config).catch(
+    err => {
+      console.error(err);
+      process.exit(1);
+    }
+  );
 
-  console.log('createInstantSearchApp', result);
-
-  if (!result.info.hasInstalledDependencies) {
+  if (!app.info.hasInstalledDependencies) {
     console.log();
     console.log();
     console.warn(
@@ -187,12 +196,12 @@ const questions = [
   }
 
   const installCommand =
-    options.packageManager === 'yarn' ? 'yarn' : 'npm install';
+    app.info.packageManager === 'yarn' ? 'yarn' : 'npm install';
 
   console.log();
   console.log(
-    `🎉  Created ${chalk.bold.cyan(result.config.name)} at ${chalk.green(
-      result.config.path
+    `🎉  Created ${chalk.bold.cyan(app.config.name)} at ${chalk.green(
+      app.config.path
     )}.`
   );
   console.log();
@@ -200,11 +209,11 @@ const questions = [
   console.log();
   console.log(`  ${chalk.cyan('cd')} ${appPath}`);
 
-  if (result.info.hasInstalledDependencies === false) {
+  if (app.info.hasInstalledDependencies === false) {
     console.log(`  ${chalk.cyan(`${installCommand}`)}`);
   }
 
-  console.log(`  ${chalk.cyan(`${result.info.packageManager} start`)}`);
+  console.log(`  ${chalk.cyan(`${app.info.packageManager} start`)}`);
   console.log();
   console.log('⚡️  Start building something awesome!');
 })();

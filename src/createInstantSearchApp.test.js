@@ -1,17 +1,14 @@
 const createInstantSearchAppFactory = require('./createInstantSearchApp');
 
 let buildAppSpy;
-let fetchLibraryVersionsSpy;
 let installDependenciesSpy;
 
 const createInstantSearchApp = (path, config) => {
   buildAppSpy = jest.fn(() => Promise.resolve());
-  fetchLibraryVersionsSpy = jest.fn();
   installDependenciesSpy = jest.fn();
 
   return createInstantSearchAppFactory(path, config, {
     buildApp: buildAppSpy,
-    fetchLibraryVersions: fetchLibraryVersionsSpy,
     installDependencies: installDependenciesSpy,
   });
 };
