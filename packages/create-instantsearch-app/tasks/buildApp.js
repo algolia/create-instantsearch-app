@@ -4,7 +4,7 @@ const inPlace = require('metalsmith-in-place');
 const rename = require('metalsmith-rename');
 
 module.exports = function buildApp(config) {
-  const templateFolder = path.join(__dirname, '../templates');
+  const templateFolder = path.join(__dirname, '../../../templates');
   const templatePath = path.join(templateFolder, config.template);
 
   return new Promise((resolve, reject) => {

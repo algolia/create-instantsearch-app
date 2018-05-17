@@ -8,7 +8,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
 
-const createInstantSearchApp = require('../lib');
+const createInstantSearchApp = require('../create-instantsearch-app');
 const {
   checkAppPath,
   checkAppName,
