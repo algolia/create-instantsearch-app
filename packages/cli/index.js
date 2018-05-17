@@ -16,7 +16,7 @@ const {
   isQuestionAsked,
   getLibraryName,
   fetchLibraryVersions,
-} = require('../core/utils');
+} = require('../shared/utils');
 const { version } = require('../../package.json');
 
 const fallbackLibraryVersion = '1.0.0';

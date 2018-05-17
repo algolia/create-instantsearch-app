@@ -5,7 +5,7 @@ const {
   checkAppName,
   checkAppPath,
   isYarnAvailable,
-} = require('../core/utils');
+} = require('../shared/utils');
 
 const TEMPLATE_FOLDER = path.join(__dirname, '../../templates');
 const TEMPLATES_NAMES = fs
