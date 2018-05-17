@@ -2,14 +2,19 @@ const createInstantSearchAppFactory = require('./createInstantSearchApp');
 
 let buildAppSpy;
 let installDependenciesSpy;
+let emitterSpy;
 
 const createInstantSearchApp = (path, config) => {
   buildAppSpy = jest.fn(() => Promise.resolve());
   installDependenciesSpy = jest.fn();
+  emitterSpy = {
+    emit: jest.fn(),
+  };
 
   return createInstantSearchAppFactory(path, config, {
     buildApp: buildAppSpy,
     installDependencies: installDependenciesSpy,
+    emitter: emitterSpy,
   });
 };
 

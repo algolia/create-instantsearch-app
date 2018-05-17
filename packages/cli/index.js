@@ -8,7 +8,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
 
-const createInstantSearchApp = require('./src');
+const createInstantSearchApp = require('../lib');
 const {
   checkAppPath,
   checkAppName,
@@ -16,8 +16,8 @@ const {
   isQuestionAsked,
   getLibraryName,
   fetchLibraryVersions,
-} = require('./src/utils');
-const { version } = require('./package.json');
+} = require('../core/utils');
+const { version } = require('../../package.json');
 
 const fallbackLibraryVersion = '1.0.0';
 let appPath;
@@ -76,7 +76,7 @@ try {
   process.exit(1);
 }
 
-const templatesFolder = path.join(__dirname, './templates');
+const templatesFolder = path.join(__dirname, '../../templates');
 const templates = fs
   .readdirSync(templatesFolder)
   .map(name => path.join(templatesFolder, name))
@@ -172,48 +172,55 @@ const questions = [
   console.log();
 
   const promptAnswers = await inquirer.prompt(questions);
-  const config = { ...optionsFromArguments, ...promptAnswers };
+  const config = {
+    ...optionsFromArguments,
+    ...promptAnswers,
+    installation: program.installation,
+  };
 
-  if (program.installation) {
+  const app = createInstantSearchApp(path.resolve(appPath), config);
+
+  app.on('installation:start', () => {
     console.log();
     console.log('📦  Installing dependencies...');
     console.log();
-  }
+  });
 
-  const app = await createInstantSearchApp(path.resolve(appPath), config).catch(
-    err => {
-      console.error(err);
-      process.exit(1);
-    }
-  );
-
-  if (!app.info.hasInstalledDependencies) {
+  app.on('installation:error', () => {
     console.log();
     console.log();
     console.warn(
       '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
     );
-  }
+  });
 
-  const installCommand =
-    app.info.packageManager === 'yarn' ? 'yarn' : 'npm install';
+  app.on('build:success', data => {
+    const installCommand =
+      data.info.packageManager === 'yarn' ? 'yarn' : 'npm install';
 
-  console.log();
-  console.log(
-    `🎉  Created ${chalk.bold.cyan(app.config.name)} at ${chalk.green(
-      app.config.path
-    )}.`
-  );
-  console.log();
-  console.log('Begin by typing:');
-  console.log();
-  console.log(`  ${chalk.cyan('cd')} ${appPath}`);
+    console.log();
+    console.log(
+      `🎉  Created ${chalk.bold.cyan(data.config.name)} at ${chalk.green(
+        data.config.path
+      )}.`
+    );
+    console.log();
+    console.log('Begin by typing:');
+    console.log();
+    console.log(`  ${chalk.cyan('cd')} ${appPath}`);
 
-  if (app.info.hasInstalledDependencies === false) {
-    console.log(`  ${chalk.cyan(`${installCommand}`)}`);
-  }
+    if (data.info.hasInstalledDependencies === false) {
+      console.log(`  ${chalk.cyan(`${installCommand}`)}`);
+    }
 
-  console.log(`  ${chalk.cyan(`${app.info.packageManager} start`)}`);
-  console.log();
-  console.log('⚡️  Start building something awesome!');
+    console.log(`  ${chalk.cyan(`${data.info.packageManager} start`)}`);
+    console.log();
+    console.log('⚡️  Start building something awesome!');
+  });
+
+  app.on('build:error', () => {
+    // TODO: delete?
+    console.log();
+    console.error('An error has occured when building the app.');
+  });
 })();

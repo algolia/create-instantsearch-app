@@ -44,13 +44,18 @@ const OPTIONS = {
   },
 };
 
-module.exports = function createInstantSearchApp(appPath, rawConfig, tasks) {
+module.exports = function createInstantSearchApp(
+  appPath,
+  rawConfig,
+  dependencies
+) {
+  const { buildApp, installDependencies, emitter } = dependencies;
+
   const config = {
     ...rawConfig,
     path: appPath,
     name: rawConfig.name || path.basename(appPath),
     installation: rawConfig.installation !== false,
-    libraryVersion: rawConfig.libraryVersion || '1.0.0',
     silent: rawConfig.silent === true,
   };
 
@@ -66,29 +71,41 @@ module.exports = function createInstantSearchApp(appPath, rawConfig, tasks) {
     }
   });
 
-  const { buildApp, installDependencies } = tasks;
   const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
-  let hasInstalledDependencies;
+  let hasInstalledDependencies = false;
 
-  return buildApp(config)
+  buildApp(config)
     .then(() => {
       if (config.installation) {
-        try {
-          installDependencies(config.path, {
-            packageManager,
-            silent: config.silent,
+        return emitter
+          .emit('installation:start')
+          .then(() => {
+            installDependencies(config.path, {
+              packageManager,
+              silent: config.silent,
+            });
+
+            hasInstalledDependencies = true;
+          })
+          .catch(() => {
+            emitter.emit('installation:error');
           });
-          hasInstalledDependencies = true;
-        } catch (err) {
-          hasInstalledDependencies = false;
-        }
+      } else {
+        return Promise.resolve();
       }
     })
-    .then(() => ({
-      config,
-      info: {
-        hasInstalledDependencies,
-        packageManager,
-      },
-    }));
+    .then(() =>
+      emitter.emit('build:success', {
+        config,
+        info: {
+          packageManager,
+          hasInstalledDependencies,
+        },
+      })
+    )
+    .catch(() => {
+      emitter.emit('build:error');
+    });
+
+  return emitter;
 };

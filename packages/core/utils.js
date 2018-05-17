@@ -52,7 +52,7 @@ function getOptionsFromArguments(rawArgs) {
   return rawArgs.reduce((allArgs, currentArg) => {
     argIndex++;
 
-    if (!currentArg.startsWith('--')) {
+    if (!currentArg.startsWith('--') || currentArg.startsWith('--no-')) {
       return allArgs;
     }
 
