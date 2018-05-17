@@ -1,9 +1,13 @@
-const { checkAppName, checkAppPath, isYarnAvailable } = require('./utils');
-
 const fs = require('fs');
 const path = require('path');
 
-const TEMPLATE_FOLDER = path.join(__dirname, '../templates');
+const {
+  checkAppName,
+  checkAppPath,
+  isYarnAvailable,
+} = require('../core/utils');
+
+const TEMPLATE_FOLDER = path.join(__dirname, '../../templates');
 const TEMPLATES_NAMES = fs
   .readdirSync(TEMPLATE_FOLDER)
   .map(name => path.join(TEMPLATE_FOLDER, name))

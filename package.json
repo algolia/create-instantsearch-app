@@ -6,18 +6,18 @@
   "author": "Algolia inc.",
   "license": "MIT",
   "bin": {
-    "create-instantsearch-app": "cli.js"
+    "create-instantsearch-app": "packages/cli/index.js"
   },
   "scripts": {
-    "start": "node cli",
-    "test": "jest ./src",
+    "start": "node packages/cli/index.js",
+    "test": "jest ./packages",
     "test:e2e": "jest './scripts/e2e-installs.test.js'",
     "lint": "eslint .",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write *.{js,md,json}"
   },
   "engines": {
-    "node": ">= 7.6"
+    "node": ">= 8"
   },
   "dependencies": {
     "algoliasearch": "^3.27.1",
