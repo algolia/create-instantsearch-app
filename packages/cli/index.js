@@ -35,7 +35,7 @@ program
     'The main searchable attribute of your index'
   )
   .option('--facets <facets>', 'The attributes for faceting')
-  .option('--template <template>', 'The InstantSearch template to use')
+  .option('-t, --template <template>', 'The InstantSearch template to use')
   .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
     appPath = dest;
@@ -219,7 +219,6 @@ const questions = [
   });
 
   app.on('build:error', () => {
-    // TODO: delete?
     console.log();
     console.error('An error has occured when building the app.');
   });
