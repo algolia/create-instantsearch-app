@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const execSync = require('child_process').execSync;
 const walkSync = require('walk-sync');
-const { getTemplateName } = require('../src/utils');
+const { getTemplateName } = require('../packages/shared/utils');
 
 const templatesFolder = path.join(__dirname, '../templates');
 const templates = fs
@@ -39,9 +39,6 @@ describe('Installation', () => {
     test('get installed by default', () => {
       execSync(
         `yarn start ${appPath} \
-          --app-id appId \
-          --api-key apiKey \
-          --index-name indexName \
           --template "InstantSearch.js"`,
         { stdio: 'ignore' }
       );
@@ -52,9 +49,6 @@ describe('Installation', () => {
     test('get skipped with the `no-installation` flag', () => {
       execSync(
         `yarn start ${appPath} \
-          --app-id appId \
-          --api-key apiKey \
-          --index-name indexName \
           --template "InstantSearch.js" \
           --no-installation`,
         { stdio: 'ignore' }
@@ -68,9 +62,6 @@ describe('Installation', () => {
     test('without conflict generates files', () => {
       execSync(
         `yarn start ${appPath} \
-          --app-id appId \
-          --api-key apiKey \
-          --index-name indexName \
           --template "InstantSearch.js" \
           --no-installation`,
         { stdio: 'ignore' }
@@ -85,9 +76,6 @@ describe('Installation', () => {
       expect(() => {
         execSync(
           `yarn start ${appPath} \
-          --app-id appId \
-          --api-key apiKey \
-          --index-name indexName \
           --template "InstantSearch.js" \
           --no-installation`,
           { stdio: 'ignore' }
@@ -107,9 +95,6 @@ describe('Installation', () => {
       expect(() => {
         execSync(
           `yarn start ${appPath}/file \
-          --app-id appId \
-          --api-key apiKey \
-          --index-name indexName \
           --template "InstantSearch.js" \
           --no-installation`,
           { stdio: 'ignore' }
@@ -150,6 +135,7 @@ describe('Snapshots', () => {
               --app-id appId \
               --api-key apiKey \
               --index-name indexName \
+              --libraryVersion "1.0.0" \
               --template "${templateName}" \
               --no-installation`,
           { stdio: 'ignore' }
