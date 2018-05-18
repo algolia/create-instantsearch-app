@@ -1,20 +1,15 @@
-const createInstantSearchAppFactory = require('./createInstantSearchApp');
+const CreateInstantSearchApp = require('./createInstantSearchApp');
 
 let buildAppSpy;
 let installDependenciesSpy;
-let emitterSpy;
 
 const createInstantSearchApp = (path, config) => {
   buildAppSpy = jest.fn(() => Promise.resolve());
   installDependenciesSpy = jest.fn();
-  emitterSpy = {
-    emit: jest.fn(),
-  };
 
-  return createInstantSearchAppFactory(path, config, {
+  return new CreateInstantSearchApp(path, config, {
     buildApp: buildAppSpy,
     installDependencies: installDependenciesSpy,
-    emitter: emitterSpy,
   });
 };
 
@@ -71,8 +66,10 @@ describe('Config', () => {
   });
 
   describe('buildApp', () => {
-    test('gets called', async () => {
-      await createInstantSearchApp('/tmp/test-app', {
+    test('gets called', () => {
+      expect.assertions(4);
+
+      createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
         libraryVersion: '2.0.0',
       });
@@ -98,20 +95,20 @@ describe('Config', () => {
   });
 
   describe('installDependencies', () => {
-    test('with installation undefined installs the dependencies gets called', async () => {
+    test('with installation set to `undefined` installs the dependencies', () => {
       expect.assertions(1);
 
-      await createInstantSearchApp('/tmp/test-app', {
+      createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
       });
 
       expect(installDependenciesSpy).toHaveBeenCalledTimes(1);
     });
 
-    test('with installation installs the dependencies gets called', async () => {
+    test('with installation installs the dependencies gets called', () => {
       expect.assertions(1);
 
-      await createInstantSearchApp('/tmp/test-app', {
+      createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
         installation: true,
       });
@@ -119,10 +116,10 @@ describe('Config', () => {
       expect(installDependenciesSpy).toHaveBeenCalledTimes(1);
     });
 
-    test('without installation does not install the dependencies gets called', async () => {
+    test('without installation does not install the dependencies', () => {
       expect.assertions(1);
 
-      await createInstantSearchApp('/tmp/test-app', {
+      createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
         installation: false,
       });

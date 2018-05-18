@@ -1,14 +1,10 @@
-const Emittery = require('emittery');
-const emitter = new Emittery();
-
-const createInstantSearchAppFactory = require('./createInstantSearchApp');
+const CreateInstantSearchApp = require('./createInstantSearchApp');
 const buildApp = require('./tasks/buildApp');
 const installDependencies = require('./tasks/installDependencies');
 
 module.exports = function createInstantSearchApp(path, config) {
-  return createInstantSearchAppFactory(path, config, {
+  return new CreateInstantSearchApp(path, config, {
     buildApp,
     installDependencies,
-    emitter,
   });
 };

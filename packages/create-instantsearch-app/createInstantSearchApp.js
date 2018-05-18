@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Emittery = require('emittery');
 
 const {
   checkAppName,
@@ -44,68 +45,67 @@ const OPTIONS = {
   },
 };
 
-module.exports = function createInstantSearchApp(
-  appPath,
-  rawConfig,
-  dependencies
-) {
-  const { buildApp, installDependencies, emitter } = dependencies;
+class CreateInstantSearchApp extends Emittery {
+  constructor(appPath, rawConfig, tasks) {
+    super();
 
-  const config = {
-    ...rawConfig,
-    path: appPath,
-    name: rawConfig.name || path.basename(appPath),
-    installation: rawConfig.installation !== false,
-    silent: rawConfig.silent === true,
-  };
+    const { buildApp, installDependencies } = tasks;
 
-  Object.keys(OPTIONS).forEach(optionName => {
-    const isOptionValid = OPTIONS[optionName].validate(config[optionName]);
+    const config = {
+      ...rawConfig,
+      path: appPath,
+      name: rawConfig.name || path.basename(appPath),
+      installation: rawConfig.installation !== false,
+      silent: rawConfig.silent === true,
+    };
 
-    if (!isOptionValid) {
-      const errorMessage = OPTIONS[optionName].getErrorMessage
-        ? OPTIONS[optionName].getErrorMessage(config[optionName])
-        : `The option \`${optionName}\` is required.`;
+    Object.keys(OPTIONS).forEach(optionName => {
+      const isOptionValid = OPTIONS[optionName].validate(config[optionName]);
 
-      throw new Error(errorMessage);
-    }
-  });
+      if (!isOptionValid) {
+        const errorMessage = OPTIONS[optionName].getErrorMessage
+          ? OPTIONS[optionName].getErrorMessage(config[optionName])
+          : `The option \`${optionName}\` is required.`;
 
-  const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
-  let hasInstalledDependencies = false;
-
-  buildApp(config)
-    .then(() => {
-      if (config.installation) {
-        return emitter
-          .emit('installation:start')
-          .then(() => {
-            installDependencies(config.path, {
-              packageManager,
-              silent: config.silent,
-            });
-
-            hasInstalledDependencies = true;
-          })
-          .catch(() => {
-            emitter.emit('installation:error');
-          });
-      } else {
-        return Promise.resolve();
+        throw new Error(errorMessage);
       }
-    })
-    .then(() =>
-      emitter.emit('build:success', {
-        config,
-        info: {
-          packageManager,
-          hasInstalledDependencies,
-        },
-      })
-    )
-    .catch(() => {
-      emitter.emit('build:error');
     });
 
-  return emitter;
-};
+    const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
+    let hasInstalledDependencies = false;
+
+    buildApp(config)
+      .then(() => {
+        if (config.installation) {
+          return this.emit('installation:start')
+            .then(() => {
+              installDependencies(config.path, {
+                packageManager,
+                silent: config.silent,
+              });
+
+              hasInstalledDependencies = true;
+            })
+            .catch(() => {
+              this.emit('installation:error');
+            });
+        } else {
+          return Promise.resolve();
+        }
+      })
+      .then(() =>
+        this.emit('build:success', {
+          config,
+          info: {
+            packageManager,
+            hasInstalledDependencies,
+          },
+        })
+      )
+      .catch(() => {
+        this.emit('build:error');
+      });
+  }
+}
+
+module.exports = CreateInstantSearchApp;
