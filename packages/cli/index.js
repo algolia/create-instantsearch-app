@@ -261,3 +261,7 @@ run().catch(err => {
 
   process.exit(2);
 });
+
+process.on('SIGINT', () => {
+  process.exit(3);
+});
