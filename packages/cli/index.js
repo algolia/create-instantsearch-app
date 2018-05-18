@@ -7,6 +7,7 @@ const program = require('commander');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
+const loadJsonFile = require('load-json-file');
 
 const createInstantSearchApp = require('../create-instantsearch-app');
 const {
@@ -36,6 +37,10 @@ program
   )
   .option('--facets <facets>', 'The attributes for faceting')
   .option('-t, --template <template>', 'The InstantSearch template to use')
+  .option(
+    '-c, --config <config>',
+    'The configuration file to get the options from'
+  )
   .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
     appPath = dest;
@@ -72,7 +77,7 @@ try {
   checkAppPath(appPath);
   checkAppName(appName);
 } catch (err) {
-  console.error(err);
+  console.error(err.message);
   process.exit(1);
 }
 
@@ -167,32 +172,19 @@ const questions = [
   },
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
-(async function() {
+async function run() {
   console.log(`Creating a new InstantSearch app in ${chalk.green(appPath)}.`);
   console.log();
 
-  const promptAnswers = await inquirer.prompt(questions);
-  const config = {
-    ...optionsFromArguments,
-    ...promptAnswers,
-    installation: program.installation,
-  };
+  const config = optionsFromArguments.config
+    ? await loadJsonFile(optionsFromArguments.config)
+    : {
+        ...optionsFromArguments,
+        ...(await inquirer.prompt(questions)),
+        installation: program.installation,
+      };
 
   const app = createInstantSearchApp(path.resolve(appPath), config);
-
-  app.on('installation:start', () => {
-    console.log();
-    console.log('📦  Installing dependencies...');
-    console.log();
-  });
-
-  app.on('installation:error', () => {
-    console.log();
-    console.log();
-    console.warn(
-      '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
-    );
-  });
 
   app.on('build:success', data => {
     const installCommand =
@@ -222,4 +214,24 @@ const questions = [
     console.log();
     console.error('An error has occured when building the app.');
   });
-})();
+
+  app.on('installation:start', () => {
+    console.log();
+    console.log('📦  Installing dependencies...');
+    console.log();
+  });
+
+  app.on('installation:error', () => {
+    console.log();
+    console.log();
+    console.warn(
+      '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
+    );
+  });
+}
+
+run().catch(err => {
+  console.error(err.message);
+
+  process.exit(2);
+});
