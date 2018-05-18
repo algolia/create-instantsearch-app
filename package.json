@@ -1,10 +1,10 @@
 {
   "name": "create-instantsearch-app",
   "version": "2.3.0",
-  "description": "Build Algolia InstantSearch app at the speed of thoughts ⚡️",
-  "main": "index.js",
+  "description": "Build InstantSearch apps at the speed of thoughts ⚡️",
   "author": "Algolia inc.",
   "license": "MIT",
+  "main": "index.js",
   "bin": {
     "create-instantsearch-app": "packages/cli/index.js"
   },
