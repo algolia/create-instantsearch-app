@@ -25,7 +25,7 @@ let appPath;
 let options = {};
 
 program
-  .version(version)
+  .version(version, '-v, --version')
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .option('--app-id <appId>', 'The application ID')
@@ -36,7 +36,7 @@ program
     'The main searchable attribute of your index'
   )
   .option(
-    '--attributesForFaceting <attributesForFaceting>',
+    '--attributes-for-faceting <attributesForFaceting>',
     'The attributes for faceting'
   )
   .option('-t, --template <template>', 'The InstantSearch template to use')
