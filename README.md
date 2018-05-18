@@ -1,6 +1,6 @@
 # Create InstantSearch App
 
-> Start your InstantSearch app in a ms ⚡️
+> Build InstantSearch apps at the speed of thoughts ⚡️
 
 `create-instantsearch-app` is a command line utility that helps you quick start your InstantSearch app using any [Algolia](https://algolia.com) InstantSearch flavor ([InstantSearch.js](https://github.com/algolia/instantsearch.js), [React InstantSearch](https://github.com/algolia/react-instantsearch), [Vue InstantSearch](https://github.com/algolia/vue-instantsearch) and [Angular InstantSearch](https://github.com/algolia/angular-instantsearch)).
 
