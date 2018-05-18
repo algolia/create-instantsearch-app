@@ -52,7 +52,7 @@ class CreateInstantSearchApp extends Emittery {
     const config = this.getConfig({ ...rawConfig, path: appPath });
 
     this.checkConfig(config);
-    this.build(config, tasks);
+    this.create(config, tasks);
   }
 
   getConfig(options) {
@@ -78,19 +78,19 @@ class CreateInstantSearchApp extends Emittery {
     });
   }
 
-  async build(config, tasks) {
-    const { buildApp, installDependencies } = tasks;
+  async create(config, tasks) {
+    const { build, install } = tasks;
 
     const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
     let hasInstalledDependencies = false;
 
-    await buildApp(config);
+    await build(config);
 
     if (config.installation) {
       await this.emit('installation:start');
 
       try {
-        installDependencies(config.path, {
+        install(config.path, {
           packageManager,
           silent: config.silent,
         });

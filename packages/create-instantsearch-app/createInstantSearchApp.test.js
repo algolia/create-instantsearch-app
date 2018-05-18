@@ -1,15 +1,15 @@
 const CreateInstantSearchApp = require('./createInstantSearchApp');
 
-let buildAppSpy;
-let installDependenciesSpy;
+let buildSpy;
+let installSpy;
 
 const createInstantSearchApp = (path, config) => {
-  buildAppSpy = jest.fn(() => Promise.resolve());
-  installDependenciesSpy = jest.fn();
+  buildSpy = jest.fn(() => Promise.resolve());
+  installSpy = jest.fn();
 
   return new CreateInstantSearchApp(path, config, {
-    buildApp: buildAppSpy,
-    installDependencies: installDependenciesSpy,
+    build: buildSpy,
+    install: installSpy,
   });
 };
 
@@ -65,7 +65,7 @@ describe('Config', () => {
     });
   });
 
-  describe('buildApp', () => {
+  describe('build', () => {
     test('gets called', () => {
       expect.assertions(4);
 
@@ -74,8 +74,8 @@ describe('Config', () => {
         libraryVersion: '2.0.0',
       });
 
-      expect(buildAppSpy).toHaveBeenCalledTimes(1);
-      expect(buildAppSpy).toHaveBeenCalledWith({
+      expect(buildSpy).toHaveBeenCalledTimes(1);
+      expect(buildSpy).toHaveBeenCalledWith({
         path: '/tmp/test-app',
         name: 'test-app',
         template: 'InstantSearch.js',
@@ -84,8 +84,8 @@ describe('Config', () => {
         silent: false,
       });
 
-      expect(installDependenciesSpy).toHaveBeenCalledTimes(1);
-      expect(installDependenciesSpy).toHaveBeenCalledWith(
+      expect(installSpy).toHaveBeenCalledTimes(1);
+      expect(installSpy).toHaveBeenCalledWith(
         '/tmp/test-app',
         expect.objectContaining({
           silent: false,
@@ -94,7 +94,7 @@ describe('Config', () => {
     });
   });
 
-  describe('installDependencies', () => {
+  describe('install', () => {
     test('with installation set to `undefined` installs the dependencies', () => {
       expect.assertions(1);
 
@@ -102,7 +102,7 @@ describe('Config', () => {
         template: 'InstantSearch.js',
       });
 
-      expect(installDependenciesSpy).toHaveBeenCalledTimes(1);
+      expect(installSpy).toHaveBeenCalledTimes(1);
     });
 
     test('with installation installs the dependencies gets called', () => {
@@ -113,7 +113,7 @@ describe('Config', () => {
         installation: true,
       });
 
-      expect(installDependenciesSpy).toHaveBeenCalledTimes(1);
+      expect(installSpy).toHaveBeenCalledTimes(1);
     });
 
     test('without installation does not install the dependencies', () => {
@@ -124,7 +124,7 @@ describe('Config', () => {
         installation: false,
       });
 
-      expect(installDependenciesSpy).not.toHaveBeenCalled();
+      expect(installSpy).not.toHaveBeenCalled();
     });
   });
 });

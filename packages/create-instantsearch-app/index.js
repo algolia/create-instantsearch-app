@@ -1,10 +1,10 @@
 const CreateInstantSearchApp = require('./createInstantSearchApp');
-const buildApp = require('./tasks/buildApp');
-const installDependencies = require('./tasks/installDependencies');
+const build = require('./tasks/build');
+const install = require('./tasks/install');
 
 module.exports = function createInstantSearchApp(path, config) {
   return new CreateInstantSearchApp(path, config, {
-    buildApp,
-    installDependencies,
+    build,
+    install,
   });
 };

@@ -78,6 +78,8 @@ try {
   checkAppName(appName);
 } catch (err) {
   console.error(err.message);
+  console.log();
+
   process.exit(1);
 }
 
@@ -232,6 +234,7 @@ async function run() {
 
 run().catch(err => {
   console.error(err.message);
+  console.log();
 
   process.exit(2);
 });

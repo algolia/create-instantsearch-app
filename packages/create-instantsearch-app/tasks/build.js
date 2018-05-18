@@ -3,7 +3,7 @@ const metalsmith = require('metalsmith');
 const inPlace = require('metalsmith-in-place');
 const rename = require('metalsmith-rename');
 
-module.exports = function buildApp(config) {
+module.exports = function build(config) {
   const templateFolder = path.join(__dirname, '../../../templates');
   const templatePath = path.join(templateFolder, config.template);
 
