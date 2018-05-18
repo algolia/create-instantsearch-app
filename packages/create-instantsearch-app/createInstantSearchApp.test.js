@@ -2,14 +2,17 @@ const CreateInstantSearchApp = require('./createInstantSearchApp');
 
 let buildSpy;
 let installSpy;
+let cleanSpy;
 
 const createInstantSearchApp = (path, config) => {
   buildSpy = jest.fn(() => Promise.resolve());
   installSpy = jest.fn();
+  cleanSpy = jest.fn();
 
   return new CreateInstantSearchApp(path, config, {
     build: buildSpy,
     install: installSpy,
+    clean: cleanSpy,
   });
 };
 

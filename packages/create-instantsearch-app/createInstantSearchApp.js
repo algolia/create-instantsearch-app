@@ -79,38 +79,41 @@ class CreateInstantSearchApp extends Emittery {
   }
 
   async create(config, tasks) {
-    const { build, install } = tasks;
+    const { build, install, clean } = tasks;
 
     const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
-    let hasInstalledDependencies = false;
 
+    await this.emit('build:start', { config });
     await build(config);
 
     if (config.installation) {
-      await this.emit('installation:start');
+      await this.emit('installation:start', { config });
 
       try {
-        install(config.path, {
-          packageManager,
-          silent: config.silent,
-        });
-        hasInstalledDependencies = true;
+        install(config, { packageManager });
+        await this.emit('installation:end', { config });
       } catch (err) {
-        hasInstalledDependencies = false;
-        this.emit('installation:error');
+        await this.emit('installation:error', { err, config });
+
+        await this.emit('clean:start', { config });
+        clean(config);
+        await this.emit('clean:end');
+
+        return;
       }
     }
 
     try {
-      await this.emit('build:success', {
+      await this.emit('build:end', {
         config,
         info: {
           packageManager,
-          hasInstalledDependencies,
         },
       });
     } catch (err) {
-      this.emit('build:error');
+      await this.emit('build:error', { err });
+
+      return;
     }
   }
 }

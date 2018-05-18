@@ -1,12 +1,12 @@
 const process = require('process');
 const execSync = require('child_process').execSync;
 
-module.exports = function install(appPath, options) {
-  const installCommand =
-    options.packageManager === 'yarn' ? 'yarn' : 'npm install';
+module.exports = function install(config, info) {
   const initialDirectory = process.cwd();
 
-  process.chdir(appPath);
-  execSync(installCommand, { stdio: options.silent ? 'ignore' : 'inherit' });
+  process.chdir(config.path);
+  execSync(`${info.packageManager} install`, {
+    stdio: config.silent ? 'ignore' : 'inherit',
+  });
   process.chdir(initialDirectory);
 };

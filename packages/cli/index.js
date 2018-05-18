@@ -178,17 +178,19 @@ async function run() {
   console.log(`Creating a new InstantSearch app in ${chalk.green(appPath)}.`);
   console.log();
 
-  const config = optionsFromArguments.config
-    ? await loadJsonFile(optionsFromArguments.config)
-    : {
-        ...optionsFromArguments,
-        ...(await inquirer.prompt(questions)),
-        installation: program.installation,
-      };
+  const config = {
+    ...(optionsFromArguments.config
+      ? await loadJsonFile(optionsFromArguments.config)
+      : {
+          ...optionsFromArguments,
+          ...(await inquirer.prompt(questions)),
+        }),
+    installation: program.installation,
+  };
 
   const app = createInstantSearchApp(path.resolve(appPath), config);
 
-  app.on('build:success', data => {
+  app.on('build:end', data => {
     const installCommand =
       data.info.packageManager === 'yarn' ? 'yarn' : 'npm install';
 
@@ -203,7 +205,7 @@ async function run() {
     console.log();
     console.log(`  ${chalk.cyan('cd')} ${appPath}`);
 
-    if (data.info.hasInstalledDependencies === false) {
+    if (program.installation === false) {
       console.log(`  ${chalk.cyan(`${installCommand}`)}`);
     }
 
@@ -212,9 +214,11 @@ async function run() {
     console.log('⚡️  Start building something awesome!');
   });
 
-  app.on('build:error', () => {
+  app.on('build:error', data => {
     console.log();
-    console.error('An error has occured when building the app.');
+    console.error(chalk.red('🛑  The app generation failed.'));
+    console.error(data.err);
+    console.log();
   });
 
   app.on('installation:start', () => {
@@ -226,9 +230,25 @@ async function run() {
   app.on('installation:error', () => {
     console.log();
     console.log();
-    console.warn(
-      '⚠️  Dependencies could not have been installed. Please follow the commands below to proceed.'
+    console.error(chalk.red('📦  Dependencies could not be installed.'));
+    console.log();
+    console.log('Try to create the app without installing the dependencies:');
+    console.log(
+      `  ${chalk.cyan('create-instantsearch-app')} ${chalk.green(
+        '<project-directory>'
+      )} --no-installation`
     );
+
+    console.log();
+    console.log();
+    console.error(chalk.red('🛑  Aborting the app generation.'));
+    console.log();
+  });
+
+  app.on('clean:start', data => {
+    console.log();
+    console.log(`✨  Cleaning up ${chalk.green(data.config.path)}.`);
+    console.log();
   });
 }
 
