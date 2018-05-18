@@ -97,7 +97,7 @@ class CreateInstantSearchApp extends Emittery {
 
         await this.emit('clean:start', { config });
         clean(config);
-        await this.emit('clean:end');
+        await this.emit('clean:end', { config });
 
         return;
       }
@@ -111,7 +111,7 @@ class CreateInstantSearchApp extends Emittery {
         },
       });
     } catch (err) {
-      await this.emit('build:error', { err });
+      await this.emit('build:error', { err, config });
 
       return;
     }
