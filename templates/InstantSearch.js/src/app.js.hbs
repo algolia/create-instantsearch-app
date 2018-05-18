@@ -9,6 +9,9 @@ const search = instantsearch({
 search.addWidget(
   instantsearch.widgets.searchBox({
     container: '#searchBox',
+    {{#if searchPlaceholder}}
+    placeholder: '{{searchPlaceholder}}',
+    {{/if}}
   })
 );
 
@@ -23,7 +26,7 @@ search.addWidget(
   })
 );
 
-{{#each facets}}
+{{#each attributesForFaceting}}
 search.addWidget(
   instantsearch.widgets.refinementList({
     container: '#{{this}}-list',

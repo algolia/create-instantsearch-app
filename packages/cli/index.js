@@ -35,7 +35,10 @@ program
     '--main-attribute <mainAttribute>',
     'The main searchable attribute of your index'
   )
-  .option('--facets <facets>', 'The attributes for faceting')
+  .option(
+    '--attributesForFaceting <attributesForFaceting>',
+    'The attributes for faceting'
+  )
   .option('-t, --template <template>', 'The InstantSearch template to use')
   .option(
     '-c, --config <config>',
@@ -115,7 +118,7 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'facets',
+    name: 'attributesForFaceting',
     message: 'Attributes for faceting',
     suffix: ` ${chalk.whiteBright('(optional)')}`,
     transformer: attributesForFaceting =>

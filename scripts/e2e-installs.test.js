@@ -113,6 +113,7 @@ describe('Snapshots', () => {
     describe(templateName, () => {
       let temporaryDirectory;
       let appPath;
+      let configFilePath;
       let generatedFiles;
 
       beforeAll(() => {
@@ -130,13 +131,27 @@ describe('Snapshots', () => {
       });
 
       beforeEach(() => {
+        configFilePath = `${temporaryDirectory}/${getTemplateName(
+          templateName
+        )}.config.json`;
+
+        const config = {
+          name: `${getTemplateName(templateName)}-app`,
+          template: templateName,
+          libraryVersion: '1.0.0',
+          appId: 'appId',
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          searchPlaceholder: 'Search placeholder',
+          mainAttribute: 'mainAttribute',
+          attributesForFaceting: ['facet1', 'facet2'],
+        };
+
+        fs.writeFileSync(configFilePath, JSON.stringify(config));
+
         execSync(
           `yarn start ${appPath} \
-              --app-id appId \
-              --api-key apiKey \
-              --index-name indexName \
-              --libraryVersion "1.0.0" \
-              --template "${templateName}" \
+              --config ${configFilePath} \
               --no-installation`,
           { stdio: 'ignore' }
         );
@@ -157,6 +172,7 @@ describe('Snapshots', () => {
 
       afterEach(() => {
         execSync(`rm -rf "${appPath}"`);
+        execSync(`rm -rf "${configFilePath}"`);
       });
 
       test('Folder structure', () => {
