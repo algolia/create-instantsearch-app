@@ -49,16 +49,22 @@ class CreateInstantSearchApp extends Emittery {
   constructor(appPath, rawConfig, tasks) {
     super();
 
-    const { buildApp, installDependencies } = tasks;
+    const config = this.getConfig({ ...rawConfig, path: appPath });
 
-    const config = {
-      ...rawConfig,
-      path: appPath,
-      name: rawConfig.name || path.basename(appPath),
-      installation: rawConfig.installation !== false,
-      silent: rawConfig.silent === true,
+    this.checkConfig(config);
+    this.build(config, tasks);
+  }
+
+  getConfig(options) {
+    return {
+      ...options,
+      name: options.name || path.basename(options.path),
+      installation: options.installation !== false,
+      silent: options.silent === true,
     };
+  }
 
+  checkConfig(config) {
     Object.keys(OPTIONS).forEach(optionName => {
       const isOptionValid = OPTIONS[optionName].validate(config[optionName]);
 
@@ -70,6 +76,10 @@ class CreateInstantSearchApp extends Emittery {
         throw new Error(errorMessage);
       }
     });
+  }
+
+  build(config, tasks) {
+    const { buildApp, installDependencies } = tasks;
 
     const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
     let hasInstalledDependencies = false;
