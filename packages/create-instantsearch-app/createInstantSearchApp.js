@@ -51,7 +51,7 @@ class CreateInstantSearchApp extends Emittery {
 
     const config = this.getConfig({
       ...rawConfig,
-      path: path.resolve(appPath),
+      path: appPath ? path.resolve(appPath) : '',
     });
 
     this.checkConfig(config);
