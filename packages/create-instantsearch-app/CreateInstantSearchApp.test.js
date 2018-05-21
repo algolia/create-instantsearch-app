@@ -1,4 +1,4 @@
-const CreateInstantSearchApp = require('./createInstantSearchApp');
+const CreateInstantSearchApp = require('./CreateInstantSearchApp');
 
 let buildSpy;
 let installSpy;

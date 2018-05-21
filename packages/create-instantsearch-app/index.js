@@ -1,4 +1,4 @@
-const CreateInstantSearchApp = require('./createInstantSearchApp');
+const CreateInstantSearchApp = require('./CreateInstantSearchApp');
 const build = require('./tasks/build');
 const install = require('./tasks/install');
 const clean = require('./tasks/clean');
