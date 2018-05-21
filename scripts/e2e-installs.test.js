@@ -124,16 +124,6 @@ describe('Snapshots', () => {
           .trim();
 
         appPath = `${temporaryDirectory}/${getTemplateName(templateName)}`;
-      });
-
-      afterAll(() => {
-        execSync(`rm -rf "${temporaryDirectory}"`);
-      });
-
-      beforeEach(() => {
-        configFilePath = `${temporaryDirectory}/${getTemplateName(
-          templateName
-        )}.config.json`;
 
         const config = {
           name: `${getTemplateName(templateName)}-app`,
@@ -146,6 +136,10 @@ describe('Snapshots', () => {
           mainAttribute: 'mainAttribute',
           attributesForFaceting: ['facet1', 'facet2'],
         };
+
+        configFilePath = `${temporaryDirectory}/${getTemplateName(
+          templateName
+        )}.config.json`;
 
         fs.writeFileSync(configFilePath, JSON.stringify(config));
 
@@ -170,9 +164,8 @@ describe('Snapshots', () => {
         });
       });
 
-      afterEach(() => {
-        execSync(`rm -rf "${appPath}"`);
-        execSync(`rm -rf "${configFilePath}"`);
+      afterAll(() => {
+        execSync(`rm -rf "${temporaryDirectory}"`);
       });
 
       test('Folder structure', () => {
