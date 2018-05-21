@@ -117,16 +117,6 @@ const questions = [
     message: 'Main searchable attribute',
   },
   {
-    type: 'input',
-    name: 'attributesForFaceting',
-    message: 'Attributes for faceting',
-    transformer: attributesForFaceting =>
-      `[ ${attributesForFaceting
-        .split(',')
-        .map(x => x.trim())
-        .join(', ')} ]`,
-  },
-  {
     type: 'list',
     name: 'template',
     message: 'InstantSearch template',
