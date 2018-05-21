@@ -115,13 +115,11 @@ const questions = [
     type: 'input',
     name: 'mainAttribute',
     message: 'Main searchable attribute',
-    suffix: ` ${chalk.whiteBright('(optional)')}`,
   },
   {
     type: 'input',
     name: 'attributesForFaceting',
     message: 'Attributes for faceting',
-    suffix: ` ${chalk.whiteBright('(optional)')}`,
     transformer: attributesForFaceting =>
       `[ ${attributesForFaceting
         .split(',')
