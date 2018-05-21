@@ -1,5 +1,5 @@
 const process = require('process');
-const execSync = require('child_process').execSync;
+const { execSync } = require('child_process');
 
 module.exports = function install(config, info) {
   const initialDirectory = process.cwd();

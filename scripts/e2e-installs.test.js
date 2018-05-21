@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const execSync = require('child_process').execSync;
+const { execSync } = require('child_process');
 const walkSync = require('walk-sync');
 const { getTemplateName } = require('../packages/shared/utils');
 

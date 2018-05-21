@@ -1,5 +1,5 @@
 const fs = require('fs');
-const execSync = require('child_process').execSync;
+const { execSync } = require('child_process');
 const chalk = require('chalk');
 const validateProjectName = require('validate-npm-package-name');
 const algoliasearch = require('algoliasearch');
