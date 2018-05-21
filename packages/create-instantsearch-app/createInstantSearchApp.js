@@ -49,7 +49,10 @@ class CreateInstantSearchApp extends Emittery {
   constructor(appPath, rawConfig, tasks) {
     super();
 
-    const config = this.getConfig({ ...rawConfig, path: appPath });
+    const config = this.getConfig({
+      ...rawConfig,
+      path: path.resolve(appPath),
+    });
 
     this.checkConfig(config);
     this.create(config, tasks);

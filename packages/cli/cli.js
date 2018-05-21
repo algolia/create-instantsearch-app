@@ -200,7 +200,7 @@ async function run() {
     installation: program.installation,
   };
 
-  const app = createInstantSearchApp(path.resolve(appPath), config);
+  const app = createInstantSearchApp(appPath, config);
 
   app.on('build:end', data => {
     const installCommand =
