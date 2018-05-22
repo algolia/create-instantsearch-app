@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Config required with unknown template throws 1`] = `"The option \`template\` must be one of these: InstantSearch.js."`;
+
+exports[`Config required with unvalid name 1`] = `"Could not create a project called \\"[31m./WrongNpmName[39m\\" because of npm naming restrictions."`;
+
+exports[`Config required without path throws 1`] = `"The option \`path\` is required."`;
+
+exports[`Config required without template throws 1`] = `"The option \`template\` must be one of these: InstantSearch.js."`;

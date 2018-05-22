@@ -14,13 +14,13 @@
   <link rel="stylesheet" href="./src/index.css">
   <link rel="stylesheet" href="./src/app.css">
 
-  <title>{{appName}}</title>
+  <title>{{name}}</title>
 </head>
 
 <body>
   <header class="header">
     <h1 class="header-title">
-      <a href="/">{{appName}}</a>
+      <a href="/">{{name}}</a>
     </h1>
     <p class="header-subtitle">using InstantSearch.js</p>
   </header>
@@ -28,7 +28,7 @@
   <div class="container">
     <div class="container-app">
       <div class="filters">
-        {{#each facets}}
+        {{#each attributesForFaceting}}
         <div id="{{this}}-list"></div>
         {{/each}}
       </div>

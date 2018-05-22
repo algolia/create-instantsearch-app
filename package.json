@@ -1,31 +1,33 @@
 {
   "name": "create-instantsearch-app",
   "version": "2.3.0",
-  "description": "Build Algolia InstantSearch app at the speed of thoughts ⚡️",
-  "main": "index.js",
+  "description": "Build InstantSearch apps at the speed of thoughts ⚡️",
   "author": "Algolia inc.",
   "license": "MIT",
+  "main": "index.js",
   "bin": {
-    "create-instantsearch-app": "index.js"
+    "create-instantsearch-app": "packages/cli/index.js"
   },
   "scripts": {
-    "start": "node index",
-    "test": "jest ./src",
+    "start": "node packages/cli/index.js",
+    "test": "jest ./packages",
     "test:e2e": "jest './scripts/e2e-installs.test.js'",
     "lint": "eslint .",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write *.{js,md,json}"
   },
   "engines": {
-    "node": ">= 7.6"
+    "node": ">= 8"
   },
   "dependencies": {
     "algoliasearch": "^3.27.1",
     "chalk": "^2.4.1",
     "commander": "^2.15.1",
+    "emittery": "^0.3.0",
     "inquirer": "^5.2.0",
     "jstransformer-handlebars": "^1.1.0",
     "latest-semver": "^1.0.0",
+    "load-json-file": "^5.0.0",
     "metalsmith": "^2.3.0",
     "metalsmith-in-place": "^4.1.1",
     "metalsmith-rename": "^1.0.0",
