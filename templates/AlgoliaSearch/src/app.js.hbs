@@ -10,11 +10,9 @@ function renderHits(query) {
   index.search(query).then(result => {
     $hits.innerHTML = `
       <ul>
-        {{#if mainAttribute}}
         ${result.hits
-          .map(hit => `<li>${hit._highlightResult.name.value}</li>`)
+          .map(hit => {{#if mainAttribute}}`<li>${hit._highlightResult.name.value}</li>`{{else}}`<li>${JSON.stringify(hit)}</li>`{{/if}})
           .join('')}
-        {{/if}}
       </ul>`;
   });
 }
