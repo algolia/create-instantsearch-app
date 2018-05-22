@@ -47,8 +47,10 @@
     "prettier": "^1.12.1",
     "walk-sync": "^0.3.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/algolia/create-instantsearch-app"
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/templates/"
+    ]
   }
 }
