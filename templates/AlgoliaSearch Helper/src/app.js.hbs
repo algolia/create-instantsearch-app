@@ -1,0 +1,27 @@
+import algoliasearch from 'algoliasearch';
+import algoliasearchHelper from 'algoliasearch-helper';
+
+const client = algoliasearch('{{appId}}', '{{apiKey}}');
+const helper = algoliasearchHelper(client, '{{indexName}}');
+
+const $searchBox = document.querySelector('#searchBox input[type=search]');
+const $hits = document.querySelector('#hits');
+
+$searchBox.addEventListener('input', event => {
+  const query = event.target.value;
+
+  helper.setQuery(query).search();
+});
+
+helper.on('result', result => {
+  $hits.innerHTML = `
+    <ul>
+      {{#if mainAttribute}}
+      ${result.hits
+        .map(hit => `<li>${hit._highlightResult.name.value}</li>`)
+        .join('')}
+      {{/if}}
+    </ul>`;
+});
+
+helper.search();
