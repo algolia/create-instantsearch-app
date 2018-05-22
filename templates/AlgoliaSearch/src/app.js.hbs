@@ -11,7 +11,7 @@ function renderHits(query) {
     $hits.innerHTML = `
       <ul>
         ${result.hits
-          .map(hit => {{#if mainAttribute}}`<li>${hit._highlightResult.name.value}</li>`{{else}}`<li>${JSON.stringify(hit)}</li>`{{/if}})
+          .map(hit => {{#if mainAttribute}}`<li>${hit._highlightResult.{{mainAttribute}}.value}</li>`{{else}}`<li>${JSON.stringify(hit)}</li>`{{/if}})
           .join('')}
       </ul>`;
   });
