@@ -8,6 +8,7 @@ const $hits = document.querySelector('#hits');
 
 function renderHits(query) {
   index.search(query).then(result => {
+    // Please sanitize user-provided data when using `innerHTML` to avoid XSS
     $hits.innerHTML = `
       <ul class="ais-hits">
         ${result.hits
