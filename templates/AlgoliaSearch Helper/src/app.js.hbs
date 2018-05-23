@@ -15,9 +15,9 @@ $searchBox.addEventListener('input', event => {
 
 helper.on('result', result => {
   $hits.innerHTML = `
-    <ul>
+    <ul class="ais-hits">
       ${result.hits
-        .map(hit => {{#if mainAttribute}}`<li>${hit._highlightResult.{{mainAttribute}}.value}</li>`{{else}}`<li>${JSON.stringify(hit)}</li>`{{/if}})
+        .map(hit => `<li class="ais-hits--item">{{#if mainAttribute}}${hit._highlightResult.{{mainAttribute}}.value}{{else}}${JSON.stringify(hit)}{{/if}}</li>`)
         .join('')}
     </ul>`;
 });

@@ -13,6 +13,11 @@ em {
   margin-bottom: 1rem;
 }
 
+.header a {
+  color: #fff;
+  text-decoration: none;
+}
+
 .header-title {
   font-size: 1.2rem;
   font-weight: normal;
@@ -21,11 +26,6 @@ em {
 .header-title::after {
   content: ' ▸ ';
   padding: 0 0.5rem;
-}
-
-.header-title a {
-  color: #fff;
-  text-decoration: none;
 }
 
 .header-subtitle {
@@ -40,14 +40,24 @@ em {
 
 .container-app {
   display: grid;
-  grid-template-columns: 20% 75%;
-  grid-gap: 5%;
+}
+
+#searchBox input[type="search"] {
+  width: 100%;
+  padding: 12px;
+  font: inherit;
+  border-radius: 2px;
+  border: 1px solid rgba(150, 150, 150, 0.16);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
 }
 
 .ais-hits {
   display: grid;
-  grid-template-columns: 47.5% 47.5%;
-  grid-gap: 1rem;
+  grid-template-columns: 49% 49%;
+  grid-gap: 2%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .ais-hits--item {
@@ -57,13 +67,9 @@ em {
   border-radius: 4px;
   border: 1px solid rgba(150, 150, 150, 0.16);
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.16);
+  margin-bottom: 1rem;
 }
 
 #searchBox {
   margin-bottom: 2rem;
-}
-
-#pagination {
-  margin: 2rem auto;
-  text-align: center;
 }
