@@ -1,13 +1,15 @@
 const process = require('process');
 const { execSync } = require('child_process');
+const { isYarnAvailable } = require('../../shared/utils');
 
-module.exports = function install(config, info) {
+module.exports = function install(config) {
+  const installCommand = isYarnAvailable() ? 'yarn' : 'npm install';
   const initialDirectory = process.cwd();
 
   process.chdir(config.path);
 
   try {
-    execSync(`${info.packageManager} install`, {
+    execSync(`${installCommand}`, {
       stdio: config.silent ? 'ignore' : 'inherit',
     });
   } catch (err) {
@@ -16,5 +18,5 @@ module.exports = function install(config, info) {
 
   process.chdir(initialDirectory);
 
-  return Promise.resolve();
+  return Promise.resolve({ installCommand });
 };

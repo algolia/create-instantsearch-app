@@ -193,9 +193,6 @@ async function run() {
   const app = createInstantSearchApp(appPath, config);
 
   app.on('build:end', data => {
-    const installCommand =
-      data.info.packageManager === 'yarn' ? 'yarn' : 'npm install';
-
     console.log();
     console.log(
       `🎉  Created ${chalk.bold.cyan(data.config.name)} at ${chalk.green(
@@ -208,10 +205,10 @@ async function run() {
     console.log(`  ${chalk.cyan('cd')} ${appPath}`);
 
     if (program.installation === false) {
-      console.log(`  ${chalk.cyan(`${installCommand}`)}`);
+      console.log(`  ${chalk.cyan(`${data.commands.install}`)}`);
     }
 
-    console.log(`  ${chalk.cyan(`${data.info.packageManager} start`)}`);
+    console.log(`  ${chalk.cyan(`${data.commands.start}`)}`);
     console.log();
     console.log('⚡️  Start building something awesome!');
   });

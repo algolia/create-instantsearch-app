@@ -2,11 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Emittery = require('emittery');
 
-const {
-  checkAppName,
-  checkAppPath,
-  isYarnAvailable,
-} = require('../shared/utils');
+const { checkAppName, checkAppPath } = require('../shared/utils');
 
 const TEMPLATE_FOLDER = path.join(__dirname, '../../templates');
 const TEMPLATES_NAMES = fs
@@ -77,9 +73,15 @@ class CreateInstantSearchApp extends Emittery {
 
   async create() {
     const config = this.config;
-    const { build, install, clean } = this.tasks;
+    const { setup, build, install, clean, teardown } = this.tasks;
 
-    const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
+    try {
+      this.emit('setup:start', { config });
+      await setup(config);
+      this.emit('setup:end', { config });
+    } catch (err) {
+      this.emit('setup:error', { err, config });
+    }
 
     this.emit('build:start', { config });
     await build(config);
@@ -88,7 +90,7 @@ class CreateInstantSearchApp extends Emittery {
       this.emit('installation:start', { config });
 
       try {
-        await install(config, { packageManager });
+        await install(config);
         this.emit('installation:end', { config });
       } catch (err) {
         this.emit('installation:error', { err, config });
@@ -101,12 +103,20 @@ class CreateInstantSearchApp extends Emittery {
       }
     }
 
+    let commands = {};
+
+    try {
+      this.emit('teardown:start', { config });
+      commands = ((await teardown()) || {}).commands;
+      this.emit('teardown:end', { config });
+    } catch (err) {
+      this.emit('teardown:error', { err, config });
+    }
+
     try {
       this.emit('build:end', {
         config,
-        info: {
-          packageManager,
-        },
+        commands,
       });
     } catch (err) {
       this.emit('build:error', { err, config });

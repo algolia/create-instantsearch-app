@@ -1,18 +1,24 @@
 const CreateInstantSearchApp = require('./CreateInstantSearchApp');
 
+let setupSpy;
 let buildSpy;
 let installSpy;
 let cleanSpy;
+let teardownSpy;
 
 const createInstantSearchApp = (path, config) => {
+  setupSpy = jest.fn(() => Promise.resolve());
   buildSpy = jest.fn(() => Promise.resolve());
   installSpy = jest.fn(() => Promise.resolve());
   cleanSpy = jest.fn(() => Promise.resolve());
+  teardownSpy = jest.fn(() => Promise.resolve());
 
   return new CreateInstantSearchApp(path, config, {
+    setup: setupSpy,
     build: buildSpy,
     install: installSpy,
     clean: cleanSpy,
+    teardown: teardownSpy,
   });
 };
 
@@ -89,8 +95,7 @@ describe('Tasks', () => {
       expect(installSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           silent: false,
-        }),
-        expect.anything()
+        })
       );
     });
   });
@@ -137,6 +142,54 @@ describe('Tasks', () => {
 });
 
 describe('Events', () => {
+  test('`setup:start` is emitted', done => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+    });
+
+    app.on('setup:start', () => {
+      done();
+    });
+
+    app.create();
+  });
+
+  test('`setup:end` is emitted', done => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+    });
+
+    app.on('setup:end', () => {
+      done();
+    });
+
+    app.create();
+  });
+
+  test('`teardown:start` is emitted', done => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+    });
+
+    app.on('teardown:start', () => {
+      done();
+    });
+
+    app.create();
+  });
+
+  test('`teardown:end` is emitted', done => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+    });
+
+    app.on('teardown:end', () => {
+      done();
+    });
+
+    app.create();
+  });
+
   test('`build:start` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
       template: 'InstantSearch.js',
@@ -179,12 +232,10 @@ describe('Events', () => {
       installation: false,
     });
 
-    const onInstallStart = jest.fn();
-
-    app.on('installation:start', onInstallStart);
+    app.on('installation:start', installSpy);
 
     app.on('build:end', () => {
-      expect(onInstallStart).not.toHaveBeenCalled();
+      expect(installSpy).not.toHaveBeenCalled();
     });
 
     app.create();
@@ -196,12 +247,10 @@ describe('Events', () => {
       installation: false,
     });
 
-    const onInstallEnd = jest.fn();
-
-    app.on('installation:start', onInstallEnd);
+    app.on('installation:start', installSpy);
 
     app.on('build:end', () => {
-      expect(onInstallEnd).not.toHaveBeenCalled();
+      expect(installSpy).not.toHaveBeenCalled();
     });
 
     app.create();
@@ -213,12 +262,10 @@ describe('Events', () => {
       installation: false,
     });
 
-    const onCleanStart = jest.fn();
-
-    app.on('clean:start', onCleanStart);
+    app.on('clean:start', cleanSpy);
 
     app.on('build:end', () => {
-      expect(onCleanStart).not.toHaveBeenCalled();
+      expect(cleanSpy).not.toHaveBeenCalled();
     });
 
     app.create();
@@ -230,12 +277,10 @@ describe('Events', () => {
       installation: false,
     });
 
-    const onCleanEnd = jest.fn();
-
-    app.on('clean:end', onCleanEnd);
+    app.on('clean:end', cleanSpy);
 
     app.on('build:end', () => {
-      expect(onCleanEnd).not.toHaveBeenCalled();
+      expect(cleanSpy).not.toHaveBeenCalled();
     });
 
     app.create();

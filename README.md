@@ -75,6 +75,30 @@ app.create();
 
 ### Events
 
+#### `setup:start`
+
+Fired at the start of the app setup
+
+#### `setup:end`
+
+Fired at the end of the app setup
+
+#### `setup:error`
+
+Fired if an error occurs during the app setup
+
+#### `teardown:start`
+
+Fired at the start of the app teardown
+
+#### `teardown:end`
+
+Fired at the end of the app teardown
+
+#### `teardown:error`
+
+Fired if an error occurs during the app teardown
+
 #### `build:start`
 
 Fired at the start of the app build

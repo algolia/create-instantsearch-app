@@ -2,6 +2,7 @@ const path = require('path');
 const metalsmith = require('metalsmith');
 const inPlace = require('metalsmith-in-place');
 const rename = require('metalsmith-rename');
+const { isYarnAvailable } = require('../../shared/utils');
 
 module.exports = function build(config) {
   const templateFolder = path.join(__dirname, '../../../templates');
@@ -30,7 +31,9 @@ module.exports = function build(config) {
           reject(err);
         }
 
-        resolve();
+        const startCommand = isYarnAvailable() ? 'yarn' : 'npm install';
+
+        resolve({ startCommand });
       });
   });
 };
