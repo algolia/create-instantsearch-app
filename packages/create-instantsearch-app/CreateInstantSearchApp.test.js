@@ -6,8 +6,8 @@ let cleanSpy;
 
 const createInstantSearchApp = (path, config) => {
   buildSpy = jest.fn(() => Promise.resolve());
-  installSpy = jest.fn();
-  cleanSpy = jest.fn();
+  installSpy = jest.fn(() => Promise.resolve());
+  cleanSpy = jest.fn(() => Promise.resolve());
 
   return new CreateInstantSearchApp(path, config, {
     build: buildSpy,
@@ -133,5 +133,111 @@ describe('Tasks', () => {
 
       expect(installSpy).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('Events', () => {
+  test('`build:start` is emitted', done => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+    });
+
+    app.on('build:start', () => {
+      done();
+    });
+
+    app.create();
+  });
+
+  test('`build:end` is emitted', done => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+    });
+
+    app.on('build:end', () => {
+      done();
+    });
+
+    app.create();
+  });
+
+  test('`installation:start` is emitted', done => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+    });
+
+    app.on('installation:start', () => {
+      done();
+    });
+
+    app.create();
+  });
+
+  test('`installation:start` is not emitted if no installation', () => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+      installation: false,
+    });
+
+    const onInstallStart = jest.fn();
+
+    app.on('installation:start', onInstallStart);
+
+    app.on('build:end', () => {
+      expect(onInstallStart).not.toHaveBeenCalled();
+    });
+
+    app.create();
+  });
+
+  test('`installation:end` is not emitted if no installation', () => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+      installation: false,
+    });
+
+    const onInstallEnd = jest.fn();
+
+    app.on('installation:start', onInstallEnd);
+
+    app.on('build:end', () => {
+      expect(onInstallEnd).not.toHaveBeenCalled();
+    });
+
+    app.create();
+  });
+
+  test('`clean:start` is not emitted it does not fail', () => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+      installation: false,
+    });
+
+    const onCleanStart = jest.fn();
+
+    app.on('clean:start', onCleanStart);
+
+    app.on('build:end', () => {
+      expect(onCleanStart).not.toHaveBeenCalled();
+    });
+
+    app.create();
+  });
+
+  test('`clean:end` is not emitted it does not fail', () => {
+    const app = createInstantSearchApp('/tmp/test-app', {
+      template: 'InstantSearch.js',
+      installation: false,
+    });
+
+    const onCleanEnd = jest.fn();
+
+    app.on('clean:end', onCleanEnd);
+
+    app.on('build:end', () => {
+      expect(onCleanEnd).not.toHaveBeenCalled();
+    });
+
+    app.create();
   });
 });
