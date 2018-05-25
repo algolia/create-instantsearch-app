@@ -252,6 +252,8 @@ async function run() {
     console.log(`✨  Cleaning up ${chalk.green(data.config.path)}.`);
     console.log();
   });
+
+  app.create();
 }
 
 run().catch(err => {

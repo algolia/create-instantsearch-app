@@ -54,15 +54,9 @@ $ create-instantsearch-app --help
 ## API
 
 ```javascript
-createInstantSearchApp(path, options?)
-```
-
-__Example__
-
-```javascript
 const createInstantSearchApp = require('create-instantsearch-app');
 
-// Generate the app
+// Initialize the app
 const app = createInstantSearchApp('~/lab/my-app', {
   template: 'InstantSearch.js',
   libraryVersion: '2.0.0',
@@ -74,6 +68,9 @@ const app = createInstantSearchApp('~/lab/my-app', {
 app.on('build:end', () => {
   console.log('⚡️ App built');
 });
+
+// Create the app
+app.create();
 ```
 
 ### Events

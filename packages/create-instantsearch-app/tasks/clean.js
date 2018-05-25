@@ -1,5 +1,6 @@
-const { execSync } = require('child_process');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
-module.exports = function clean(config) {
-  execSync(`rm -rf ${config.path}`);
+module.exports = async function clean(config) {
+  await exec(`rm -rf ${config.path}`);
 };

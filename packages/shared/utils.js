@@ -7,11 +7,15 @@ function checkAppName(name) {
   const validationResult = validateProjectName(name);
 
   if (!validationResult.validForNewPackages) {
-    throw new Error(
-      `Could not create a project called "${chalk.red(
-        name
-      )}" because of npm naming restrictions.`
-    );
+    let errorMessage = `Could not create a project called "${chalk.red(
+      name
+    )}" because of npm naming restrictions.`;
+
+    (validationResult.errors || []).forEach(error => {
+      errorMessage += `\n  - ${error}`;
+    });
+
+    throw new Error(errorMessage);
   }
 
   return true;

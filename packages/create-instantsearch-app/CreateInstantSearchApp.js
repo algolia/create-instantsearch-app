@@ -45,76 +45,71 @@ const OPTIONS = {
   },
 };
 
+function checkConfig(config) {
+  Object.keys(OPTIONS).forEach(optionName => {
+    const isOptionValid = OPTIONS[optionName].validate(config[optionName]);
+
+    if (!isOptionValid) {
+      const errorMessage = OPTIONS[optionName].getErrorMessage
+        ? OPTIONS[optionName].getErrorMessage(config[optionName])
+        : `The option \`${optionName}\` is required.`;
+
+      throw new Error(errorMessage);
+    }
+  });
+}
+
 class CreateInstantSearchApp extends Emittery {
-  constructor(appPath, rawConfig, tasks) {
+  constructor(appPath, options, tasks) {
     super();
 
-    const config = this.getConfig({
-      ...rawConfig,
-      path: appPath ? path.resolve(appPath) : '',
-    });
-
-    this.checkConfig(config);
-    this.create(config, tasks);
-  }
-
-  getConfig(options) {
-    return {
+    this.config = {
       ...options,
-      name: options.name || path.basename(options.path),
+      name: options.name || path.basename(appPath),
       installation: options.installation !== false,
       silent: options.silent === true,
+      path: appPath ? path.resolve(appPath) : '',
     };
+    this.tasks = tasks;
+
+    checkConfig(this.config);
   }
 
-  checkConfig(config) {
-    Object.keys(OPTIONS).forEach(optionName => {
-      const isOptionValid = OPTIONS[optionName].validate(config[optionName]);
-
-      if (!isOptionValid) {
-        const errorMessage = OPTIONS[optionName].getErrorMessage
-          ? OPTIONS[optionName].getErrorMessage(config[optionName])
-          : `The option \`${optionName}\` is required.`;
-
-        throw new Error(errorMessage);
-      }
-    });
-  }
-
-  async create(config, tasks) {
-    const { build, install, clean } = tasks;
+  async create() {
+    const config = this.config;
+    const { build, install, clean } = this.tasks;
 
     const packageManager = isYarnAvailable() ? 'yarn' : 'npm';
 
-    await this.emit('build:start', { config });
+    this.emit('build:start', { config });
     await build(config);
 
     if (config.installation) {
-      await this.emit('installation:start', { config });
+      this.emit('installation:start', { config });
 
       try {
-        install(config, { packageManager });
-        await this.emit('installation:end', { config });
+        await install(config, { packageManager });
+        this.emit('installation:end', { config });
       } catch (err) {
-        await this.emit('installation:error', { err, config });
+        this.emit('installation:error', { err, config });
 
-        await this.emit('clean:start', { config });
-        clean(config);
-        await this.emit('clean:end', { config });
+        this.emit('clean:start', { config });
+        await clean(config);
+        this.emit('clean:end', { config });
 
         return;
       }
     }
 
     try {
-      await this.emit('build:end', {
+      this.emit('build:end', {
         config,
         info: {
           packageManager,
         },
       });
     } catch (err) {
-      await this.emit('build:error', { err, config });
+      this.emit('build:error', { err, config });
 
       return;
     }

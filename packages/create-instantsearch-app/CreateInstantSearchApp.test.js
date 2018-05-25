@@ -16,66 +16,64 @@ const createInstantSearchApp = (path, config) => {
   });
 };
 
-describe('Config', () => {
-  describe('required', () => {
-    test('without path throws', () => {
-      const createApp = () => createInstantSearchApp('', {});
-
-      expect(createApp).toThrowErrorMatchingSnapshot();
-    });
-
-    test('without template throws', () => {
-      const createApp = () => createInstantSearchApp('/tmp/test-app', {});
-
-      expect(createApp).toThrowErrorMatchingSnapshot();
-    });
-
-    test('with unknown template throws', () => {
-      const createApp = () =>
-        createInstantSearchApp('/tmp/test-app', {
-          template: 'UnknownTemplate',
-        });
-
-      expect(createApp).toThrowErrorMatchingSnapshot();
-    });
-
-    test('with correct template does not throw', () => {
-      const createApp = () =>
-        createInstantSearchApp('/tmp/test-app', {
-          template: 'InstantSearch.js',
-        });
-
-      expect(createApp).not.toThrow();
-    });
-
-    test('with path and template does not throw', () => {
-      const createApp = () =>
-        createInstantSearchApp('/tmp/test-app', {
-          template: 'InstantSearch.js',
-        });
-
-      expect(createApp).not.toThrow();
-    });
-
-    test('with unvalid name', () => {
-      const createApp = () =>
-        createInstantSearchApp('/tmp/test-app', {
-          name: './WrongNpmName',
-          template: 'InstantSearch.js',
-        });
-
-      expect(createApp).toThrowErrorMatchingSnapshot();
-    });
+describe('Options', () => {
+  test('without path throws', () => {
+    expect(() => {
+      createInstantSearchApp('', {});
+    }).toThrowErrorMatchingSnapshot();
   });
 
+  test('without template throws', () => {
+    expect(() => {
+      createInstantSearchApp('/tmp/test-app', {});
+    }).toThrowErrorMatchingSnapshot();
+  });
+
+  test('with unknown template throws', () => {
+    expect(() => {
+      createInstantSearchApp('/tmp/test-app', {
+        template: 'UnknownTemplate',
+      });
+    }).toThrowErrorMatchingSnapshot();
+  });
+
+  test('with correct template does not throw', () => {
+    expect(() => {
+      createInstantSearchApp('/tmp/test-app', {
+        template: 'InstantSearch.js',
+      });
+    }).not.toThrow();
+  });
+
+  test('with path and template does not throw', () => {
+    expect(() => {
+      createInstantSearchApp('/tmp/test-app', {
+        template: 'InstantSearch.js',
+      });
+    }).not.toThrow();
+  });
+
+  test('with unvalid name', () => {
+    expect(() => {
+      createInstantSearchApp('/tmp/test-app', {
+        name: './WrongNpmName',
+        template: 'InstantSearch.js',
+      });
+    }).toThrowErrorMatchingSnapshot();
+  });
+});
+
+describe('Tasks', () => {
   describe('build', () => {
-    test('gets called', () => {
+    test('gets called', async () => {
       expect.assertions(4);
 
-      createInstantSearchApp('/tmp/test-app', {
+      const app = createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
         libraryVersion: '2.0.0',
       });
+
+      await app.create();
 
       expect(buildSpy).toHaveBeenCalledTimes(1);
       expect(buildSpy).toHaveBeenCalledWith({
@@ -89,43 +87,49 @@ describe('Config', () => {
 
       expect(installSpy).toHaveBeenCalledTimes(1);
       expect(installSpy).toHaveBeenCalledWith(
-        '/tmp/test-app',
         expect.objectContaining({
           silent: false,
-        })
+        }),
+        expect.anything()
       );
     });
   });
 
   describe('install', () => {
-    test('with installation set to `undefined` installs the dependencies', () => {
+    test('with installation set to `undefined` installs the dependencies', async () => {
       expect.assertions(1);
 
-      createInstantSearchApp('/tmp/test-app', {
+      const app = createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
       });
+
+      await app.create();
 
       expect(installSpy).toHaveBeenCalledTimes(1);
     });
 
-    test('with installation installs the dependencies gets called', () => {
+    test('with installation installs the dependencies gets called', async () => {
       expect.assertions(1);
 
-      createInstantSearchApp('/tmp/test-app', {
+      const app = createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
         installation: true,
       });
 
+      await app.create();
+
       expect(installSpy).toHaveBeenCalledTimes(1);
     });
 
-    test('without installation does not install the dependencies', () => {
+    test('without installation does not install the dependencies', async () => {
       expect.assertions(1);
 
-      createInstantSearchApp('/tmp/test-app', {
+      const app = createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
         installation: false,
       });
+
+      await app.create();
 
       expect(installSpy).not.toHaveBeenCalled();
     });

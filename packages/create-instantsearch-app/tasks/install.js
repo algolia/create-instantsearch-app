@@ -1,11 +1,12 @@
 const process = require('process');
-const { execSync } = require('child_process');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
-module.exports = function install(config, info) {
+module.exports = async function install(config, info) {
   const initialDirectory = process.cwd();
 
   process.chdir(config.path);
-  execSync(`${info.packageManager} install`, {
+  await exec(`${info.packageManager} install`, {
     stdio: config.silent ? 'ignore' : 'inherit',
   });
   process.chdir(initialDirectory);
