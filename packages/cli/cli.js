@@ -167,15 +167,27 @@ const questions = [
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
 async function getConfig() {
-  // Get config from configuration file given as an argument
+  let config;
+
   if (optionsFromArguments.config) {
-    return await loadJsonFile(optionsFromArguments.config);
+    // Get config from configuration file given as an argument
+    config = await loadJsonFile(optionsFromArguments.config);
+  } else {
+    // Get config from the arguments and the prompt
+    config = {
+      ...optionsFromArguments,
+      ...(await inquirer.prompt(questions)),
+    };
   }
 
-  // Get config from the arguments and the prompt
   return {
-    ...optionsFromArguments,
-    ...(await inquirer.prompt(questions)),
+    ...config,
+    libraryVersion:
+      config.libraryVersion ||
+      (await fetchLibraryVersions(
+        require(`${templatesFolder}/${config.template}/.template.js`)
+          .libraryName
+      ).then(latestSemver)),
   };
 }
 
