@@ -248,9 +248,9 @@ async function run() {
     console.log();
     console.log('Try to create the app without installing the dependencies:');
     console.log(
-      `  ${chalk.cyan('create-instantsearch-app')} ${chalk.green(
-        '<project-directory>'
-      )} --no-installation`
+      `  ${chalk.cyan('create-instantsearch-app')} ${process.argv
+        .slice(2)
+        .join(' ')} --no-installation`
     );
 
     console.log();
