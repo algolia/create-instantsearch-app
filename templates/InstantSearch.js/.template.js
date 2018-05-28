@@ -6,7 +6,6 @@ const teardown = require('../../packages/tasks/node/teardown');
 module.exports = {
   libraryName: 'instantsearch.js',
   tasks: {
-    setup: () => Promise.resolve(),
     build,
     install,
     clean,
