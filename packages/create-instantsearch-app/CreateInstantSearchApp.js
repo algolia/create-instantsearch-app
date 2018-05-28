@@ -73,7 +73,14 @@ class CreateInstantSearchApp extends EventEmitter {
 
   async create() {
     const config = this.config;
-    const { setup, build, install, clean, teardown } = this.tasks;
+    const noop = () => {};
+    const {
+      setup = noop,
+      build = noop,
+      install = noop,
+      clean = noop,
+      teardown = noop,
+    } = this.tasks;
 
     try {
       this.emit('setup:start', { config });
