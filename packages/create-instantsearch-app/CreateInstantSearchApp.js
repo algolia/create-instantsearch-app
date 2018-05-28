@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Emittery = require('emittery');
+const EventEmitter = require('events');
 
 const { checkAppName, checkAppPath } = require('../shared/utils');
 
@@ -55,7 +55,7 @@ function checkConfig(config) {
   });
 }
 
-class CreateInstantSearchApp extends Emittery {
+class CreateInstantSearchApp extends EventEmitter {
   constructor(appPath, options, tasks) {
     super();
 
@@ -90,9 +90,8 @@ class CreateInstantSearchApp extends Emittery {
       await build(config);
 
       if (config.installation) {
-        this.emit('installation:start', { config });
-
         try {
+          this.emit('installation:start', { config });
           await install(config);
           this.emit('installation:end', { config });
         } catch (err) {
