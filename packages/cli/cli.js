@@ -10,11 +10,7 @@ const latestSemver = require('latest-semver');
 const loadJsonFile = require('load-json-file');
 
 const createInstantSearchApp = require('../create-instantsearch-app');
-const {
-  checkAppPath,
-  checkAppName,
-  getLibraryName,
-} = require('../shared/utils');
+const { checkAppPath, checkAppName } = require('../shared/utils');
 const {
   getOptionsFromArguments,
   isQuestionAsked,
@@ -130,7 +126,11 @@ const questions = [
     name: 'libraryVersion',
     message: answers => `${answers.template} version`,
     choices: async answers => {
-      const libraryName = getLibraryName(answers.template);
+      const { libraryName } = require(`${templatesFolder}/${
+        answers.template
+      }/.template.js`);
+
+      console.log('libraryName', libraryName);
 
       try {
         const versions = await fetchLibraryVersions(libraryName);
@@ -190,7 +190,10 @@ async function run() {
     installation: program.installation,
   };
 
-  const app = createInstantSearchApp(appPath, config);
+  const { tasks } = require(`${templatesFolder}/${
+    config.template
+  }/.template.js`);
+  const app = createInstantSearchApp(appPath, config, tasks);
 
   app.on('build:end', data => {
     console.log();

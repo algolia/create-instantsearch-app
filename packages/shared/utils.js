@@ -45,10 +45,6 @@ function checkAppPath(path) {
   return true;
 }
 
-function getLibraryName(name) {
-  return name.toLowerCase().replace(/ /g, '-');
-}
-
 function getTemplateName(appName) {
   return appName
     .toLocaleLowerCase()
@@ -70,5 +66,4 @@ module.exports = {
   checkAppPath,
   isYarnAvailable,
   getTemplateName,
-  getLibraryName,
 };
