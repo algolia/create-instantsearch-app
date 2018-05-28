@@ -10,7 +10,11 @@ const latestSemver = require('latest-semver');
 const loadJsonFile = require('load-json-file');
 
 const createInstantSearchApp = require('../create-instantsearch-app');
-const { checkAppPath, checkAppName } = require('../shared/utils');
+const {
+  checkAppPath,
+  checkAppName,
+  checkAppTemplateConfig,
+} = require('../shared/utils');
 const {
   getOptionsFromArguments,
   isQuestionAsked,
@@ -126,9 +130,11 @@ const questions = [
     name: 'libraryVersion',
     message: answers => `${answers.template} version`,
     choices: async answers => {
-      const { libraryName } = require(`${templatesFolder}/${
+      const templateConfig = require(`${templatesFolder}/${
         answers.template
       }/.template.js`);
+      checkAppTemplateConfig(templateConfig);
+      const { libraryName } = templateConfig;
 
       try {
         const versions = await fetchLibraryVersions(libraryName);
@@ -180,14 +186,22 @@ async function getConfig() {
     };
   }
 
+  let libraryVersion = config.libraryVersion;
+
+  if (!libraryVersion) {
+    const templateConfig = require(`${templatesFolder}/${
+      config.template
+    }/.template.js`);
+    checkAppTemplateConfig(templateConfig);
+
+    libraryVersion = await fetchLibraryVersions(
+      templateConfig.libraryName
+    ).then(latestSemver);
+  }
+
   return {
     ...config,
-    libraryVersion:
-      config.libraryVersion ||
-      (await fetchLibraryVersions(
-        require(`${templatesFolder}/${config.template}/.template.js`)
-          .libraryName
-      ).then(latestSemver)),
+    libraryVersion,
   };
 }
 

@@ -45,6 +45,14 @@ function checkAppPath(path) {
   return true;
 }
 
+function checkAppTemplateConfig(templateConfig) {
+  if (!templateConfig.libraryName) {
+    throw new Error(
+      'The key `libraryName` is required in the template configuration.'
+    );
+  }
+}
+
 function getTemplateName(appName) {
   return appName
     .toLocaleLowerCase()
@@ -64,6 +72,7 @@ function isYarnAvailable() {
 module.exports = {
   checkAppName,
   checkAppPath,
+  checkAppTemplateConfig,
   isYarnAvailable,
   getTemplateName,
 };

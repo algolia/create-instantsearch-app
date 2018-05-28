@@ -74,6 +74,20 @@ describe('checkAppPath', () => {
   });
 });
 
+describe('checkTemplateConfigFile', () => {
+  test('with correct file', () => {
+    expect(() => {
+      utils.checkAppTemplateConfig({ libraryName: 'library)nale' });
+    }).not.toThrow();
+  });
+
+  test('without `libraryName`', () => {
+    expect(() => {
+      utils.checkAppTemplateConfig({});
+    }).toThrowErrorMatchingSnapshot();
+  });
+});
+
 describe('getTemplateName', () => {
   test('InstantSearch.js', () => {
     expect(utils.getTemplateName('InstantSearch.js')).toBe('instantsearchjs');
