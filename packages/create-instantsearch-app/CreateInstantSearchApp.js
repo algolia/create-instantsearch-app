@@ -81,39 +81,43 @@ class CreateInstantSearchApp extends Emittery {
       this.emit('setup:end', { config });
     } catch (err) {
       this.emit('setup:error', { err, config });
+
+      return;
     }
 
-    this.emit('build:start', { config });
-    await build(config);
+    try {
+      this.emit('build:start', { config });
+      await build(config);
 
-    if (config.installation) {
-      this.emit('installation:start', { config });
+      if (config.installation) {
+        this.emit('installation:start', { config });
+
+        try {
+          await install(config);
+          this.emit('installation:end', { config });
+        } catch (err) {
+          this.emit('installation:error', { err, config });
+
+          this.emit('clean:start', { config });
+          await clean(config);
+          this.emit('clean:end', { config });
+
+          return;
+        }
+      }
+
+      let commands = {};
 
       try {
-        await install(config);
-        this.emit('installation:end', { config });
+        this.emit('teardown:start', { config });
+        commands = ((await teardown()) || {}).commands;
+        this.emit('teardown:end', { config });
       } catch (err) {
-        this.emit('installation:error', { err, config });
-
-        this.emit('clean:start', { config });
-        await clean(config);
-        this.emit('clean:end', { config });
+        this.emit('teardown:error', { err, config });
 
         return;
       }
-    }
 
-    let commands = {};
-
-    try {
-      this.emit('teardown:start', { config });
-      commands = ((await teardown()) || {}).commands;
-      this.emit('teardown:end', { config });
-    } catch (err) {
-      this.emit('teardown:error', { err, config });
-    }
-
-    try {
       this.emit('build:end', {
         config,
         commands,
