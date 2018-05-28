@@ -77,7 +77,7 @@ describe('checkAppPath', () => {
 describe('checkTemplateConfigFile', () => {
   test('with correct file', () => {
     expect(() => {
-      utils.checkAppTemplateConfig({ libraryName: 'library)nale' });
+      utils.checkAppTemplateConfig({ libraryName: 'library-name' });
     }).not.toThrow();
   });
 
