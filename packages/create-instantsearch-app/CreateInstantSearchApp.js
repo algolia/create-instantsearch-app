@@ -76,9 +76,9 @@ class CreateInstantSearchApp extends EventEmitter {
     const noop = () => {};
     const {
       setup = noop,
-      build = noop,
+      build = require('../tasks/common/build'),
       install = noop,
-      clean = noop,
+      clean = require('../tasks/common/clean'),
       teardown = noop,
     } = this.tasks;
 

@@ -1,14 +1,10 @@
-const build = require('../../packages/tasks/common/build');
-const clean = require('../../packages/tasks/common/clean');
 const install = require('../../packages/tasks/node/install');
 const teardown = require('../../packages/tasks/node/teardown');
 
 module.exports = {
   libraryName: 'instantsearch.js',
   tasks: {
-    build,
     install,
-    clean,
     teardown,
   },
   keywords: [
