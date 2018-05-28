@@ -130,8 +130,6 @@ const questions = [
         answers.template
       }/.template.js`);
 
-      console.log('libraryName', libraryName);
-
       try {
         const versions = await fetchLibraryVersions(libraryName);
         const latestStableVersion = latestSemver(versions);
