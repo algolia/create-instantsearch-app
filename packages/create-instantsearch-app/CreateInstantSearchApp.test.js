@@ -136,7 +136,7 @@ describe('Tasks', () => {
 
       await app.create();
 
-      expect(installSpy).not.toHaveBeenCalled();
+      expect(installSpy).toHaveBeenCalledTimes(0);
     });
   });
 });
@@ -235,7 +235,7 @@ describe('Events', () => {
     app.on('installation:start', installSpy);
 
     app.on('build:end', () => {
-      expect(installSpy).not.toHaveBeenCalled();
+      expect(installSpy).toHaveBeenCalledTimes(0);
     });
 
     app.create();
@@ -250,7 +250,7 @@ describe('Events', () => {
     app.on('installation:start', installSpy);
 
     app.on('build:end', () => {
-      expect(installSpy).not.toHaveBeenCalled();
+      expect(installSpy).toHaveBeenCalledTimes(0);
     });
 
     app.create();
@@ -265,7 +265,7 @@ describe('Events', () => {
     app.on('clean:start', cleanSpy);
 
     app.on('build:end', () => {
-      expect(cleanSpy).not.toHaveBeenCalled();
+      expect(cleanSpy).toHaveBeenCalledTimes(0);
     });
 
     app.create();
@@ -280,7 +280,7 @@ describe('Events', () => {
     app.on('clean:end', cleanSpy);
 
     app.on('build:end', () => {
-      expect(cleanSpy).not.toHaveBeenCalled();
+      expect(cleanSpy).toHaveBeenCalledTimes(0);
     });
 
     app.create();
