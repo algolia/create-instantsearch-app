@@ -207,7 +207,6 @@ async function getConfig() {
 
 async function run() {
   console.log(`Creating a new InstantSearch app in ${chalk.green(appPath)}.`);
-  console.log();
 
   const config = {
     ...(await getConfig()),
@@ -227,17 +226,6 @@ async function run() {
       )}.`
     );
     console.log();
-    console.log('Begin by typing:');
-    console.log();
-    console.log(`  ${chalk.cyan('cd')} ${appPath}`);
-
-    if (program.installation === false) {
-      console.log(`  ${chalk.cyan(`${data.commands.install}`)}`);
-    }
-
-    console.log(`  ${chalk.cyan(`${data.commands.start}`)}`);
-    console.log();
-    console.log('⚡️  Start building something awesome!');
   });
 
   app.on('build:error', data => {

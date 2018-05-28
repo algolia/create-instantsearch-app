@@ -111,25 +111,19 @@ class CreateInstantSearchApp extends EventEmitter {
           return;
         }
       }
-
-      let commands = {};
-
-      try {
-        this.emit('teardown:start', { config });
-        commands = ((await teardown()) || {}).commands;
-        this.emit('teardown:end', { config });
-      } catch (err) {
-        this.emit('teardown:error', { err, config });
-
-        return;
-      }
-
-      this.emit('build:end', {
-        config,
-        commands,
-      });
+      this.emit('build:end', { config });
     } catch (err) {
       this.emit('build:error', { err, config });
+
+      return;
+    }
+
+    try {
+      this.emit('teardown:start', { config });
+      await teardown(config);
+      this.emit('teardown:end', { config });
+    } catch (err) {
+      this.emit('teardown:error', { err, config });
 
       return;
     }
