@@ -13,7 +13,7 @@ const createInstantSearchApp = require('../create-instantsearch-app');
 const {
   checkAppPath,
   checkAppName,
-  getLibraryName,
+  checkAppTemplateConfig,
 } = require('../shared/utils');
 const {
   getOptionsFromArguments,
@@ -130,7 +130,11 @@ const questions = [
     name: 'libraryVersion',
     message: answers => `${answers.template} version`,
     choices: async answers => {
-      const libraryName = getLibraryName(answers.template);
+      const templateConfig = require(`${templatesFolder}/${
+        answers.template
+      }/.template.js`);
+      checkAppTemplateConfig(templateConfig);
+      const { libraryName } = templateConfig;
 
       try {
         const versions = await fetchLibraryVersions(libraryName);
@@ -169,28 +173,50 @@ const questions = [
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
 async function getConfig() {
-  // Get config from configuration file given as an argument
+  let config;
+
   if (optionsFromArguments.config) {
-    return await loadJsonFile(optionsFromArguments.config);
+    // Get config from configuration file given as an argument
+    config = await loadJsonFile(optionsFromArguments.config);
+  } else {
+    // Get config from the arguments and the prompt
+    config = {
+      ...optionsFromArguments,
+      ...(await inquirer.prompt(questions)),
+    };
   }
 
-  // Get config from the arguments and the prompt
+  let libraryVersion = config.libraryVersion;
+
+  if (!libraryVersion) {
+    const templateConfig = require(`${templatesFolder}/${
+      config.template
+    }/.template.js`);
+    checkAppTemplateConfig(templateConfig);
+
+    libraryVersion = await fetchLibraryVersions(
+      templateConfig.libraryName
+    ).then(latestSemver);
+  }
+
   return {
-    ...optionsFromArguments,
-    ...(await inquirer.prompt(questions)),
+    ...config,
+    libraryVersion,
   };
 }
 
 async function run() {
   console.log(`Creating a new InstantSearch app in ${chalk.green(appPath)}.`);
-  console.log();
 
   const config = {
     ...(await getConfig()),
     installation: program.installation,
   };
 
-  const app = createInstantSearchApp(appPath, config);
+  const { tasks } = require(`${templatesFolder}/${
+    config.template
+  }/.template.js`);
+  const app = createInstantSearchApp(appPath, config, tasks);
 
   app.on('build:end', data => {
     console.log();
@@ -200,17 +226,6 @@ async function run() {
       )}.`
     );
     console.log();
-    console.log('Begin by typing:');
-    console.log();
-    console.log(`  ${chalk.cyan('cd')} ${appPath}`);
-
-    if (program.installation === false) {
-      console.log(`  ${chalk.cyan(`${data.commands.install}`)}`);
-    }
-
-    console.log(`  ${chalk.cyan(`${data.commands.start}`)}`);
-    console.log();
-    console.log('⚡️  Start building something awesome!');
   });
 
   app.on('build:error', data => {
@@ -233,9 +248,9 @@ async function run() {
     console.log();
     console.log('Try to create the app without installing the dependencies:');
     console.log(
-      `  ${chalk.cyan('create-instantsearch-app')} ${chalk.green(
-        '<project-directory>'
-      )} --no-installation`
+      `  ${chalk.cyan('create-instantsearch-app')} ${process.argv
+        .slice(2)
+        .join(' ')} --no-installation`
     );
 
     console.log();

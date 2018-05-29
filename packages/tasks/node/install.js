@@ -18,5 +18,5 @@ module.exports = function install(config) {
 
   process.chdir(initialDirectory);
 
-  return Promise.resolve({ installCommand });
+  return Promise.resolve();
 };

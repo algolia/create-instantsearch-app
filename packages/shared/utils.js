@@ -45,15 +45,12 @@ function checkAppPath(path) {
   return true;
 }
 
-function getLibraryName(name) {
-  return name.toLowerCase().replace(/ /g, '-');
-}
-
-function getTemplateName(appName) {
-  return appName
-    .toLocaleLowerCase()
-    .replace(/\./g, '')
-    .replace(/ /g, '-');
+function checkAppTemplateConfig(templateConfig) {
+  if (!templateConfig.libraryName) {
+    throw new Error(
+      'The key `libraryName` is required in the template configuration.'
+    );
+  }
 }
 
 function isYarnAvailable() {
@@ -68,7 +65,6 @@ function isYarnAvailable() {
 module.exports = {
   checkAppName,
   checkAppPath,
+  checkAppTemplateConfig,
   isYarnAvailable,
-  getTemplateName,
-  getLibraryName,
 };

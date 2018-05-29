@@ -74,48 +74,16 @@ describe('checkAppPath', () => {
   });
 });
 
-describe('getTemplateName', () => {
-  test('InstantSearch.js', () => {
-    expect(utils.getTemplateName('InstantSearch.js')).toBe('instantsearchjs');
+describe('checkTemplateConfigFile', () => {
+  test('with correct file', () => {
+    expect(() => {
+      utils.checkAppTemplateConfig({ libraryName: 'library-name' });
+    }).not.toThrow();
   });
 
-  test('Vue InstantSearch', () => {
-    expect(utils.getTemplateName('Vue InstantSearch')).toBe(
-      'vue-instantsearch'
-    );
-  });
-
-  test('React InstantSearch', () => {
-    expect(utils.getTemplateName('React InstantSearch')).toBe(
-      'react-instantsearch'
-    );
-  });
-
-  test('Angular InstantSearch', () => {
-    expect(utils.getTemplateName('Angular InstantSearch')).toBe(
-      'angular-instantsearch'
-    );
-  });
-});
-
-describe('getLibraryName', () => {
-  test('InstantSearch.js', () => {
-    expect(utils.getLibraryName('InstantSearch.js')).toBe('instantsearch.js');
-  });
-
-  test('React InstantSearch', () => {
-    expect(utils.getLibraryName('React InstantSearch')).toBe(
-      'react-instantsearch'
-    );
-  });
-
-  test('Vue InstantSearch', () => {
-    expect(utils.getLibraryName('Vue InstantSearch')).toBe('vue-instantsearch');
-  });
-
-  test('Angular InstantSearch', () => {
-    expect(utils.getLibraryName('Angular InstantSearch')).toBe(
-      'angular-instantsearch'
-    );
+  test('without `libraryName`', () => {
+    expect(() => {
+      utils.checkAppTemplateConfig({});
+    }).toThrowErrorMatchingSnapshot();
   });
 });

@@ -2,7 +2,7 @@ const path = require('path');
 const metalsmith = require('metalsmith');
 const inPlace = require('metalsmith-in-place');
 const rename = require('metalsmith-rename');
-const { isYarnAvailable } = require('../../shared/utils');
+const ignore = require('metalsmith-ignore');
 
 module.exports = function build(config) {
   const templateFolder = path.join(__dirname, '../../../templates');
@@ -13,6 +13,7 @@ module.exports = function build(config) {
       .source(templatePath)
       .destination(config.path)
       .metadata(config)
+      .use(ignore(['.template.js']))
       .use(
         // Add the `.hbs` extension to any templating files that need
         // their placeholders to get filled with `metalsmith-in-place`
@@ -31,9 +32,7 @@ module.exports = function build(config) {
           reject(err);
         }
 
-        const startCommand = isYarnAvailable() ? 'yarn' : 'npm install';
-
-        resolve({ startCommand });
+        resolve();
       });
   });
 };
