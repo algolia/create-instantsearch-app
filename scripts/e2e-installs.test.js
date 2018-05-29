@@ -181,9 +181,9 @@ describe('Snapshots', () => {
             const image = fs.readFileSync(`${templatePath}/${filePath}`);
 
             expect(image).toMatchImageSnapshot({
-              customSnapshotIdentifier: `e2e-installs-${path.basename(
-                filePath
-              )}`,
+              customSnapshotIdentifier: `e2e-installs-${
+                templateConfig.templateName
+              }-${path.basename(filePath)}`,
             });
           } else {
             const fileContent = fs
