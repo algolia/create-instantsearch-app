@@ -5,8 +5,8 @@ node_js:
 cache:
   - yarn: true
 script:
-  - "${SCRIPT}"
+  - SCRIPT
 env:
   matrix:
-  - SCRIPT="yarn test && yarn lint"
+  - SCRIPT="yarn test"
   - SCRIPT="yarn test:e2e"
