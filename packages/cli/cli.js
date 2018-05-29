@@ -265,7 +265,7 @@ async function run() {
     console.log();
   });
 
-  app.create();
+  await app.create();
 }
 
 run().catch(err => {
