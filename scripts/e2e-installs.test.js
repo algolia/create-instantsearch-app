@@ -169,7 +169,7 @@ describe('Snapshots', () => {
       });
 
       test('Folder structure', () => {
-        expect(generatedFiles).toMatchSnapshot();
+        expect(generatedFiles).toMatchSnapshot('contains the right files');
       });
 
       test('File content', () => {
