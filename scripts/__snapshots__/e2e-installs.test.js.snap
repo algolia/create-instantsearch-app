@@ -359,9 +359,9 @@ exports[`Snapshots React InstantSearch File content: public/index.html 1`] = `
   <link rel=\\"shortcut icon\\" href=\\"%PUBLIC_URL%/favicon.png\\">
 
   <!--
-      Do not use @7 in production, use a complete version like x.x.x, see website for latest version:
-      https://community.algolia.com/react-instantsearch/Getting_started.html#load-the-algolia-theme
-    -->
+    Do not use @7 in production, use a complete version like x.x.x, see website for latest version:
+    https://community.algolia.com/react-instantsearch/Getting_started.html#load-the-algolia-theme
+  -->
   <link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css\\">
 
   <title>react-instantsearch-app</title>
@@ -559,5 +559,371 @@ Array [
   "src/App.js",
   "src/index.css",
   "src/index.js",
+]
+`;
+
+exports[`Snapshots Vue InstantSearch File content: .babelrc 1`] = `
+"{
+  \\"presets\\": [
+    [\\"env\\", { \\"modules\\": false }],
+    \\"stage-3\\"
+  ]
+}"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: .gitignore 1`] = `
+"node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+dist/"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: README.md 1`] = `
+"# vue-instantsearch-app
+
+_This project was generated with [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) by [Algolia](https://algolia.com)._
+
+## Get started
+
+To run this project locally, install the dependencies and run the local server:
+
+\`\`\`sh
+npm install
+npm start
+\`\`\`
+
+Alternatively, you may use [Yarn](https://http://yarnpkg.com/):
+
+\`\`\`sh
+yarn
+yarn start
+\`\`\`"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: index.html 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+
+<head>
+  <meta charset=\\"utf-8\\">
+  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1, shrink-to-fit=no\\">
+  <meta name=\\"theme-color\\" content=\\"#000000\\">
+
+  <link rel=\\"manifest\\" href=\\"manifest.json\\">
+  <link rel=\\"shortcut icon\\" href=\\"favicon.png\\">
+
+  <!--
+    Do not use @7 in production, use a complete version like x.x.x, see website for latest version:
+    https://community.algolia.com/react-instantsearch/Getting_started.html#load-the-algolia-theme
+  -->
+  <link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css\\">
+
+  <title>vue-instantsearch-app</title>
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+
+  <div id=\\"app\\"></div>
+
+  <script src=\\"/dist/build.js\\"></script>
+</body>
+
+</html>"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: manifest.json 1`] = `
+"{
+  \\"short_name\\": \\"vue-instantsearch-app\\",
+  \\"name\\": \\"vue-instantsearch-app Sample\\",
+  \\"icons\\": [
+    {
+      \\"src\\": \\"favicon.png\\",
+      \\"sizes\\": \\"64x64 32x32 24x24 16x16\\",
+      \\"type\\": \\"image/x-icon\\"
+    }
+  ],
+  \\"start_url\\": \\"./index.html\\",
+  \\"display\\": \\"standalone\\",
+  \\"theme_color\\": \\"#000000\\",
+  \\"background_color\\": \\"#ffffff\\"
+}"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: package.json 1`] = `
+"{
+  \\"name\\": \\"vue-instantsearch-app\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"private\\": true,
+  \\"scripts\\": {
+    \\"start\\": \\"cross-env NODE_ENV=development webpack-dev-server --port 3000 --hot\\",
+    \\"build\\": \\"cross-env NODE_ENV=production webpack --progress --hide-modules\\"
+  },
+  \\"dependencies\\": {
+    \\"vue\\": \\"^2.5.16\\",
+    \\"vue-instantsearch\\": \\"^1.6.0\\"
+  },
+  \\"devDependencies\\": {
+    \\"babel-core\\": \\"6.26.0\\",
+    \\"babel-loader\\": \\"7.1.4\\",
+    \\"babel-preset-env\\": \\"1.6.1\\",
+    \\"babel-preset-stage-3\\": \\"6.24.1\\",
+    \\"cross-env\\": \\"5.1.4\\",
+    \\"css-loader\\": \\"0.28.11\\",
+    \\"file-loader\\": \\"1.1.11\\",
+    \\"vue-loader\\": \\"14.2.2\\",
+    \\"vue-template-compiler\\": \\"2.5.16\\",
+    \\"webpack\\": \\"3.11.0\\",
+    \\"webpack-dev-server\\": \\"2.11.2\\"
+  }
+}"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: src/App.vue 1`] = `
+"<template>
+  <div>
+    <header class=\\"header\\">
+      <h1 class=\\"header-title\\">
+        <a href=\\"/\\">vue-instantsearch-app</a>
+      </h1>
+      <p class=\\"header-subtitle\\">
+        using
+        <a href=\\"https://github.com/algolia/vue-instantsearch\\">
+          Vue InstantSearch
+        </a>
+      </p>
+    </header>
+
+    <div class=\\"container\\">
+      <ais-index
+        app-id=\\"appId\\"
+        api-key=\\"apiKey\\"
+        index-name=\\"indexName\\"
+      >
+        <div class=\\"container-app\\">
+          <div class=\\"filters\\">
+            <ais-refinement-list attribute-name=\\"facet1\\"></ais-refinement-list>
+            <ais-refinement-list attribute-name=\\"facet2\\"></ais-refinement-list>
+          </div>
+
+          <div class=\\"search-container\\">
+            <ais-search-box
+              placeholder=\\"Search placeholder\\"
+              :class-names=\\"{
+                'ais-search-form': 'ais-SearchBox-form',
+                'ais-search-box': 'ais-SearchBox',
+                'ais-input': 'ais-SearchBox-input',
+                'ais-clear': 'ais-SearchBox-reset',
+                'ais-clear--disabled': 'ais-SearchBox-reset--disabled',
+                'ais-search-box__submit': 'ais-SearchBox-submit',
+                'ais-search-box__loading-indicator': 'ais-SearchBox-loadingIndicator',
+              }\\"
+            ></ais-search-box>
+
+            <ais-results class=\\"ais-Hits-list\\">
+              <template slot-scope=\\"{ result }\\">
+                <div class=\\"ais-Hits-item\\">
+                  <ais-highlight :result=\\"result\\" attribute-name=\\"mainAttribute\\"></ais-highlight>
+                </div>
+              </template>
+            </ais-results>
+
+            <div class=\\"pagination\\">
+              <ais-pagination
+                :class-names=\\"{
+                  'ais-pagination': 'ais-Pagination-list',
+                  'ais-pagination__item': 'ais-Pagination-item',
+                  'ais-pagination__item--next': 'ais-Pagination-item--next',
+                  'ais-pagination__item--previous': 'ais-Pagination-item--previous',
+                  'ais-pagination__item--disabled': 'ais-Pagination-item--disabled',
+                  'ais-pagination__item--first': 'ais-Pagination-item--first',
+                  'ais-pagination__item--last': 'ais-Pagination-item--last',
+                  'ais-pagination__link': 'ais-Pagination-link',
+                }\\"
+              ></ais-pagination>
+            </div>
+          </div>
+        </div>
+      </ais-index>
+    </div>
+  </div>
+</template>
+
+<style>
+body,
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+em {
+  background: cyan;
+  font-style: normal;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0.5rem 1rem;
+  background-image: linear-gradient(to right, #4dba87, #2f9088);
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.header a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.header-title {
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+.header-title::after {
+  content: ' ▸ ';
+  padding: 0 0.5rem;
+}
+
+.header-subtitle {
+  font-size: 1.2rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.container-app {
+  display: grid;
+  grid-template-columns: 20% 75%;
+  grid-gap: 5%;
+}
+
+.searchBox {
+  margin-bottom: 2rem;
+}
+
+.pagination {
+  margin: 2rem auto;
+  text-align: center;
+}
+</style>"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: src/main.js 1`] = `
+"import Vue from 'vue';
+import App from './App.vue';
+import InstantSearch from 'vue-instantsearch';
+
+Vue.use(InstantSearch);
+
+new Vue({
+  el: '#app',
+  render: h => h(App),
+});"
+`;
+
+exports[`Snapshots Vue InstantSearch File content: webpack.config.js 1`] = `
+"const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/dist/',
+    filename: 'build.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\\\\.css$/,
+        use: ['vue-style-loader', 'css-loader'],
+      },
+      {
+        test: /\\\\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {},
+          // other vue-loader options go here
+        },
+      },
+      {
+        test: /\\\\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\\\\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]',
+        },
+      },
+    ],
+  },
+  resolve: {
+    alias: {
+      vue$: 'vue/dist/vue.esm.js',
+    },
+    extensions: ['*', '.js', '.vue', '.json'],
+  },
+  devServer: {
+    historyApiFallback: true,
+    noInfo: true,
+    overlay: true,
+    port: 3000,
+  },
+  performance: {
+    hints: false,
+  },
+  devtool: '#eval-source-map',
+};
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map';
+  // http://vue-loader.vuejs.org/en/workflow/production.html
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '\\"production\\"',
+      },
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      compress: {
+        warnings: false,
+      },
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+    }),
+  ]);
+}"
+`;
+
+exports[`Snapshots Vue InstantSearch Folder structure: contains the right files 1`] = `
+Array [
+  ".babelrc",
+  ".gitignore",
+  "README.md",
+  "favicon.png",
+  "index.html",
+  "manifest.json",
+  "package.json",
+  "src/App.vue",
+  "src/main.js",
+  "webpack.config.js",
 ]
 `;
