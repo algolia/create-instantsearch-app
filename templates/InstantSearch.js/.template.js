@@ -3,10 +3,8 @@ const teardown = require('../../packages/tasks/node/teardown');
 
 module.exports = {
   libraryName: 'instantsearch.js',
-  tasks: {
-    install,
-    teardown,
-  },
+  templateName: 'instantsearch.js',
+  appName: 'instantsearch.js-app',
   keywords: [
     'algolia',
     'search',
@@ -17,4 +15,8 @@ module.exports = {
     'InstantSearch.js',
     'instantsearch',
   ],
+  tasks: {
+    install,
+    teardown,
+  },
 };

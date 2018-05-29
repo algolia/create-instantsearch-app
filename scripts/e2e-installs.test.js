@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const walkSync = require('walk-sync');
-const { getTemplateName } = require('../packages/shared/utils');
 
 const templatesFolder = path.join(__dirname, '../templates');
 const templates = fs
@@ -109,6 +108,7 @@ describe('Installation', () => {
 describe('Snapshots', () => {
   templates.forEach(templatePath => {
     const templateName = path.basename(templatePath);
+    const templateConfig = require(`${templatePath}/.template.js`);
 
     describe(templateName, () => {
       let temporaryDirectory;
@@ -123,10 +123,10 @@ describe('Snapshots', () => {
           .toString()
           .trim();
 
-        appPath = `${temporaryDirectory}/${getTemplateName(templateName)}`;
+        appPath = `${temporaryDirectory}/${templateConfig.appName}`;
 
         const config = {
-          name: `${getTemplateName(templateName)}-app`,
+          name: `${templateConfig.appName}`,
           template: templateName,
           libraryVersion: '1.0.0',
           appId: 'appId',
@@ -137,9 +137,9 @@ describe('Snapshots', () => {
           attributesForFaceting: ['facet1', 'facet2'],
         };
 
-        configFilePath = `${temporaryDirectory}/${getTemplateName(
-          templateName
-        )}.config.json`;
+        configFilePath = `${temporaryDirectory}/${
+          templateConfig.appName
+        }.config.json`;
 
         fs.writeFileSync(configFilePath, JSON.stringify(config));
 

@@ -53,13 +53,6 @@ function checkAppTemplateConfig(templateConfig) {
   }
 }
 
-function getTemplateName(appName) {
-  return appName
-    .toLocaleLowerCase()
-    .replace(/\./g, '')
-    .replace(/ /g, '-');
-}
-
 function isYarnAvailable() {
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
@@ -74,5 +67,4 @@ module.exports = {
   checkAppPath,
   checkAppTemplateConfig,
   isYarnAvailable,
-  getTemplateName,
 };
