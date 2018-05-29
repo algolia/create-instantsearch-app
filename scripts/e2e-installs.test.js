@@ -2,6 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const walkSync = require('walk-sync');
+const { toMatchImageSnapshot } = require('jest-image-snapshot');
+
+expect.extend({ toMatchImageSnapshot });
 
 const templatesFolder = path.join(__dirname, '../templates');
 const templates = fs
@@ -174,12 +177,22 @@ describe('Snapshots', () => {
 
       test('File content', () => {
         generatedFiles.forEach(filePath => {
-          const fileContent = fs
-            .readFileSync(`${appPath}/${filePath}`)
-            .toString()
-            .trim();
+          if (['.png', '.ico', '.jpg'].includes(filePath.slice(-4))) {
+            const image = fs.readFileSync(`${templatePath}/${filePath}`);
 
-          expect(fileContent).toMatchSnapshot(filePath);
+            expect(image).toMatchImageSnapshot({
+              customSnapshotIdentifier: `e2e-installs-${path.basename(
+                filePath
+              )}`,
+            });
+          } else {
+            const fileContent = fs
+              .readFileSync(`${appPath}/${filePath}`)
+              .toString()
+              .trim();
+
+            expect(fileContent).toMatchSnapshot(filePath);
+          }
         });
       });
     });
