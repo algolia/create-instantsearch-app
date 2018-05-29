@@ -26,12 +26,23 @@
           </div>
 
           <div class="search-container">
-            <ais-search-box placeholder="{{searchPlaceholder}}"></ais-search-box>
+            <ais-search-box
+              placeholder="{{searchPlaceholder}}"
+              :class-names="{
+                'ais-search-form': 'ais-SearchBox-form',
+                'ais-search-box': 'ais-SearchBox',
+                'ais-input': 'ais-SearchBox-input',
+                'ais-clear': 'ais-SearchBox-reset',
+                'ais-clear--disabled': 'ais-SearchBox-reset--disabled',
+                'ais-search-box__submit': 'ais-SearchBox-submit',
+                'ais-search-box__loading-indicator': 'ais-SearchBox-loadingIndicator',
+              }"
+            ></ais-search-box>
 
-            <ais-results>
+            <ais-results class="ais-Hits-list">
               {{#if mainAttribute}}
               <template slot-scope="{ result }">
-                <div>
+                <div class="ais-Hits-item">
                   <ais-highlight :result="result" attribute-name="{{mainAttribute}}"></ais-highlight>
                 </div>
               </template>
@@ -39,7 +50,18 @@
             </ais-results>
 
             <div class="pagination">
-              <ais-pagination></ais-pagination>
+              <ais-pagination
+                :class-names="{
+                  'ais-pagination': 'ais-Pagination-list',
+                  'ais-pagination__item': 'ais-Pagination-item',
+                  'ais-pagination__item--next': 'ais-Pagination-item--next',
+                  'ais-pagination__item--previous': 'ais-Pagination-item--previous',
+                  'ais-pagination__item--disabled': 'ais-Pagination-item--disabled',
+                  'ais-pagination__item--first': 'ais-Pagination-item--first',
+                  'ais-pagination__item--last': 'ais-Pagination-item--last',
+                  'ais-pagination__link': 'ais-Pagination-link',
+                }"
+              ></ais-pagination>
             </div>
           </div>
         </div>
