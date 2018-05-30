@@ -29,6 +29,7 @@ program
   .version(version, '-v, --version')
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
+  .option('--name <name>', 'The name of the application')
   .option('--app-id <appId>', 'The application ID')
   .option('--api-key <apiKey>', 'The Algolia search API key')
   .option('--index-name <indexName>', 'The main index of your search')
@@ -41,6 +42,7 @@ program
     'The attributes for faceting'
   )
   .option('-t, --template <template>', 'The InstantSearch template to use')
+  .option('--library-version <template>', 'The version of the library')
   .option(
     '-c, --config <config>',
     'The configuration file to get the options from'
