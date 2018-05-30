@@ -10,7 +10,7 @@
 
 _The tool requires Node ≥ 8._
 
-```sh
+```
 npx create-instantsearch-app my-app
 cd my-app
 npm start
@@ -24,7 +24,7 @@ Open http://localhost:3000 to see you app.
 
 Alternatively, you can use [Yarn](https://http://yarnpkg.com):
 
-```sh
+```
 yarn create instantsearch-app my-app
 cd my-app
 yarn start
@@ -88,7 +88,7 @@ The `config` flag is handy to automate app generations.
 
 Create the app based on this configuration:
 
-```console
+```
 create-instantsearch-app my-app --config config.json
 ```
 
