@@ -241,10 +241,11 @@ async function run() {
     console.log();
   });
 
-  app.on('installation:error', () => {
+  app.on('installation:error', data => {
     console.log();
     console.log();
     console.error(chalk.red('📦  Dependencies could not be installed.'));
+    console.log(data.err);
     console.log();
     console.log('Try to create the app without installing the dependencies:');
     console.log(
