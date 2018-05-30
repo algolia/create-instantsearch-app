@@ -5,7 +5,7 @@ module.exports = {
   libraryName: 'angular-instantsearch',
   templateName: 'angular-instantsearch',
   appName: 'angular-instantsearch-app',
-  keywords: ['algolia', 'InstantSearch', 'Angular'],
+  keywords: ['algolia', 'InstantSearch', 'Angular', 'angular-instantsearch'],
   tasks: {
     install,
     teardown,
