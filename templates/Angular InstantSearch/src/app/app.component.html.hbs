@@ -11,36 +11,36 @@
 </header>
 
 <div class="container">
-  <ng-ais-instantsearch [config]="config">
+  <ais-instantsearch [config]="config">
     <div class="container-app">
       <div class="filters">
         {{#each attributesForFaceting}}
-        <ng-ais-refinement-list attribute="{{this}}"></ng-ais-refinement-list>
+        <ais-refinement-list attribute="{{this}}"></ais-refinement-list>
         {{/each}}
       </div>
 
       <div class="search-container">
         <div class="searchBox">
-          <ng-ais-search-box placeholder="{{searchPlaceholder}}"></ng-ais-search-box>
+          <ais-search-box placeholder="{{searchPlaceholder}}"></ais-search-box>
         </div>
 
-        <ng-ais-hits class="ais-Hits-list">
+        <ais-hits class="ais-Hits-list">
           <ng-template let-hits="hits">
             <li *ngFor="let hit of hits" class="ais-Hits-item">
               {{#if mainAttribute}}
-              <ng-ais-highlight attribute="{{mainAttribute}}" [hit]="hit"></ng-ais-highlight>
+              <ais-highlight attribute="{{mainAttribute}}" [hit]="hit"></ais-highlight>
               {{else}}
               <code>{JSON.stringify(hit)}</code>
               {{/if}}
             </li>
           </ng-template>
-        </ng-ais-hits>
+        </ais-hits>
 
         <div class="pagination">
-          <ng-ais-pagination></ng-ais-pagination>
+          <ais-pagination></ais-pagination>
         </div>
       </div>
 
     </div>
-  </ng-ais-instantsearch>
+  </ais-instantsearch>
 </div>
