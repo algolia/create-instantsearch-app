@@ -113,7 +113,7 @@ app.on('build:end', () => {
 });
 
 // Create the app
-await app.create();
+app.create();
 ```
 
 ### Tasks
