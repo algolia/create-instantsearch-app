@@ -2,7 +2,9 @@
 
 > Build InstantSearch apps at the speed of thoughts ⚡️
 
-`create-instantsearch-app` is a command line utility that helps you quick start your InstantSearch app using any [Algolia](https://algolia.com) InstantSearch flavor ([InstantSearch.js](https://github.com/algolia/instantsearch.js), [React InstantSearch](https://github.com/algolia/react-instantsearch), [Vue InstantSearch](https://github.com/algolia/vue-instantsearch) and [Angular InstantSearch](https://github.com/algolia/angular-instantsearch)).
+[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
+
+`create-instantsearch-app` is a command line utility that helps you quick start your InstantSearch app using any [Algolia][algolia-website] InstantSearch flavor ([InstantSearch.js][instantsearchjs-github], [React InstantSearch][react-instantsearch-github], [Vue InstantSearch][vue-instantsearch-github] and [Angular InstantSearch][angular-instantsearch-github]).
 
 ## Get started
 
@@ -30,28 +32,69 @@ yarn start
 
 ## Usage
 
-This package comes with the module `createInstantSearchApp(path, options?)` and the command-line tool `create-instantsearch-app`.
+This package comes with the module `createInstantSearchApp(path, options?, tasks?)` and the command-line tool `create-instantsearch-app`.
 
-```sh
+```
 $ create-instantsearch-app --help
 
   Usage: create-instantsearch-app <project-directory> [options]
 
   Options:
 
-    -V, --version                                      output the version number
+    -v, --version                                      output the version number
+    --name <name>                                      The name of the application
     --app-id <appId>                                   The application ID
     --api-key <apiKey>                                 The Algolia search API key
     --index-name <indexName>                           The main index of your search
     --main-attribute <mainAttribute>                   The main searchable attribute of your index
     --attributes-for-faceting <attributesForFaceting>  The attributes for faceting
     -t, --template <template>                          The InstantSearch template to use
+    --library-version <template>                       The version of the library
     -c, --config <config>                              The configuration file to get the options from
     --no-installation                                  Ignore dependency installation
     -h, --help                                         output usage information
 ```
 
+### Options documentation
+
+#### `--template`
+
+Supported templates are:
+
+- [`InstantSearch.js`][instantsearchjs-github]
+- [`React InstantSearch`][react-instantsearch-github]
+- [`Vue InstantSearch`][vue-instantsearch-github]
+- [`Angular InstantSearch`][angular-instantsearch-github]
+
+#### `--config`
+
+The `config` flag is handy to automate app generations.
+
+<h6 align="center">`config.json`</h6>
+
+```json
+{
+  "name": "my-app",
+  "template": "InstantSearch JS",
+  "libraryVersion": "2.8.0",
+  "appId": "MY_APP_ID",
+  "apiKey": "MY_API_KEY",
+  "indexName": "MY_INDEX_NAME",
+  "searchPlaceholder": "Search",
+  "mainAttribute": "name",
+  "attributesForFaceting": ["brand", "location"]
+}
+```
+
+Create the app based on this configuration:
+
+```console
+create-instantsearch-app my-app --config config.json
+```
+
 ## API
+
+`create-instantsearch-app` is based on the module `createInstantSearchApp(path, options?, tasks?)`.
 
 ```javascript
 const createInstantSearchApp = require('create-instantsearch-app');
@@ -70,63 +113,86 @@ app.on('build:end', () => {
 });
 
 // Create the app
+await app.create();
+```
+
+### Tasks
+
+The app generation follows this lifecycle:
+
+1. **Setup**
+2. **Build**
+3. **Install**
+4. (**Clean**) *if the project generation fails*
+5. **Teardown**
+
+Each task can be plugged to the third argument of the call `createInstantSearchApp(path, options?, tasks?)`.
+
+<h6 align="center">Example</h6>
+
+```javascript
+const app = createInstantSearchApp('my-app', { template: 'InstantSearch.js' }, {
+  setup() {
+    // Check the project requirements
+  },
+  teardown() {
+    // Go to the project folder
+  },
+});
+
 app.create();
 ```
 
 ### Events
 
-#### `setup:start`
+#### Setup
 
-Fired at the start of the app setup
+- `setup:start` at the start of the app setup
+- `setup:end` at the end of the app setup
+- `setup:error` if an error occurs during the app setup
 
-#### `setup:end`
+#### Build
 
-Fired at the end of the app setup
+- `build:start` at the start of the app build
+- `build:end` at the end of the app build
+- `build:error` if an error occurs during the app build
 
-#### `setup:error`
+#### Installation
 
-Fired if an error occurs during the app setup
+- `installation:start` at the start of the app installation
+- `installation:end` at the end of the app installation
+- `installation:error` if an error occurs during the app installation
 
-#### `teardown:start`
+#### Clean
 
-Fired at the start of the app teardown
+- `clean:start` at the start of the app clean up if case the app creation is aborted
+- `clean:end` at the end of the app clean up if case the app creation is aborted
 
-#### `teardown:end`
+#### Teardown
 
-Fired at the end of the app teardown
+- `teardown:start` at the start of the app teardown
+- `teardown:end` at the end of the app teardown
+- `teardown:error` if an error occurs during the app teardown
 
-#### `teardown:error`
+## License
 
-Fired if an error occurs during the app teardown
+Create InstantSearch App is [MIT licensed](LICENSE.md).
 
-#### `build:start`
+<!-- Badges -->
 
-Fired at the start of the app build
+[version-svg]: https://img.shields.io/npm/v/create-instantsearch-app.svg?style=flat-square
+[package-url]: https://npmjs.org/package/create-instantsearch-app
+[travis-svg]: https://img.shields.io/travis/algolia/create-instantsearch-app/develop.svg?style=flat-square
+[travis-url]: https://travis-ci.org/algolia/create-instantsearch-app
+[license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
+[license-url]: LICENSE
+[downloads-image]: https://img.shields.io/npm/dm/create-instantsearch-app.svg?style=flat-square
+[downloads-url]: http://npm-stat.com/charts.html?package=create-instantsearch-app
 
-#### `build:end`
+<!-- Links -->
 
-Fired at the end of the app build
-
-#### `build:error`
-
-Fired if an error occurs during the app build
-
-#### `installation:start`
-
-Fired at the start of the app installation
-
-#### `installation:end`
-
-Fired at the end of the app installation
-
-#### `installation:error`
-
-Fired if an error occurs during the app installation
-
-#### `clean:start`
-
-Fired at the start of the app clean up if case the app creation is aborted
-
-#### `clean:end`
-
-Fired at the end of the app clean up if case the app creation is aborted
+[algolia-website]: https://www.algolia.com/?utm_medium=social-owned&utm_source=GitHub&utm_campaign=create-instantsearch-app%20repository
+[instantsearchjs-github]: https://github.com/algolia/instantsearch.js
+[react-instantsearch-github]: https://github.com/algolia/react-instantsearch
+[vue-instantsearch-github]: https://github.com/algolia/vue-instantsearch
+[angular-instantsearch-github]: https://github.com/algolia/angular-instantsearch
