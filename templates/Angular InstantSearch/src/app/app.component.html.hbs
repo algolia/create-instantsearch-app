@@ -24,17 +24,7 @@
           <ais-search-box placeholder="{{searchPlaceholder}}"></ais-search-box>
         </div>
 
-        <ais-hits class="ais-Hits-list">
-          <ng-template let-hits="hits">
-            <li *ngFor="let hit of hits" class="ais-Hits-item">
-              {{#if mainAttribute}}
-              <ais-highlight attribute="{{mainAttribute}}" [hit]="hit"></ais-highlight>
-              {{else}}
-              <code>{JSON.stringify(hit)}</code>
-              {{/if}}
-            </li>
-          </ng-template>
-        </ais-hits>
+        <ais-hits></ais-hits>
 
         <div class="pagination">
           <ais-pagination></ais-pagination>
