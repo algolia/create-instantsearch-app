@@ -28,8 +28,8 @@
           <div class="search-container">
             <ais-search-box
               placeholder="{{searchPlaceholder}}"
+              class="ais-SearchBox-form"
               :class-names="{
-                'ais-search-form': 'ais-SearchBox-form',
                 'ais-search-box': 'ais-SearchBox',
                 'ais-input': 'ais-SearchBox-input',
                 'ais-clear': 'ais-SearchBox-reset',
