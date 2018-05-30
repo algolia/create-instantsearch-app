@@ -21,9 +21,14 @@ module.exports = function build(config) {
           [/\.html$/, '.html.hbs'],
           [/\.css$/, '.css.hbs'],
           [/\.js$/, '.js.hbs'],
+          [/\.vue$/, '.vue.hbs'],
           [/\.md$/, '.md.hbs'],
           [/\.json$/, '.json.hbs'],
           [/\.webmanifest$/, '.webmanifest.hbs'],
+          // Use `.babelrc.template` as name to not trigger babel
+          // when requiring the file `.template.js` in end-to-end tests
+          // and rename it `.babelrc` afterwards
+          [/\.babelrc.template$/, '.babelrc'],
         ])
       )
       .use(inPlace())
