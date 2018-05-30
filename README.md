@@ -2,7 +2,7 @@
 
 > Build InstantSearch apps at the speed of thoughts ⚡️
 
-[![Version][version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
+[![Build Status][travis-svg]][travis-url] [![Version][version-svg]][package-url] [![License][license-image]][license-url]
 
 `create-instantsearch-app` is a command line utility that helps you quick start your InstantSearch app using any [Algolia][algolia-website] InstantSearch flavor ([InstantSearch.js][instantsearchjs-github], [React InstantSearch][react-instantsearch-github], [Vue InstantSearch][vue-instantsearch-github] and [Angular InstantSearch][angular-instantsearch-github]).
 
@@ -186,8 +186,6 @@ Create InstantSearch App is [MIT licensed](LICENSE.md).
 [travis-url]: https://travis-ci.org/algolia/create-instantsearch-app
 [license-image]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: LICENSE
-[downloads-image]: https://img.shields.io/npm/dm/create-instantsearch-app.svg?style=flat-square
-[downloads-url]: http://npm-stat.com/charts.html?package=create-instantsearch-app
 
 <!-- Links -->
 
