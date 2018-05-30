@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshots InstantSearch.js File content: .gitignore 1`] = `
+exports[`Templates InstantSearch.js File content: .gitignore 1`] = `
 "# See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
@@ -25,7 +25,7 @@ yarn-debug.log*
 yarn-error.log*"
 `;
 
-exports[`Snapshots InstantSearch.js File content: README.md 1`] = `
+exports[`Templates InstantSearch.js File content: README.md 1`] = `
 "# instantsearch.js-app
 
 _This project was generated with [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) by [Algolia](https://algolia.com)._
@@ -47,7 +47,7 @@ yarn start
 \`\`\`"
 `;
 
-exports[`Snapshots InstantSearch.js File content: index.html 1`] = `
+exports[`Templates InstantSearch.js File content: index.html 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
 
@@ -98,7 +98,7 @@ exports[`Snapshots InstantSearch.js File content: index.html 1`] = `
 </html>"
 `;
 
-exports[`Snapshots InstantSearch.js File content: manifest.webmanifest 1`] = `
+exports[`Templates InstantSearch.js File content: manifest.webmanifest 1`] = `
 "{
   \\"short_name\\": \\"instantsearch.js-app\\",
   \\"name\\": \\"instantsearch.js-app Sample\\",
@@ -116,7 +116,7 @@ exports[`Snapshots InstantSearch.js File content: manifest.webmanifest 1`] = `
 }"
 `;
 
-exports[`Snapshots InstantSearch.js File content: package.json 1`] = `
+exports[`Templates InstantSearch.js File content: package.json 1`] = `
 "{
   \\"name\\": \\"instantsearch.js-app\\",
   \\"version\\": \\"1.0.0\\",
@@ -131,7 +131,7 @@ exports[`Snapshots InstantSearch.js File content: package.json 1`] = `
 }"
 `;
 
-exports[`Snapshots InstantSearch.js File content: src/app.css 1`] = `
+exports[`Templates InstantSearch.js File content: src/app.css 1`] = `
 "em {
   background: cyan;
   font-style: normal;
@@ -203,7 +203,7 @@ exports[`Snapshots InstantSearch.js File content: src/app.css 1`] = `
 }"
 `;
 
-exports[`Snapshots InstantSearch.js File content: src/app.js 1`] = `
+exports[`Templates InstantSearch.js File content: src/app.js 1`] = `
 "/* global instantsearch */
 
 const search = instantsearch({
@@ -252,7 +252,7 @@ search.addWidget(
 search.start();"
 `;
 
-exports[`Snapshots InstantSearch.js File content: src/index.css 1`] = `
+exports[`Templates InstantSearch.js File content: src/index.css 1`] = `
 "body,
 h1 {
   margin: 0;
@@ -265,7 +265,7 @@ body {
 }"
 `;
 
-exports[`Snapshots InstantSearch.js Folder structure: contains the right files 1`] = `
+exports[`Templates InstantSearch.js Folder structure: contains the right files 1`] = `
 Array [
   ".gitignore",
   "README.md",
@@ -279,7 +279,7 @@ Array [
 ]
 `;
 
-exports[`Snapshots React InstantSearch File content: .gitignore 1`] = `
+exports[`Templates React InstantSearch File content: .gitignore 1`] = `
 "# See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
@@ -303,7 +303,7 @@ yarn-debug.log*
 yarn-error.log*"
 `;
 
-exports[`Snapshots React InstantSearch File content: README.md 1`] = `
+exports[`Templates React InstantSearch File content: README.md 1`] = `
 "# react-instantsearch-app
 
 _This project was generated with [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) by [Algolia](https://algolia.com)._
@@ -325,7 +325,7 @@ yarn start
 \`\`\`"
 `;
 
-exports[`Snapshots React InstantSearch File content: package.json 1`] = `
+exports[`Templates React InstantSearch File content: package.json 1`] = `
 "{
   \\"name\\": \\"react-instantsearch-app\\",
   \\"version\\": \\"1.0.0\\",
@@ -346,7 +346,7 @@ exports[`Snapshots React InstantSearch File content: package.json 1`] = `
 }"
 `;
 
-exports[`Snapshots React InstantSearch File content: public/index.html 1`] = `
+exports[`Templates React InstantSearch File content: public/index.html 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
 
@@ -378,7 +378,7 @@ exports[`Snapshots React InstantSearch File content: public/index.html 1`] = `
 </html>"
 `;
 
-exports[`Snapshots React InstantSearch File content: public/manifest.json 1`] = `
+exports[`Templates React InstantSearch File content: public/manifest.json 1`] = `
 "{
   \\"short_name\\": \\"react-instantsearch-app\\",
   \\"name\\": \\"react-instantsearch-app Sample\\",
@@ -396,7 +396,7 @@ exports[`Snapshots React InstantSearch File content: public/manifest.json 1`] = 
 }"
 `;
 
-exports[`Snapshots React InstantSearch File content: src/App.css 1`] = `
+exports[`Templates React InstantSearch File content: src/App.css 1`] = `
 "em {
   background: cyan;
   font-style: normal;
@@ -453,7 +453,7 @@ exports[`Snapshots React InstantSearch File content: src/App.css 1`] = `
 }"
 `;
 
-exports[`Snapshots React InstantSearch File content: src/App.js 1`] = `
+exports[`Templates React InstantSearch File content: src/App.js 1`] = `
 "import React, { Component } from 'react';
 import {
   InstantSearch,
@@ -525,7 +525,7 @@ Hit.propTypes = {
 export default App;"
 `;
 
-exports[`Snapshots React InstantSearch File content: src/index.css 1`] = `
+exports[`Templates React InstantSearch File content: src/index.css 1`] = `
 "body,
 h1 {
   margin: 0;
@@ -538,7 +538,7 @@ body {
 }"
 `;
 
-exports[`Snapshots React InstantSearch File content: src/index.js 1`] = `
+exports[`Templates React InstantSearch File content: src/index.js 1`] = `
 "import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -547,7 +547,7 @@ import App from './App';
 ReactDOM.render(<App />, document.getElementById('root'));"
 `;
 
-exports[`Snapshots React InstantSearch Folder structure: contains the right files 1`] = `
+exports[`Templates React InstantSearch Folder structure: contains the right files 1`] = `
 Array [
   ".gitignore",
   "README.md",
@@ -562,7 +562,7 @@ Array [
 ]
 `;
 
-exports[`Snapshots Vue InstantSearch File content: .babelrc 1`] = `
+exports[`Templates Vue InstantSearch File content: .babelrc 1`] = `
 "{
   \\"presets\\": [
     [\\"env\\", { \\"modules\\": false }],
@@ -571,7 +571,7 @@ exports[`Snapshots Vue InstantSearch File content: .babelrc 1`] = `
 }"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: .gitignore 1`] = `
+exports[`Templates Vue InstantSearch File content: .gitignore 1`] = `
 "node_modules/
 npm-debug.log
 yarn-debug.log
@@ -579,7 +579,7 @@ yarn-error.log
 dist/"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: README.md 1`] = `
+exports[`Templates Vue InstantSearch File content: README.md 1`] = `
 "# vue-instantsearch-app
 
 _This project was generated with [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) by [Algolia](https://algolia.com)._
@@ -601,7 +601,7 @@ yarn start
 \`\`\`"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: index.html 1`] = `
+exports[`Templates Vue InstantSearch File content: index.html 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
 
@@ -635,7 +635,7 @@ exports[`Snapshots Vue InstantSearch File content: index.html 1`] = `
 </html>"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: manifest.json 1`] = `
+exports[`Templates Vue InstantSearch File content: manifest.json 1`] = `
 "{
   \\"short_name\\": \\"vue-instantsearch-app\\",
   \\"name\\": \\"vue-instantsearch-app Sample\\",
@@ -653,7 +653,7 @@ exports[`Snapshots Vue InstantSearch File content: manifest.json 1`] = `
 }"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: package.json 1`] = `
+exports[`Templates Vue InstantSearch File content: package.json 1`] = `
 "{
   \\"name\\": \\"vue-instantsearch-app\\",
   \\"version\\": \\"1.0.0\\",
@@ -682,7 +682,7 @@ exports[`Snapshots Vue InstantSearch File content: package.json 1`] = `
 }"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: src/App.vue 1`] = `
+exports[`Templates Vue InstantSearch File content: src/App.vue 1`] = `
 "<template>
   <div>
     <header class=\\"header\\">
@@ -821,7 +821,7 @@ em {
 </style>"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: src/main.js 1`] = `
+exports[`Templates Vue InstantSearch File content: src/main.js 1`] = `
 "import Vue from 'vue';
 import App from './App.vue';
 import InstantSearch from 'vue-instantsearch';
@@ -834,7 +834,7 @@ new Vue({
 });"
 `;
 
-exports[`Snapshots Vue InstantSearch File content: webpack.config.js 1`] = `
+exports[`Templates Vue InstantSearch File content: webpack.config.js 1`] = `
 "const path = require('path');
 const webpack = require('webpack');
 
@@ -913,7 +913,7 @@ if (process.env.NODE_ENV === 'production') {
 }"
 `;
 
-exports[`Snapshots Vue InstantSearch Folder structure: contains the right files 1`] = `
+exports[`Templates Vue InstantSearch Folder structure: contains the right files 1`] = `
 Array [
   ".babelrc",
   ".gitignore",
