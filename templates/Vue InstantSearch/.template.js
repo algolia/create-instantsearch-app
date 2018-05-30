@@ -5,15 +5,7 @@ module.exports = {
   libraryName: 'vue-instantsearch',
   templateName: 'vue-instantsearch',
   appName: 'vue-instantsearch-app',
-  keywords: [
-    'algolia',
-    'template',
-    'example',
-    'fiddle',
-    'InstantSearch',
-    'Vue',
-    'vue-instantsearch',
-  ],
+  keywords: ['algolia', 'InstantSearch', 'Vue', 'vue-instantsearch'],
   tasks: {
     install,
     teardown,
