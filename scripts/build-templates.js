@@ -71,9 +71,10 @@ async function build() {
     templates.map(async templateTitle => {
       const {
         appName,
+        templateName,
         keywords,
       } = require(`${templatesFolder}/${templateTitle}/.template.js`);
-      const appPath = appName;
+      const appPath = templateName;
 
       const app = createInstantSearchApp(appPath, {
         name: appName,
