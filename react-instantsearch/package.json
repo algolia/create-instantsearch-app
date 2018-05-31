@@ -1,0 +1,24 @@
+{
+  "name": "react-instantsearch-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-instantsearch": "^5.1.0",
+    "react-scripts": "1.1.4"
+  },
+  "devDependencies": {
+    "prop-types": "^15.6.1"
+  },
+  "keywords": [
+    "algolia",
+    "InstantSearch",
+    "React",
+    "react-instantsearch"
+  ]
+}

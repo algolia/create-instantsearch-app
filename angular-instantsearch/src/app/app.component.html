@@ -1,0 +1,34 @@
+<header class="header">
+  <h1 class="header-title">
+    <a href="/">angular-instantsearch-app</a>
+  </h1>
+  <p class="header-subtitle">
+    using
+    <a href="https://github.com/algolia/angular-instantsearch">
+      Angular InstantSearch
+    </a>
+  </p>
+</header>
+
+<div class="container">
+  <ais-instantsearch [config]="config">
+    <div class="container-app">
+      <div class="filters">
+        <ais-refinement-list attribute="brand"></ais-refinement-list>
+      </div>
+
+      <div class="search-container">
+        <div class="searchBox">
+          <ais-search-box placeholder=""></ais-search-box>
+        </div>
+
+        <ais-hits></ais-hits>
+
+        <div class="pagination">
+          <ais-pagination></ais-pagination>
+        </div>
+      </div>
+
+    </div>
+  </ais-instantsearch>
+</div>
