@@ -55,11 +55,11 @@ async function build() {
     execSync(`git checkout ${TEMPLATES_BRANCH}`);
   }
 
-  // Delete all content on the `templates` branch except the `templates` folder
-  // execSync('shopt -s extglob');
-  // execSync('rm -rf !("templates")');
+  // Delete all content and code to a temporary file that will be deleted
+  execSync('mkdir tmp');
+  execSync('mv * ./tmp', { stdio: 'ignore' });
 
-  const templatesFolder = path.join(__dirname, '../templates');
+  const templatesFolder = path.join(__dirname, '../tmp/templates');
   const templates = fs
     .readdirSync(templatesFolder)
     .map(name => path.join(templatesFolder, name))
@@ -110,8 +110,8 @@ async function build() {
     })
   );
 
-  // Delete the `templates` folder which is not useful anymore
-  // execSync('rm -rf templates');
+  // Delete the temporary file created to keep only the demos
+  execSync('rm -rf tmp');
 
   // Stage all new demos to Git
   execSync(`git add -A`);
