@@ -176,7 +176,7 @@ app.create();
 
 ## License
 
-Create InstantSearch App is [MIT licensed](LICENSE.md).
+Create InstantSearch App is [MIT licensed](LICENSE).
 
 <!-- Badges -->
 
