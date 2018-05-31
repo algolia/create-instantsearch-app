@@ -28,32 +28,6 @@ function exitWithError(err) {
 }
 
 async function build() {
-  // const initialBranch = execSync('git rev-parse --abbrev-ref HEAD')
-  //   .toString()
-  //   .trim();
-
-  // Allow template build only from `master` branch
-  // if (initialBranch !== 'master') {
-  //   console.error(
-  //     `You cannot compile the templates from the branch "${chalk.red(
-  //       initialBranch
-  //     )}". Please change to "${chalk.cyan('master')}".`
-  //   );
-  //   console.log();
-  //   console.log(`  ${chalk.cyan('git checkout master')}`);
-
-  //   exitWithError();
-  // }
-
-  // const templateBranch = execSync(`git branch --list ${TEMPLATES_BRANCH}`)
-  //   .toString()
-  //   .trim();
-
-  // Create the `templates` orphan branch if it doesn't exist
-  // if (!templateBranch) {
-  //   execSync(`git checkout --orphan ${TEMPLATES_BRANCH}`);
-  // }
-
   // Clone the `templates` branch inside the `build` folder on the current branch
   execSync(`mkdir ${BUILD_FOLDER}`);
   execSync(
@@ -113,19 +87,13 @@ async function build() {
   );
 
   // Change directory to the build folder to execute Git commands
-  execSync(`cd ${BUILD_FOLDER}`);
+  process.chdir(BUILD_FOLDER);
 
   // Stage all new demos to Git
   execSync(`git add -A`);
 
   // Commit the new demos
-  const commitMessage = `feat(template): Update templates`;
-
-  // //   const commitMessage = `feat(template): Update templates
-
-  // ${templates
-  //     .map(templateTitle => `* Update "${templateTitle}" template`)
-  //     .join('\n')}`;
+  const commitMessage = 'feat(template): Update templates';
 
   console.log('▶︎  Commiting');
   console.log();
@@ -145,6 +113,8 @@ async function build() {
     )}".`
   );
   console.log();
+
+  process.chdir('..');
 
   // Clean the build folder
   execSync(`rm -rf ${BUILD_FOLDER}`);
