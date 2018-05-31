@@ -59,8 +59,9 @@ async function build() {
 
   // Clone the `templates` branch inside the `build` folder on the current branch
   execSync(`mkdir ${BUILD_FOLDER}`);
-  execSync(`cd ${BUILD_FOLDER}`);
-  execSync(`git clone -b ${TEMPLATES_BRANCH} --single-branch .`);
+  execSync(
+    `git clone -b ${TEMPLATES_BRANCH} --single-branch . ${BUILD_FOLDER}`
+  );
 
   const templatesFolder = path.join(__dirname, '../tmp/templates');
   const templates = fs
