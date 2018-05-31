@@ -2,7 +2,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 const chalk = require('chalk');
 
 const createInstantSearchApp = require('../');
@@ -24,8 +25,8 @@ function exitWithError(err) {
   process.exit(1);
 }
 
-try {
-  const initialBranch = execSync('git rev-parse --abbrev-ref HEAD')
+async function build() {
+  const initialBranch = await exec('git rev-parse --abbrev-ref HEAD')
     .toString()
     .trim();
 
@@ -42,20 +43,20 @@ try {
   //   exitWithError();
   // }
 
-  const templateBranch = execSync(`git branch --list ${TEMPLATES_BRANCH}`)
+  const templateBranch = await exec(`git branch --list ${TEMPLATES_BRANCH}`)
     .toString()
     .trim();
 
   // Create `templates` branch if doesn't exist
   if (!templateBranch) {
-    execSync(`git checkout -b ${TEMPLATES_BRANCH}`);
+    await exec(`git checkout -b ${TEMPLATES_BRANCH}`);
   } else {
-    execSync(`git checkout ${TEMPLATES_BRANCH}`);
+    await exec(`git checkout ${TEMPLATES_BRANCH}`);
   }
 
   // Delete all content on the `templates` branch except the `templates` folder
-  // execSync('shopt -s extglob');
-  // execSync('rm -rf !("templates")');
+  // await exec('shopt -s extglob');
+  // await exec('rm -rf !("templates")');
 
   const templatesFolder = path.join(__dirname, '../templates');
   const templates = fs
@@ -67,7 +68,7 @@ try {
   console.log('▶︎  Generating templates');
 
   // Create all demos
-  templates.forEach(templateTitle => {
+  await templates.forEach(async templateTitle => {
     const {
       appName,
       keywords,
@@ -86,28 +87,23 @@ try {
       silent: true,
     });
 
-    app.create().then(() => {
-      const packagePath = `${appPath}/package.json`;
-      const packageConfig = JSON.parse(fs.readFileSync(packagePath));
-      const packageConfigFilled = {
-        ...packageConfig,
-        keywords,
-      };
+    await app.create();
 
-      fs.writeFileSync(
-        packagePath,
-        JSON.stringify(packageConfigFilled, null, 2)
-      );
-    });
+    const packagePath = `${appPath}/package.json`;
+    const packageConfig = JSON.parse(fs.readFileSync(packagePath));
+    const packageConfigFilled = {
+      ...packageConfig,
+      keywords,
+    };
+
+    fs.writeFileSync(packagePath, JSON.stringify(packageConfigFilled, null, 2));
   });
 
   // Delete the `templates` folder which is not useful anymore
-  // execSync('rm -rf templates');
-
-  execSync(`ls`);
+  // await exec('rm -rf templates');
 
   // Stage all new demos to Git
-  execSync(`git add -A`);
+  await exec(`git add -A`);
 
   // Commit the new demos
   const commitMessage = `feat(template): Update templates`;
@@ -122,12 +118,12 @@ try {
   console.log();
   console.log(`  ${chalk.cyan(commitMessage)}`);
 
-  execSync(`git commit -m "${commitMessage}"`);
+  await exec(`git commit -m "${commitMessage}"`);
 
   // Push new demos to `templates` branch
   console.log();
   console.log(`▶︎  Pushing to branch "${chalk.green(TEMPLATES_BRANCH)}"`);
-  // execSync(`git push origin ${TEMPLATES_BRANCH}`);
+  // await exec(`git push origin ${TEMPLATES_BRANCH}`);
 
   console.log();
   console.log(
@@ -138,7 +134,7 @@ try {
   console.log();
 
   // Move back to the initial branch
-  execSync(`git checkout ${initialBranch}`);
-} catch (err) {
-  exitWithError(err);
+  await exec(`git checkout ${initialBranch}`);
 }
+
+build().catch(exitWithError);
