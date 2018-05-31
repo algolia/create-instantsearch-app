@@ -24,16 +24,14 @@ function exitWithError(err) {
     console.error(err);
   }
 
-  if (fs.lstatSync(BUILD_FOLDER).isDirectory()) {
-    execSync(`rm -rf ${BUILD_FOLDER}`);
-  }
+  execSync(`rm -rf ${BUILD_FOLDER}`);
 
   process.exit(1);
 }
 
 async function build() {
   // Clone the `templates` branch inside the `build` folder on the current branch
-  if (fs.lstatSync(BUILD_FOLDER).isDirectory()) {
+  if (fs.existsSync(BUILD_FOLDER)) {
     execSync(`rm -rf ${BUILD_FOLDER}`);
   }
 
