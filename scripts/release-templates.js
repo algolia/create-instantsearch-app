@@ -50,20 +50,17 @@ async function build() {
     .trim();
 
   // Create the `templates` orphan branch if it doesn't exist
-  if (!templateBranch) {
-    execSync(`git checkout --orphan ${TEMPLATES_BRANCH}`);
-    execSync(`git push origin ${TEMPLATES_BRANCH}`);
-    // } else {
-    //   execSync(`git checkout ${TEMPLATES_BRANCH}`);
-  }
+  // if (!templateBranch) {
+  //   execSync(`git checkout --orphan ${TEMPLATES_BRANCH}`);
+  // }
 
   // Clone the `templates` branch inside the `build` folder on the current branch
   execSync(`mkdir ${BUILD_FOLDER}`);
   execSync(
-    `git clone -b ${TEMPLATES_BRANCH} --single-branch . ${BUILD_FOLDER}`
+    `git clone -b ${TEMPLATES_BRANCH} --single-branch https://github.com/algolia/create-instantsearch-app.git ${BUILD_FOLDER}`
   );
 
-  const templatesFolder = path.join(__dirname, '../tmp/templates');
+  const templatesFolder = path.join(__dirname, '../templates');
   const templates = fs
     .readdirSync(templatesFolder)
     .map(name => path.join(templatesFolder, name))
@@ -82,6 +79,7 @@ async function build() {
         keywords,
       } = require(`${templatesFolder}/${templateTitle}/.template.js`);
       const appPath = `${BUILD_FOLDER}/${templateName}`;
+      execSync(`rm -rf ${appPath}`);
 
       const app = createInstantSearchApp(appPath, {
         name: appName,
@@ -123,7 +121,7 @@ async function build() {
   // Commit the new demos
   const commitMessage = `feat(template): Update templates`;
 
-  //   const commitMessage = `feat(template): Update templates
+  // //   const commitMessage = `feat(template): Update templates
 
   // ${templates
   //     .map(templateTitle => `* Update "${templateTitle}" template`)
