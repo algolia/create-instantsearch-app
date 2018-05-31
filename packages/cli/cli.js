@@ -14,12 +14,9 @@ const {
   checkAppPath,
   checkAppName,
   checkAppTemplateConfig,
-} = require('../shared/utils');
-const {
-  getOptionsFromArguments,
-  isQuestionAsked,
   fetchLibraryVersions,
-} = require('./utils');
+} = require('../shared/utils');
+const { getOptionsFromArguments, isQuestionAsked } = require('./utils');
 const { version } = require('../../package.json');
 
 let appPath;

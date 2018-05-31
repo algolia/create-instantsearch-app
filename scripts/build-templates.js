@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const chalk = require('chalk');
+const latestSemver = require('latest-semver');
+const { fetchLibraryVersions } = require('../packages/shared/utils');
 
 const createInstantSearchApp = require('../');
 
@@ -72,6 +74,7 @@ async function build() {
       const {
         appName,
         templateName,
+        libraryName,
         keywords,
       } = require(`${templatesFolder}/${templateTitle}/.template.js`);
       const appPath = templateName;
@@ -79,6 +82,9 @@ async function build() {
       const app = createInstantSearchApp(appPath, {
         name: appName,
         template: templateTitle,
+        libraryVersion: await fetchLibraryVersions(libraryName).then(
+          latestSemver
+        ),
         appId: APP_ID,
         apiKey: API_KEY,
         indexName: INDEX_NAME,
