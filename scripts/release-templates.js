@@ -49,12 +49,12 @@ async function build() {
     .toString()
     .trim();
 
-  // Create the `templates` orphan branch if doesn't exist
+  // Create the `templates` orphan branch if it doesn't exist
   if (!templateBranch) {
     execSync(`git checkout --orphan ${TEMPLATES_BRANCH}`);
     execSync(`git push origin ${TEMPLATES_BRANCH}`);
-  } else {
-    execSync(`git checkout ${TEMPLATES_BRANCH}`);
+    // } else {
+    //   execSync(`git checkout ${TEMPLATES_BRANCH}`);
   }
 
   // Clone the `templates` branch inside the `build` folder on the current branch
@@ -135,7 +135,7 @@ async function build() {
 
   execSync(`git commit -m "${commitMessage}"`);
 
-  // Push new demos to `templates` branch
+  // Push the new demos to the `templates` branch
   console.log();
   console.log(`▶︎  Pushing to branch "${chalk.green(TEMPLATES_BRANCH)}"`);
   execSync(`git push origin ${TEMPLATES_BRANCH}`);
