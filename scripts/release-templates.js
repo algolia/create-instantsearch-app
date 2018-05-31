@@ -18,10 +18,14 @@ const INDEX_NAME = 'instant_search';
 
 function exitWithError(err) {
   console.log();
-  console.log('❎  Cancelled template compilation.');
+  console.log('❎  Canceled template compilation.');
 
   if (err) {
     console.error(err);
+  }
+
+  if (fs.lstatSync(BUILD_FOLDER).isDirectory()) {
+    execSync(`rm -rf ${BUILD_FOLDER}`);
   }
 
   process.exit(1);
@@ -29,6 +33,10 @@ function exitWithError(err) {
 
 async function build() {
   // Clone the `templates` branch inside the `build` folder on the current branch
+  if (fs.lstatSync(BUILD_FOLDER).isDirectory()) {
+    execSync(`rm -rf ${BUILD_FOLDER}`);
+  }
+
   execSync(`mkdir ${BUILD_FOLDER}`);
   execSync(
     `git clone -b ${TEMPLATES_BRANCH} --single-branch https://github.com/algolia/create-instantsearch-app.git ${BUILD_FOLDER}`
