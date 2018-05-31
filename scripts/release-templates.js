@@ -45,9 +45,9 @@ async function build() {
   //   exitWithError();
   // }
 
-  const templateBranch = execSync(`git branch --list ${TEMPLATES_BRANCH}`)
-    .toString()
-    .trim();
+  // const templateBranch = execSync(`git branch --list ${TEMPLATES_BRANCH}`)
+  //   .toString()
+  //   .trim();
 
   // Create the `templates` orphan branch if it doesn't exist
   // if (!templateBranch) {
