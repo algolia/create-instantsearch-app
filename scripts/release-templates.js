@@ -10,6 +10,7 @@ const { fetchLibraryVersions } = require('../packages/shared/utils');
 const createInstantSearchApp = require('../');
 
 const TEMPLATES_BRANCH = 'templates';
+const BUILD_FOLDER = 'build';
 
 const APP_ID = 'latency';
 const API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
@@ -27,9 +28,9 @@ function exitWithError(err) {
 }
 
 async function build() {
-  const initialBranch = execSync('git rev-parse --abbrev-ref HEAD')
-    .toString()
-    .trim();
+  // const initialBranch = execSync('git rev-parse --abbrev-ref HEAD')
+  //   .toString()
+  //   .trim();
 
   // Allow template build only from `master` branch
   // if (initialBranch !== 'master') {
@@ -48,16 +49,18 @@ async function build() {
     .toString()
     .trim();
 
-  // Create `templates` branch if doesn't exist
+  // Create the `templates` orphan branch if doesn't exist
   if (!templateBranch) {
-    execSync(`git checkout -b ${TEMPLATES_BRANCH}`);
+    execSync(`git checkout --orphan ${TEMPLATES_BRANCH}`);
+    // execSync(`git push origin ${TEMPLATES_BRANCH}`);
   } else {
     execSync(`git checkout ${TEMPLATES_BRANCH}`);
   }
 
-  // Delete all content and code to a temporary file that will be deleted
-  execSync('mkdir tmp');
-  execSync('mv * ./tmp', { stdio: 'ignore' });
+  // Clone the `templates` branch inside the `build` folder on the current branch
+  execSync(`mkdir ${BUILD_FOLDER}`);
+  execSync(`cd ${BUILD_FOLDER}`);
+  execSync(`git clone -b ${TEMPLATES_BRANCH} --single-branch .`);
 
   const templatesFolder = path.join(__dirname, '../tmp/templates');
   const templates = fs
@@ -77,7 +80,7 @@ async function build() {
         libraryName,
         keywords,
       } = require(`${templatesFolder}/${templateTitle}/.template.js`);
-      const appPath = templateName;
+      const appPath = `${BUILD_FOLDER}/${templateName}`;
 
       const app = createInstantSearchApp(appPath, {
         name: appName,
@@ -110,8 +113,8 @@ async function build() {
     })
   );
 
-  // Delete the temporary file created to keep only the demos
-  execSync('rm -rf tmp');
+  // Change directory to the build folder to execute Git commands
+  execSync(`cd ${BUILD_FOLDER}`);
 
   // Stage all new demos to Git
   execSync(`git add -A`);
@@ -134,7 +137,7 @@ async function build() {
   // Push new demos to `templates` branch
   console.log();
   console.log(`▶︎  Pushing to branch "${chalk.green(TEMPLATES_BRANCH)}"`);
-  // execSync(`git push origin ${TEMPLATES_BRANCH}`);
+  execSync(`git push origin ${TEMPLATES_BRANCH}`);
 
   console.log();
   console.log(
@@ -144,8 +147,8 @@ async function build() {
   );
   console.log();
 
-  // Move back to the initial branch
-  execSync(`git checkout ${initialBranch}`);
+  // Clean the build folder
+  execSync(`rm -rf ${BUILD_FOLDER}`);
 }
 
 build().catch(exitWithError);
