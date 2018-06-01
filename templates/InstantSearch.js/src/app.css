@@ -13,6 +13,11 @@ em {
   margin-bottom: 1rem;
 }
 
+.header a {
+  color: #fff;
+  text-decoration: none;
+}
+
 .header-title {
   font-size: 1.2rem;
   font-weight: normal;
@@ -21,11 +26,6 @@ em {
 .header-title::after {
   content: ' ▸ ';
   padding: 0 0.5rem;
-}
-
-.header-title a {
-  color: #fff;
-  text-decoration: none;
 }
 
 .header-subtitle {
