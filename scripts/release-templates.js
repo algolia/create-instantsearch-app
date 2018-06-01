@@ -9,6 +9,8 @@ const { fetchLibraryVersions } = require('../packages/shared/utils');
 
 const createInstantSearchApp = require('../');
 
+const GITHUB_REPOSITORY =
+  'https://github.com/algolia/create-instantsearch-app.git';
 const TEMPLATES_BRANCH = 'templates';
 const BUILD_FOLDER = 'build';
 
@@ -16,28 +18,20 @@ const APP_ID = 'latency';
 const API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
 const INDEX_NAME = 'instant_search';
 
-function exitWithError(err) {
-  console.log();
-  console.log('❎  Canceled template compilation.');
-
-  if (err) {
-    console.error(err);
-  }
-
-  execSync(`rm -rf ${BUILD_FOLDER}`);
-
-  process.exit(1);
-}
-
-async function build() {
-  // Clone the `templates` branch inside the `build` folder on the current branch
+function cleanup() {
   if (fs.existsSync(BUILD_FOLDER)) {
     execSync(`rm -rf ${BUILD_FOLDER}`);
   }
+}
 
+async function build() {
+  cleanup();
+
+  // Clone the `templates` branch inside the `build` folder on the current branch
   execSync(`mkdir ${BUILD_FOLDER}`);
   execSync(
-    `git clone -b ${TEMPLATES_BRANCH} --single-branch https://github.com/algolia/create-instantsearch-app.git ${BUILD_FOLDER}`
+    `git clone -b ${TEMPLATES_BRANCH} --single-branch ${GITHUB_REPOSITORY} ${BUILD_FOLDER}`,
+    { stdio: 'ignore' }
   );
 
   const templatesFolder = path.join(__dirname, '../templates');
@@ -49,7 +43,7 @@ async function build() {
 
   console.log('▶︎  Generating templates');
 
-  // Create all demos
+  // Generate all demos
   await Promise.all(
     templates.map(async templateTitle => {
       const {
@@ -95,35 +89,56 @@ async function build() {
   // Change directory to the build folder to execute Git commands
   process.chdir(BUILD_FOLDER);
 
-  // Stage all new demos to Git
-  execSync(`git add -A`);
-
-  // Commit the new demos
-  const commitMessage = 'feat(template): Update templates';
-
-  console.log('▶︎  Commiting');
-  console.log();
-  console.log(`  ${chalk.cyan(commitMessage)}`);
-
-  execSync(`git commit -m "${commitMessage}"`);
-
-  // Push the new demos to the `templates` branch
-  console.log();
-  console.log(`▶︎  Pushing to branch "${chalk.green(TEMPLATES_BRANCH)}"`);
-  execSync(`git push origin ${TEMPLATES_BRANCH}`);
-
-  console.log();
-  console.log(
-    `✅  Templates have been compiled to the branch "${chalk.green(
-      TEMPLATES_BRANCH
-    )}".`
+  const haveTemplatesBeenUpdated = Boolean(
+    execSync('git status -s')
+      .toString()
+      .trim()
   );
-  console.log();
 
+  if (haveTemplatesBeenUpdated) {
+    // Stage all new demos to Git
+    execSync('git add -A');
+
+    // Commit the new demos
+    const commitMessage = 'feat(template): Update templates';
+
+    console.log('▶︎  Commiting');
+    console.log();
+    console.log(`  ${chalk.cyan(commitMessage)}`);
+
+    execSync(`git commit -m "${commitMessage}"`);
+
+    // Push the new demos to the `templates` branch
+    console.log();
+    console.log(`▶︎  Pushing to branch "${chalk.green(TEMPLATES_BRANCH)}"`);
+    execSync(`git push origin ${TEMPLATES_BRANCH}`);
+
+    console.log();
+    console.log(
+      `✅  Templates have been compiled to the branch "${chalk.green(
+        TEMPLATES_BRANCH
+      )}".`
+    );
+  } else {
+    console.log();
+    console.log('ℹ️  No changes made to the templates.');
+  }
+
+  console.log();
   process.chdir('..');
 
-  // Clean the build folder
-  execSync(`rm -rf ${BUILD_FOLDER}`);
+  cleanup();
 }
 
-build().catch(exitWithError);
+build().catch(err => {
+  console.log();
+  console.log('❎  Canceled template compilation.');
+
+  if (err) {
+    console.error(err);
+  }
+
+  execSync(`rm -rf ${BUILD_FOLDER}`);
+
+  process.exit(1);
+});
