@@ -8,17 +8,28 @@
 
 ## Get started
 
-_The tool requires Node ≥ 8._
+> The tool requires Node ≥ 8.
 
 ```
-npx create-instantsearch-app my-app
+npm init instantsearch-app my-app
 cd my-app
 npm start
 ```
 
-> [`npx`](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a tool introduced in `npm@5.2.0` that makes it possible to run CLI tools hosted on the npm registry.
-
 Open http://localhost:3000 to see you app.
+
+<details>
+  <summary>I use an older <code>npm</code> version</summary>
+
+[`npm-init <@scope>` ](https://docs.npmjs.com/cli/init) is only available on recent `npm` versions. If it's not available, install `create-instantsearch-app` globally and run the binary.
+
+```
+npm install --global create-instantsearch-app
+create-instantsearch-app my-app
+cd my-app
+npm start
+```
+</details>
 
 ---
 
