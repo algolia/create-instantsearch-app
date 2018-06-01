@@ -1,5 +1,15 @@
 #!/usr/bin/env node
 
+/*
+ * This script releases compiled templates to the branch `templates`.
+ * This branch is used for CodeSandbox.
+ * Example: https://codesandbox.io/s/github/algolia/create-instantsearch-app/tree/templates/instantsearch.js
+ *
+ * If this is the first time running this script, you need to create a new orphan branch:
+ *   $ git checkout --orphan templates
+ * To be able to push the branch, create a first dummy commit.
+ */
+
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
@@ -53,6 +63,8 @@ async function build() {
         keywords,
       } = require(`${templatesFolder}/${templateTitle}/.template.js`);
       const appPath = `${BUILD_FOLDER}/${templateName}`;
+
+      // Remove the old app
       execSync(`rm -rf ${appPath}`);
 
       const app = createInstantSearchApp(appPath, {
