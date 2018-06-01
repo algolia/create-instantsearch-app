@@ -1,7 +1,7 @@
 const utils = require('./utils');
 
 describe('getOptionsFromArguments', () => {
-  test('with a single command', () => {
+  test('with a single option', () => {
     expect(
       utils.getOptionsFromArguments('cmd --appId APP_ID'.split(' '))
     ).toEqual({
@@ -9,7 +9,7 @@ describe('getOptionsFromArguments', () => {
     });
   });
 
-  test('with a multiple commands', () => {
+  test('with multiple options', () => {
     expect(
       utils.getOptionsFromArguments([
         'cmd',
@@ -39,6 +39,30 @@ describe('getOptionsFromArguments', () => {
 
     expect(
       utils.getOptionsFromArguments(['node', 'index', '--appId', 'APP_ID'])
+    ).toEqual({
+      appId: 'APP_ID',
+    });
+
+    expect(
+      utils.getOptionsFromArguments([
+        'npm',
+        'init',
+        'instantsearch-app',
+        '--appId',
+        'APP_ID',
+      ])
+    ).toEqual({
+      appId: 'APP_ID',
+    });
+
+    expect(
+      utils.getOptionsFromArguments([
+        'yarn',
+        'create',
+        'instantsearch-app',
+        '--appId',
+        'APP_ID',
+      ])
     ).toEqual({
       appId: 'APP_ID',
     });
@@ -101,15 +125,15 @@ describe('isQuestionAsked', () => {
 });
 
 describe('camelCase', () => {
-  test('with single word', () => {
+  test('with a single word', () => {
     expect(utils.camelCase('test')).toBe('test');
   });
 
-  test('with caret-separated word', () => {
+  test('with a caret-separated word', () => {
     expect(utils.camelCase('app-id')).toBe('appId');
   });
 
-  test('with caret-separated twice word', () => {
+  test('with a twice-caret-separated word', () => {
     expect(utils.camelCase('instant-search-js')).toBe('instantSearchJs');
   });
 });

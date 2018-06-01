@@ -59,7 +59,7 @@ describe('Options', () => {
     }).not.toThrow();
   });
 
-  test('with unvalid name', () => {
+  test('with unvalid name throws', () => {
     expect(() => {
       createInstantSearchApp('/tmp/test-app', {
         name: './WrongNpmName',
@@ -101,7 +101,7 @@ describe('Tasks', () => {
   });
 
   describe('install', () => {
-    test('with installation set to `undefined` installs the dependencies', async () => {
+    test('with installation set to `undefined` calls the `install` task', async () => {
       expect.assertions(1);
 
       const app = createInstantSearchApp('/tmp/test-app', {
@@ -113,7 +113,7 @@ describe('Tasks', () => {
       expect(installSpy).toHaveBeenCalledTimes(1);
     });
 
-    test('with installation installs the dependencies gets called', async () => {
+    test('with installation calls the `install` task', async () => {
       expect.assertions(1);
 
       const app = createInstantSearchApp('/tmp/test-app', {
@@ -126,7 +126,7 @@ describe('Tasks', () => {
       expect(installSpy).toHaveBeenCalledTimes(1);
     });
 
-    test('without installation does not install the dependencies', async () => {
+    test('without installation does not call the `install` task', async () => {
       expect.assertions(1);
 
       const app = createInstantSearchApp('/tmp/test-app', {
@@ -226,7 +226,7 @@ describe('Events', () => {
     app.create();
   });
 
-  test('`installation:start` is not emitted if no installation', () => {
+  test('`installation:start` is not emitted if `installation` set to false', () => {
     const app = createInstantSearchApp('/tmp/test-app', {
       template: 'InstantSearch.js',
       installation: false,
@@ -241,7 +241,7 @@ describe('Events', () => {
     app.create();
   });
 
-  test('`installation:end` is not emitted if no installation', () => {
+  test('`installation:end` is not emitted if `installation` set to false', () => {
     const app = createInstantSearchApp('/tmp/test-app', {
       template: 'InstantSearch.js',
       installation: false,
@@ -256,7 +256,7 @@ describe('Events', () => {
     app.create();
   });
 
-  test('`clean:start` is not emitted it does not fail', () => {
+  test('`clean:start` is not emitted if does not fail', () => {
     const app = createInstantSearchApp('/tmp/test-app', {
       template: 'InstantSearch.js',
       installation: false,
