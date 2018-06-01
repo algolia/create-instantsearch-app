@@ -1011,7 +1011,12 @@ exports[`Templates InstantSearch.js File content: index.html 1`] = `
     <h1 class=\\"header-title\\">
       <a href=\\"/\\">instantsearch.js-app</a>
     </h1>
-    <p class=\\"header-subtitle\\">using InstantSearch.js</p>
+    <p class=\\"header-subtitle\\">
+      using
+      <a href=\\"https://community.algolia.com/instantsearch.js/\\">
+        InstantSearch.js
+      </a>
+    </p>
   </header>
 
   <div class=\\"container\\">
@@ -1086,6 +1091,11 @@ exports[`Templates InstantSearch.js File content: src/app.css 1`] = `
   margin-bottom: 1rem;
 }
 
+.header a {
+  color: #fff;
+  text-decoration: none;
+}
+
 .header-title {
   font-size: 1.2rem;
   font-weight: normal;
@@ -1094,11 +1104,6 @@ exports[`Templates InstantSearch.js File content: src/app.css 1`] = `
 .header-title::after {
   content: ' ▸ ';
   padding: 0 0.5rem;
-}
-
-.header-title a {
-  color: #fff;
-  text-decoration: none;
 }
 
 .header-subtitle {
