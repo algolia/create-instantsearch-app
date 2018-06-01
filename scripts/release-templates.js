@@ -101,13 +101,11 @@ async function build() {
   // Change directory to the build folder to execute Git commands
   process.chdir(BUILD_FOLDER);
 
-  const haveTemplatesBeenUpdated = Boolean(
-    execSync('git status -s')
-      .toString()
-      .trim()
-  );
+  const uncommitedChanges = execSync('git status --porcelain')
+    .toString()
+    .trim();
 
-  if (haveTemplatesBeenUpdated) {
+  if (uncommitedChanges) {
     // Stage all new demos to Git
     execSync('git add -A');
 
