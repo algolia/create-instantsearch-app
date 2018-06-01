@@ -19,7 +19,7 @@
     "format": "prettier --write *.{js,md,json}",
     "release-templates": "node ./scripts/release-templates",
     "release": "standard-version && git push --follow-tags origin master && npm publish && conventional-github-releaser --preset angular",
-    "release:beta": "standard-version --prerelease beta && git push --follow-tags origin master && npm publish && conventional-github-releaser --preset angular"
+    "release:beta": "standard-version --prerelease beta && git push --follow-tags origin master && npm publish --tag beta && conventional-github-releaser --preset angular"
   },
   "engines": {
     "node": ">= 8"
