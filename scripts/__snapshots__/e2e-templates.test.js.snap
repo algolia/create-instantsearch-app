@@ -1091,6 +1091,11 @@ exports[`Templates InstantSearch.js File content: src/app.css 1`] = `
   margin-bottom: 1rem;
 }
 
+.header a {
+  color: #fff;
+  text-decoration: none;
+}
+
 .header-title {
   font-size: 1.2rem;
   font-weight: normal;
@@ -1099,11 +1104,6 @@ exports[`Templates InstantSearch.js File content: src/app.css 1`] = `
 .header-title::after {
   content: ' ▸ ';
   padding: 0 0.5rem;
-}
-
-.header-title a {
-  color: #fff;
-  text-decoration: none;
 }
 
 .header-subtitle {
