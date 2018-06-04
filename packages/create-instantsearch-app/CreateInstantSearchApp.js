@@ -2,7 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const EventEmitter = require('events');
 
-const { checkAppName, checkAppPath } = require('../shared/utils');
+const {
+  checkAppName,
+  checkAppPath,
+  getAllTemplates,
+} = require('../shared/utils');
+
+const allTemplates = getAllTemplates();
 
 const OPTIONS = {
   path: {
@@ -19,10 +25,14 @@ const OPTIONS = {
   },
   template: {
     validate(input) {
-      return fs.existsSync(`${input}/.template.js`);
+      return (
+        allTemplates.includes(input) || fs.existsSync(`${input}/.template.js`)
+      );
     },
     getErrorMessage() {
-      return 'The template must contain a configuration file `.template.js`.';
+      return `The template directory must contain a configuration file \`.template.js\` or must be one of those: ${allTemplates.join(
+        ', '
+      )}`;
     },
   },
   installation: {
@@ -52,6 +62,9 @@ class CreateInstantSearchApp extends EventEmitter {
 
     this.config = {
       ...options,
+      template: allTemplates.includes(options.template)
+        ? path.resolve('templates', options.template)
+        : options.template,
       name: options.name || path.basename(appPath),
       installation: options.installation !== false,
       silent: options.silent === true,
