@@ -125,9 +125,7 @@ const questions = [
     message: answers => `${answers.template} version`,
     choices: async answers => {
       const templatePath = getTemplatePath(answers.template);
-      const templateConfig = getAppTemplateConfig(
-        `${templatePath}/.template.js`
-      );
+      const templateConfig = getAppTemplateConfig(templatePath);
       const { libraryName } = templateConfig;
 
       try {
@@ -184,7 +182,7 @@ async function getConfig() {
   let libraryVersion = config.libraryVersion;
 
   if (!libraryVersion) {
-    const templateConfig = getAppTemplateConfig(`${templatePath}/.template.js`);
+    const templateConfig = getAppTemplateConfig(templatePath);
 
     libraryVersion = await fetchLibraryVersions(
       templateConfig.libraryName
@@ -207,7 +205,7 @@ async function run() {
   };
 
   const templatePath = getTemplatePath(config.template);
-  const { tasks } = getAppTemplateConfig(`${templatePath}/.template.js`);
+  const { tasks } = getAppTemplateConfig(templatePath);
   const app = createInstantSearchApp(appPath, config, tasks);
 
   app.on('build:end', data => {

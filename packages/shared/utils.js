@@ -58,12 +58,9 @@ function checkAppPath(appPath) {
   return true;
 }
 
-function getAppTemplateConfig(
-  templateConfigPath,
-  { loadFileFn = require } = {}
-) {
+function getAppTemplateConfig(templatePath, { loadFileFn = require } = {}) {
   try {
-    const templateConfig = loadFileFn(templateConfigPath);
+    const templateConfig = loadFileFn(`${templatePath}/.template.js`);
 
     if (!templateConfig.libraryName) {
       throw new Error(
