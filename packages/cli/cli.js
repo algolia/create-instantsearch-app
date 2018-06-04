@@ -208,54 +208,6 @@ async function run() {
   const { tasks } = getAppTemplateConfig(templatePath);
   const app = createInstantSearchApp(appPath, config, tasks);
 
-  app.on('build:end', data => {
-    console.log();
-    console.log(
-      `🎉  Created ${chalk.bold.cyan(data.config.name)} at ${chalk.green(
-        data.config.path
-      )}.`
-    );
-    console.log();
-  });
-
-  app.on('build:error', data => {
-    console.log();
-    console.error(chalk.red('🛑  The app generation failed.'));
-    console.error(data.err);
-    console.log();
-  });
-
-  app.on('installation:start', () => {
-    console.log();
-    console.log('📦  Installing dependencies...');
-    console.log();
-  });
-
-  app.on('installation:error', data => {
-    console.log();
-    console.log();
-    console.error(chalk.red('📦  Dependencies could not be installed.'));
-    console.log(data.err);
-    console.log();
-    console.log('Try to create the app without installing the dependencies:');
-    console.log(
-      `  ${chalk.cyan('create-instantsearch-app')} ${process.argv
-        .slice(2)
-        .join(' ')} --no-installation`
-    );
-
-    console.log();
-    console.log();
-    console.error(chalk.red('🛑  Aborting the app generation.'));
-    console.log();
-  });
-
-  app.on('clean:start', data => {
-    console.log();
-    console.log(`✨  Cleaning up ${chalk.green(data.config.path)}.`);
-    console.log();
-  });
-
   await app.create();
 }
 
