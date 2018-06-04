@@ -1,15 +1,27 @@
 const fs = require('fs');
+const path = require('path');
 const { execSync } = require('child_process');
 const chalk = require('chalk');
 const validateProjectName = require('validate-npm-package-name');
 const algoliasearch = require('algoliasearch');
 
-function checkAppName(name) {
-  const validationResult = validateProjectName(name);
+const TEMPLATES_FOLDER = path.join(__dirname, '../../templates');
+
+const algoliaConfig = {
+  appId: 'OFCNCOG2CU',
+  apiKey: 'f54e21fa3a2a0160595bb058179bfb1e',
+  indexName: 'npm-search',
+};
+
+const client = algoliasearch(algoliaConfig.appId, algoliaConfig.apiKey);
+const index = client.initIndex(algoliaConfig.indexName);
+
+function checkAppName(appName) {
+  const validationResult = validateProjectName(appName);
 
   if (!validationResult.validForNewPackages) {
     let errorMessage = `Could not create a project called "${chalk.red(
-      name
+      appName
     )}" because of npm naming restrictions.`;
 
     (validationResult.errors || []).forEach(error => {
@@ -22,22 +34,22 @@ function checkAppName(name) {
   return true;
 }
 
-function checkAppPath(path) {
-  if (fs.existsSync(path)) {
-    if (fs.lstatSync(path).isDirectory()) {
-      const files = fs.readdirSync(path);
+function checkAppPath(appPath) {
+  if (fs.existsSync(appPath)) {
+    if (fs.lstatSync(appPath).isDirectory()) {
+      const files = fs.readdirSync(appPath);
 
       if (files && files.length > 0) {
         throw new Error(
           `Could not create project in destination folder "${chalk.red(
-            path
+            appPath
           )}" because it is not empty.`
         );
       }
     } else {
       throw new Error(
         `Could not create project at path ${chalk.red(
-          path
+          appPath
         )} because a file of the same name already exists.`
       );
     }
@@ -46,10 +58,21 @@ function checkAppPath(path) {
   return true;
 }
 
-function checkAppTemplateConfig(templateConfig) {
-  if (!templateConfig.libraryName) {
+function getAppTemplateConfig(templatePath, { loadFileFn = require } = {}) {
+  try {
+    const templateConfig = loadFileFn(`${templatePath}/.template.js`);
+
+    if (!templateConfig.libraryName) {
+      throw new Error(
+        'The key `libraryName` is must be the name of the library to use on npm.'
+      );
+    }
+
+    return templateConfig;
+  } catch (err) {
     throw new Error(
-      'The key `libraryName` is required in the template configuration.'
+      `The template configuration file \`.template.js\` contains errors:
+${err.message}`
     );
   }
 }
@@ -63,14 +86,27 @@ function isYarnAvailable() {
   }
 }
 
-const algoliaConfig = {
-  appId: 'OFCNCOG2CU',
-  apiKey: 'f54e21fa3a2a0160595bb058179bfb1e',
-  indexName: 'npm-search',
-};
+function getAllTemplates() {
+  const templates = fs
+    .readdirSync(TEMPLATES_FOLDER)
+    .map(name => path.join(TEMPLATES_FOLDER, name))
+    .filter(source => fs.lstatSync(source).isDirectory())
+    .map(source => path.basename(source));
 
-const client = algoliasearch(algoliaConfig.appId, algoliaConfig.apiKey);
-const index = client.initIndex(algoliaConfig.indexName);
+  return templates;
+}
+
+function getTemplatePath(templateName) {
+  const supportedTemplates = getAllTemplates();
+
+  // We support the template, let's retrieve its path
+  if (supportedTemplates.includes(templateName)) {
+    return path.join(TEMPLATES_FOLDER, templateName);
+  }
+
+  // This is a custom template, it's a path already
+  return templateName;
+}
 
 async function fetchLibraryVersions(libraryName) {
   const library = await index.getObject(libraryName);
@@ -81,7 +117,9 @@ async function fetchLibraryVersions(libraryName) {
 module.exports = {
   checkAppName,
   checkAppPath,
-  checkAppTemplateConfig,
+  getAppTemplateConfig,
   isYarnAvailable,
   fetchLibraryVersions,
+  getAllTemplates,
+  getTemplatePath,
 };

@@ -77,13 +77,19 @@ describe('checkAppPath', () => {
 describe('checkTemplateConfigFile', () => {
   test('with correct file', () => {
     expect(() => {
-      utils.checkAppTemplateConfig({ libraryName: 'library-name' });
+      const requireMock = jest.fn(() => ({
+        libraryName: 'library-name',
+      }));
+
+      utils.getAppTemplateConfig('my-template', { loadFileFn: requireMock });
     }).not.toThrow();
   });
 
   test('without `libraryName`', () => {
     expect(() => {
-      utils.checkAppTemplateConfig({});
+      const requireMock = jest.fn(() => ({}));
+
+      utils.getAppTemplateConfig('my-template', { loadFileFn: requireMock });
     }).toThrowErrorMatchingSnapshot();
   });
 });

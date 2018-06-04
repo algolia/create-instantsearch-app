@@ -1,3 +1,4 @@
+const path = require('path');
 const CreateInstantSearchApp = require('./CreateInstantSearchApp');
 
 let setupSpy;
@@ -6,14 +7,14 @@ let installSpy;
 let cleanSpy;
 let teardownSpy;
 
-const createInstantSearchApp = (path, config) => {
+const createInstantSearchApp = (appPath, config) => {
   setupSpy = jest.fn(() => Promise.resolve());
   buildSpy = jest.fn(() => Promise.resolve());
   installSpy = jest.fn(() => Promise.resolve());
   cleanSpy = jest.fn(() => Promise.resolve());
   teardownSpy = jest.fn(() => Promise.resolve());
 
-  return new CreateInstantSearchApp(path, config, {
+  return new CreateInstantSearchApp(appPath, config, {
     setup: setupSpy,
     build: buildSpy,
     install: installSpy,
@@ -51,12 +52,20 @@ describe('Options', () => {
     }).not.toThrow();
   });
 
-  test('with path and template does not throw', () => {
+  test('with correct template path does not throw', () => {
     expect(() => {
       createInstantSearchApp('/tmp/test-app', {
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
       });
     }).not.toThrow();
+  });
+
+  test('with wrong template path throws', () => {
+    expect(() => {
+      createInstantSearchApp('/tmp/test-app', {
+        template: path.resolve('./templates'),
+      });
+    }).toThrowErrorMatchingSnapshot();
   });
 
   test('with unvalid name throws', () => {
@@ -85,7 +94,7 @@ describe('Tasks', () => {
       expect(buildSpy).toHaveBeenCalledWith({
         path: '/tmp/test-app',
         name: 'test-app',
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
         installation: true,
         libraryVersion: '2.0.0',
         silent: false,

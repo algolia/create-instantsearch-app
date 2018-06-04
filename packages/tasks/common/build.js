@@ -1,16 +1,12 @@
-const path = require('path');
 const metalsmith = require('metalsmith');
 const inPlace = require('metalsmith-in-place');
 const rename = require('metalsmith-rename');
 const ignore = require('metalsmith-ignore');
 
 module.exports = function build(config) {
-  const templateFolder = path.join(__dirname, '../../../templates');
-  const templatePath = path.join(templateFolder, config.template);
-
   return new Promise((resolve, reject) => {
     metalsmith(__dirname)
-      .source(templatePath)
+      .source(config.template)
       .destination(config.path)
       .metadata(config)
       .use(ignore(['.template.js']))

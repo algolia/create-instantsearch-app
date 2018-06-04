@@ -139,7 +139,7 @@ The app generation follows this lifecycle:
 
 Each task can be plugged to the third argument of the call `createInstantSearchApp(path, options?, tasks?)`.
 
-<h6 align="center">Example</h6>
+<h6 align="center">Tasks example</h6>
 
 ```javascript
 const app = createInstantSearchApp('my-app', { template: 'InstantSearch.js' }, {
@@ -152,6 +152,43 @@ const app = createInstantSearchApp('my-app', { template: 'InstantSearch.js' }, {
 });
 
 app.create();
+```
+
+### Templates
+
+To use your own template, create a file `.template.js` at the root of your template directory. This is the configuration file that `createInstantSearchApp()` reads to retrieve the version of the library to install from `npm` and the [tasks](#tasks) to process.
+
+<h6 align="center">`.template.js`</h6>
+
+```javascript
+const { execSync } = require('child_process');
+
+module.exports = {
+  libraryName: 'algoliasearch-helper',
+  tasks: {
+    install(config) {
+      execSync(`cd ${config.path} && npm install`);
+    },
+    teardown(config) {
+      console.log('Begin by running: npm start');
+    },
+  },
+};
+```
+
+All your template files that need to be injected values should have the `.hbs` extension ([read more on Handlebars](https://handlebarsjs.com)). You can see examples in the [`templates`](templates) folder. Then, pass the path to your template when generating the app.
+
+Using the API:
+
+```javascript
+const app = createInstantSearchApp('my-app', { template: './my-custom-template' });
+app.create();
+```
+
+Using the CLI:
+
+```
+create-instantsearch-app my-app --template ./my-custom-template
 ```
 
 ### Events
