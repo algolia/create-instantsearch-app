@@ -29,6 +29,7 @@ create-instantsearch-app my-app
 cd my-app
 npm start
 ```
+
 </details>
 
 ---
@@ -126,25 +127,29 @@ app.create().then(() => console.log('App generated!'));
 
 The app generation follows this lifecycle:
 
-1. **Setup**
-2. **Build**
-3. **Install**
-4. (**Clean**) *if the project generation fails*
-5. **Teardown**
+1.  **Setup**
+2.  **Build**
+3.  **Install**
+4.  (**Clean**) _if the project generation fails_
+5.  **Teardown**
 
 Each task can be plugged to the third argument of the call `createInstantSearchApp(path, options?, tasks?)`.
 
 <h6 align="center">Tasks example</h6>
 
 ```javascript
-const app = createInstantSearchApp('my-app', { template: 'InstantSearch.js' }, {
-  setup() {
-    // Check the project requirements
-  },
-  teardown() {
-    // Go to the project folder
-  },
-});
+const app = createInstantSearchApp(
+  'my-app',
+  { template: 'InstantSearch.js' },
+  {
+    setup(config) {
+      // Check the project requirements
+    },
+    teardown(config) {
+      // Go to the project folder
+    },
+  }
+);
 
 app.create();
 ```
@@ -176,7 +181,10 @@ All your template files that need to be injected values should have the `.hbs` e
 Using the API:
 
 ```javascript
-const app = createInstantSearchApp('my-app', { template: './my-custom-template' });
+const app = createInstantSearchApp('my-app', {
+  template: './my-custom-template',
+});
+
 app.create();
 ```
 
