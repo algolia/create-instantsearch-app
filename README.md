@@ -77,6 +77,8 @@ Supported templates are:
 - [`Vue InstantSearch`][vue-instantsearch-github]
 - [`Angular InstantSearch`][angular-instantsearch-github]
 
+You can also [create your own template](#templates) and specify its path.
+
 #### `--config`
 
 The `config` flag is handy to automate app generations.
@@ -86,7 +88,7 @@ The `config` flag is handy to automate app generations.
 ```json
 {
   "name": "my-app",
-  "template": "InstantSearch JS",
+  "template": "InstantSearch.js",
   "libraryVersion": "2.8.0",
   "appId": "MY_APP_ID",
   "apiKey": "MY_API_KEY",
