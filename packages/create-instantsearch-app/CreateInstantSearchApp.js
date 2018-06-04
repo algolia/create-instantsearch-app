@@ -4,13 +4,6 @@ const EventEmitter = require('events');
 
 const { checkAppName, checkAppPath } = require('../shared/utils');
 
-const TEMPLATE_FOLDER = path.join(__dirname, '../../templates');
-const TEMPLATES_NAMES = fs
-  .readdirSync(TEMPLATE_FOLDER)
-  .map(name => path.join(TEMPLATE_FOLDER, name))
-  .filter(source => fs.lstatSync(source).isDirectory())
-  .map(source => path.basename(source));
-
 const OPTIONS = {
   path: {
     validate(input) {
@@ -26,12 +19,10 @@ const OPTIONS = {
   },
   template: {
     validate(input) {
-      return TEMPLATES_NAMES.includes(input);
+      return fs.existsSync(`${input}/.template.js`);
     },
     getErrorMessage() {
-      return `The option \`template\` must be one of these: ${TEMPLATES_NAMES.join(
-        ', '
-      )}.`;
+      return 'The template must contain a configuration file `.template.js`.';
     },
   },
   installation: {

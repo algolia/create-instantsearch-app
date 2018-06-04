@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
 const path = require('path');
 const process = require('process');
 const program = require('commander');
@@ -13,8 +12,10 @@ const createInstantSearchApp = require('../create-instantsearch-app');
 const {
   checkAppPath,
   checkAppName,
-  checkAppTemplateConfig,
+  getAppTemplateConfig,
   fetchLibraryVersions,
+  getAllTemplates,
+  getTemplatePath,
 } = require('../shared/utils');
 const { getOptionsFromArguments, isQuestionAsked } = require('./utils');
 const { version } = require('../../package.json');
@@ -86,12 +87,6 @@ try {
   process.exit(1);
 }
 
-const templatesFolder = path.join(__dirname, '../../templates');
-const templates = fs
-  .readdirSync(templatesFolder)
-  .map(name => path.join(templatesFolder, name))
-  .filter(source => fs.lstatSync(source).isDirectory())
-  .map(source => path.basename(source));
 const optionsFromArguments = getOptionsFromArguments(options.rawArgs);
 
 const questions = [
@@ -119,9 +114,9 @@ const questions = [
     type: 'list',
     name: 'template',
     message: 'InstantSearch template',
-    choices: templates,
+    choices: getAllTemplates(),
     validate(input) {
-      return templates.includes(input);
+      return Boolean(input);
     },
   },
   {
@@ -129,10 +124,10 @@ const questions = [
     name: 'libraryVersion',
     message: answers => `${answers.template} version`,
     choices: async answers => {
-      const templateConfig = require(`${templatesFolder}/${
-        answers.template
-      }/.template.js`);
-      checkAppTemplateConfig(templateConfig);
+      const templatePath = getTemplatePath(answers.template);
+      const templateConfig = getAppTemplateConfig(
+        `${templatePath}/.template.js`
+      );
       const { libraryName } = templateConfig;
 
       try {
@@ -185,13 +180,11 @@ async function getConfig() {
     };
   }
 
+  const templatePath = getTemplatePath(config.template);
   let libraryVersion = config.libraryVersion;
 
   if (!libraryVersion) {
-    const templateConfig = require(`${templatesFolder}/${
-      config.template
-    }/.template.js`);
-    checkAppTemplateConfig(templateConfig);
+    const templateConfig = getAppTemplateConfig(`${templatePath}/.template.js`);
 
     libraryVersion = await fetchLibraryVersions(
       templateConfig.libraryName
@@ -201,6 +194,7 @@ async function getConfig() {
   return {
     ...config,
     libraryVersion,
+    template: templatePath,
   };
 }
 
@@ -212,9 +206,8 @@ async function run() {
     installation: program.installation,
   };
 
-  const { tasks } = require(`${templatesFolder}/${
-    config.template
-  }/.template.js`);
+  const templatePath = getTemplatePath(config.template);
+  const { tasks } = getAppTemplateConfig(`${templatePath}/.template.js`);
   const app = createInstantSearchApp(appPath, config, tasks);
 
   app.on('build:end', data => {
