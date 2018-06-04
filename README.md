@@ -191,37 +191,6 @@ Using the CLI:
 create-instantsearch-app my-app --template ./my-custom-template
 ```
 
-### Events
-
-#### Setup
-
-- `setup:start` at the start of the app setup
-- `setup:end` at the end of the app setup
-- `setup:error` if an error occurs during the app setup
-
-#### Build
-
-- `build:start` at the start of the app build
-- `build:end` at the end of the app build
-- `build:error` if an error occurs during the app build
-
-#### Installation
-
-- `installation:start` at the start of the app installation
-- `installation:end` at the end of the app installation
-- `installation:error` if an error occurs during the app installation
-
-#### Clean
-
-- `clean:start` at the start of the app clean up if case the app creation is aborted
-- `clean:end` at the end of the app clean up if case the app creation is aborted
-
-#### Teardown
-
-- `teardown:start` at the start of the app teardown
-- `teardown:end` at the end of the app teardown
-- `teardown:error` if an error occurs during the app teardown
-
 ## License
 
 Create InstantSearch App is [MIT licensed](LICENSE).
