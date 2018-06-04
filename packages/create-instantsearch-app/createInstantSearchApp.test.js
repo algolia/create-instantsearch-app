@@ -6,22 +6,24 @@ let buildSpy;
 let installSpy;
 let cleanSpy;
 let teardownSpy;
+let createInstantSearchApp;
 
-function createInstantSearchApp(appPath, config) {
+beforeEach(() => {
   setupSpy = jest.fn(() => Promise.resolve());
   buildSpy = jest.fn(() => Promise.resolve());
   installSpy = jest.fn(() => Promise.resolve());
   cleanSpy = jest.fn(() => Promise.resolve());
   teardownSpy = jest.fn(() => Promise.resolve());
 
-  return createInstantSearchAppFactory(appPath, config, {
-    setup: setupSpy,
-    build: buildSpy,
-    install: installSpy,
-    clean: cleanSpy,
-    teardown: teardownSpy,
-  });
-}
+  createInstantSearchApp = (appPath, config) =>
+    createInstantSearchAppFactory(appPath, config, {
+      setup: setupSpy,
+      build: buildSpy,
+      install: installSpy,
+      clean: cleanSpy,
+      teardown: teardownSpy,
+    });
+});
 
 describe('Options', () => {
   test('without path throws', () => {
@@ -81,7 +83,7 @@ describe('Options', () => {
 describe('Tasks', () => {
   describe('build', () => {
     test('gets called', async () => {
-      expect.assertions(4);
+      expect.assertions(2);
 
       const app = createInstantSearchApp('/tmp/test-app', {
         template: 'InstantSearch.js',
@@ -99,13 +101,6 @@ describe('Tasks', () => {
         libraryVersion: '2.0.0',
         silent: false,
       });
-
-      expect(installSpy).toHaveBeenCalledTimes(1);
-      expect(installSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          silent: false,
-        })
-      );
     });
   });
 
@@ -146,6 +141,108 @@ describe('Tasks', () => {
       await app.create();
 
       expect(installSpy).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('lifecycle', () => {
+    test('without interruption should not call clean task', async () => {
+      expect.assertions(5);
+
+      const app = createInstantSearchApp('/tmp/test-app', {
+        template: 'InstantSearch.js',
+      });
+
+      await app.create();
+
+      expect(setupSpy).toHaveBeenCalledTimes(1);
+      expect(buildSpy).toHaveBeenCalledTimes(1);
+      expect(installSpy).toHaveBeenCalledTimes(1);
+      expect(cleanSpy).toHaveBeenCalledTimes(0);
+      expect(teardownSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('with failing setup should stop the execution', async () => {
+      expect.assertions(5);
+
+      const failingSetupSpy = jest.fn(() => Promise.reject(new Error()));
+
+      const app = createInstantSearchAppFactory(
+        '/tmp/test-app',
+        {
+          template: 'InstantSearch.js',
+        },
+        {
+          setup: failingSetupSpy,
+          build: buildSpy,
+          install: installSpy,
+          clean: cleanSpy,
+          teardown: teardownSpy,
+        }
+      );
+
+      await app.create();
+
+      expect(failingSetupSpy).toHaveBeenCalledTimes(1);
+      expect(buildSpy).toHaveBeenCalledTimes(0);
+      expect(installSpy).toHaveBeenCalledTimes(0);
+      expect(cleanSpy).toHaveBeenCalledTimes(0);
+      expect(teardownSpy).toHaveBeenCalledTimes(0);
+    });
+
+    test('with failing build should stop the execution', async () => {
+      expect.assertions(5);
+
+      const failingBuildSpy = jest.fn(() => Promise.reject(new Error()));
+
+      const app = createInstantSearchAppFactory(
+        '/tmp/test-app',
+        {
+          template: 'InstantSearch.js',
+        },
+        {
+          setup: setupSpy,
+          build: failingBuildSpy,
+          install: installSpy,
+          clean: cleanSpy,
+          teardown: teardownSpy,
+        }
+      );
+
+      await app.create();
+
+      expect(setupSpy).toHaveBeenCalledTimes(1);
+      expect(failingBuildSpy).toHaveBeenCalledTimes(1);
+      expect(installSpy).toHaveBeenCalledTimes(0);
+      expect(cleanSpy).toHaveBeenCalledTimes(0);
+      expect(teardownSpy).toHaveBeenCalledTimes(0);
+    });
+
+    test('with failing install should call clean task and stop the execution', async () => {
+      expect.assertions(5);
+
+      const failingInstallSpy = jest.fn(() => Promise.reject(new Error()));
+
+      const app = createInstantSearchAppFactory(
+        '/tmp/test-app',
+        {
+          template: 'InstantSearch.js',
+        },
+        {
+          setup: setupSpy,
+          build: buildSpy,
+          install: failingInstallSpy,
+          clean: cleanSpy,
+          teardown: teardownSpy,
+        }
+      );
+
+      await app.create();
+
+      expect(setupSpy).toHaveBeenCalledTimes(1);
+      expect(buildSpy).toHaveBeenCalledTimes(1);
+      expect(failingInstallSpy).toHaveBeenCalledTimes(1);
+      expect(cleanSpy).toHaveBeenCalledTimes(1);
+      expect(teardownSpy).toHaveBeenCalledTimes(0);
     });
   });
 });
