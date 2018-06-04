@@ -1,5 +1,5 @@
 const path = require('path');
-const createInstantSearchAppFactory = require('./CreateInstantSearchApp');
+const createInstantSearchAppFactory = require('./createInstantSearchApp');
 
 let setupSpy;
 let buildSpy;
