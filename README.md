@@ -110,7 +110,6 @@ create-instantsearch-app my-app --config config.json
 ```javascript
 const createInstantSearchApp = require('create-instantsearch-app');
 
-// Initialize the app
 const app = createInstantSearchApp('~/lab/my-app', {
   template: 'InstantSearch.js',
   libraryVersion: '2.0.0',
@@ -118,13 +117,7 @@ const app = createInstantSearchApp('~/lab/my-app', {
   attributesForFaceting: ['keywords'],
 });
 
-// Track the progress
-app.on('build:end', () => {
-  console.log('⚡️ App built');
-});
-
-// Create the app
-app.create();
+app.create().then(() => console.log('App generated!'));
 ```
 
 ### Tasks
