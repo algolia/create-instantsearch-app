@@ -1,3 +1,4 @@
+const path = require('path');
 const CreateInstantSearchApp = require('./CreateInstantSearchApp');
 
 let setupSpy;
@@ -6,14 +7,14 @@ let installSpy;
 let cleanSpy;
 let teardownSpy;
 
-const createInstantSearchApp = (path, config) => {
+const createInstantSearchApp = (appPath, config) => {
   setupSpy = jest.fn(() => Promise.resolve());
   buildSpy = jest.fn(() => Promise.resolve());
   installSpy = jest.fn(() => Promise.resolve());
   cleanSpy = jest.fn(() => Promise.resolve());
   teardownSpy = jest.fn(() => Promise.resolve());
 
-  return new CreateInstantSearchApp(path, config, {
+  return new CreateInstantSearchApp(appPath, config, {
     setup: setupSpy,
     build: buildSpy,
     install: installSpy,
@@ -46,7 +47,7 @@ describe('Options', () => {
   test('with correct template does not throw', () => {
     expect(() => {
       createInstantSearchApp('/tmp/test-app', {
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
       });
     }).not.toThrow();
   });
@@ -54,7 +55,7 @@ describe('Options', () => {
   test('with path and template does not throw', () => {
     expect(() => {
       createInstantSearchApp('/tmp/test-app', {
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
       });
     }).not.toThrow();
   });
@@ -63,7 +64,7 @@ describe('Options', () => {
     expect(() => {
       createInstantSearchApp('/tmp/test-app', {
         name: './WrongNpmName',
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
       });
     }).toThrowErrorMatchingSnapshot();
   });
@@ -75,7 +76,7 @@ describe('Tasks', () => {
       expect.assertions(4);
 
       const app = createInstantSearchApp('/tmp/test-app', {
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
         libraryVersion: '2.0.0',
       });
 
@@ -85,7 +86,7 @@ describe('Tasks', () => {
       expect(buildSpy).toHaveBeenCalledWith({
         path: '/tmp/test-app',
         name: 'test-app',
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
         installation: true,
         libraryVersion: '2.0.0',
         silent: false,
@@ -105,7 +106,7 @@ describe('Tasks', () => {
       expect.assertions(1);
 
       const app = createInstantSearchApp('/tmp/test-app', {
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
       });
 
       await app.create();
@@ -117,7 +118,7 @@ describe('Tasks', () => {
       expect.assertions(1);
 
       const app = createInstantSearchApp('/tmp/test-app', {
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
         installation: true,
       });
 
@@ -130,7 +131,7 @@ describe('Tasks', () => {
       expect.assertions(1);
 
       const app = createInstantSearchApp('/tmp/test-app', {
-        template: 'InstantSearch.js',
+        template: path.resolve('./templates/InstantSearch.js'),
         installation: false,
       });
 
@@ -144,7 +145,7 @@ describe('Tasks', () => {
 describe('Events', () => {
   test('`setup:start` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
     });
 
     app.on('setup:start', () => {
@@ -156,7 +157,7 @@ describe('Events', () => {
 
   test('`setup:end` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
     });
 
     app.on('setup:end', () => {
@@ -168,7 +169,7 @@ describe('Events', () => {
 
   test('`teardown:start` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
     });
 
     app.on('teardown:start', () => {
@@ -180,7 +181,7 @@ describe('Events', () => {
 
   test('`teardown:end` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
     });
 
     app.on('teardown:end', () => {
@@ -192,7 +193,7 @@ describe('Events', () => {
 
   test('`build:start` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
     });
 
     app.on('build:start', () => {
@@ -204,7 +205,7 @@ describe('Events', () => {
 
   test('`build:end` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
     });
 
     app.on('build:end', () => {
@@ -216,7 +217,7 @@ describe('Events', () => {
 
   test('`installation:start` is emitted', done => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
     });
 
     app.on('installation:start', () => {
@@ -228,7 +229,7 @@ describe('Events', () => {
 
   test('`installation:start` is not emitted if `installation` set to false', () => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
       installation: false,
     });
 
@@ -243,7 +244,7 @@ describe('Events', () => {
 
   test('`installation:end` is not emitted if `installation` set to false', () => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
       installation: false,
     });
 
@@ -258,7 +259,7 @@ describe('Events', () => {
 
   test('`clean:start` is not emitted if does not fail', () => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
       installation: false,
     });
 
@@ -273,7 +274,7 @@ describe('Events', () => {
 
   test('`clean:end` is not emitted it does not fail', () => {
     const app = createInstantSearchApp('/tmp/test-app', {
-      template: 'InstantSearch.js',
+      template: path.resolve('./templates/InstantSearch.js'),
       installation: false,
     });
 
