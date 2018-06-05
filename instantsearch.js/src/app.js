@@ -16,7 +16,11 @@ search.addWidget(
   instantsearch.widgets.hits({
     container: '#hits',
     templates: {
-      item: '<div class="hit">{{{_highlightResult.name.value}}}</div>',
+      item: `
+        <div>
+          <header>{{{_highlightResult.name.value}}}</header>
+        </div>
+      `,
     },
   })
 );
