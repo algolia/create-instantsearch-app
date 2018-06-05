@@ -57,7 +57,7 @@ function checkConfig(config) {
   });
 }
 
-const noop = () => {};
+function noop() {}
 
 function createInstantSearchApp(appPath, options = {}, tasks = {}) {
   const config = {
