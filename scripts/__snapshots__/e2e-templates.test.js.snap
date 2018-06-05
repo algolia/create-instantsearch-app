@@ -1167,7 +1167,11 @@ search.addWidget(
   instantsearch.widgets.hits({
     container: '#hits',
     templates: {
-      item: '<div class=\\"hit\\">{{{_highlightResult.mainAttribute.value}}}</div>',
+      item: \`
+        <div>
+          <header>{{{_highlightResult.mainAttribute.value}}}</header>
+        </div>
+      \`,
     },
   })
 );
@@ -1608,7 +1612,7 @@ exports[`Templates Vue InstantSearch File content: package.json 1`] = `
   },
   \\"dependencies\\": {
     \\"vue\\": \\"^2.5.16\\",
-    \\"vue-instantsearch\\": \\"^1.6.0\\"
+    \\"vue-instantsearch\\": \\"^1.0.0\\"
   },
   \\"devDependencies\\": {
     \\"babel-core\\": \\"6.26.0\\",

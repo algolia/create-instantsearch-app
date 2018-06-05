@@ -20,7 +20,11 @@ search.addWidget(
     container: '#hits',
     {{#if mainAttribute}}
     templates: {
-      item: '<div class="hit">\{{{_highlightResult.{{mainAttribute}}.value}}}</div>',
+      item: `
+        <div>
+          <header>\{{{_highlightResult.{{mainAttribute}}.value}}}</header>
+        </div>
+      `,
     },
     {{/if}}
   })
