@@ -13,7 +13,7 @@ module.exports = function install(config) {
   process.chdir(config.path);
 
   try {
-    execSync('pod update', {
+    execSync('pod install', {
       stdio: config.silent ? 'ignore' : 'inherit',
     });
   } catch (err) {

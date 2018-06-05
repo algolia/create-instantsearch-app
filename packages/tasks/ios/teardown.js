@@ -10,6 +10,9 @@ module.exports = function teardown(config) {
         )}.`
       );
       console.log();
+
+      console.log(`Begin by open the \`${chalk.green('xcworkspace')}\` file.`);
+      console.log();
     } catch (err) {
       console.log();
       console.error(chalk.red('🛑  The app generation failed.'));
