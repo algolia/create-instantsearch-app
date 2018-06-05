@@ -18,8 +18,8 @@
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write *.{js,md,json}",
     "release-templates": "node ./scripts/release-templates",
-    "release": "standard-version && git push --follow-tags origin master && npm publish && conventional-github-releaser --preset angular",
-    "release:beta": "standard-version --prerelease beta && git push --follow-tags origin master && npm publish --tag beta && conventional-github-releaser --preset angular"
+    "release": "standard-version --tag-prefix '' && git push --follow-tags origin master && npm publish && conventional-github-releaser --preset angular && npm run release-templates",
+    "release:beta": "standard-version --prerelease beta --tag-prefix '' && git push --follow-tags origin master && npm publish --tag beta && conventional-github-releaser --preset angular && npm run release-templates"
   },
   "engines": {
     "node": ">= 8"
