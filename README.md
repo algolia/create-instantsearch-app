@@ -29,6 +29,7 @@ create-instantsearch-app my-app
 cd my-app
 npm start
 ```
+
 </details>
 
 ---
@@ -77,6 +78,8 @@ Supported templates are:
 - [`Vue InstantSearch`][vue-instantsearch-github]
 - [`Angular InstantSearch`][angular-instantsearch-github]
 
+You can also [create your own template](#templates) and specify its path.
+
 #### `--config`
 
 The `config` flag is handy to automate app generations.
@@ -86,7 +89,7 @@ The `config` flag is handy to automate app generations.
 ```json
 {
   "name": "my-app",
-  "template": "InstantSearch JS",
+  "template": "InstantSearch.js",
   "libraryVersion": "2.8.0",
   "appId": "MY_APP_ID",
   "apiKey": "MY_API_KEY",
@@ -110,7 +113,6 @@ create-instantsearch-app my-app --config config.json
 ```javascript
 const createInstantSearchApp = require('create-instantsearch-app');
 
-// Initialize the app
 const app = createInstantSearchApp('~/lab/my-app', {
   template: 'InstantSearch.js',
   libraryVersion: '2.0.0',
@@ -118,38 +120,36 @@ const app = createInstantSearchApp('~/lab/my-app', {
   attributesForFaceting: ['keywords'],
 });
 
-// Track the progress
-app.on('build:end', () => {
-  console.log('⚡️ App built');
-});
-
-// Create the app
-app.create();
+app.create().then(() => console.log('App generated!'));
 ```
 
 ### Tasks
 
 The app generation follows this lifecycle:
 
-1. **Setup**
-2. **Build**
-3. **Install**
-4. (**Clean**) *if the project generation fails*
-5. **Teardown**
+1.  **Setup**
+2.  **Build**
+3.  **Install**
+4.  (**Clean**) _if the project generation fails_
+5.  **Teardown**
 
 Each task can be plugged to the third argument of the call `createInstantSearchApp(path, options?, tasks?)`.
 
 <h6 align="center">Tasks example</h6>
 
 ```javascript
-const app = createInstantSearchApp('my-app', { template: 'InstantSearch.js' }, {
-  setup() {
-    // Check the project requirements
-  },
-  teardown() {
-    // Go to the project folder
-  },
-});
+const app = createInstantSearchApp(
+  'my-app',
+  { template: 'InstantSearch.js' },
+  {
+    setup(config) {
+      // Check the project requirements
+    },
+    teardown(config) {
+      // Go to the project folder
+    },
+  }
+);
 
 app.create();
 ```
@@ -181,7 +181,10 @@ All your template files that need to be injected values should have the `.hbs` e
 Using the API:
 
 ```javascript
-const app = createInstantSearchApp('my-app', { template: './my-custom-template' });
+const app = createInstantSearchApp('my-app', {
+  template: './my-custom-template',
+});
+
 app.create();
 ```
 
@@ -190,37 +193,6 @@ Using the CLI:
 ```
 create-instantsearch-app my-app --template ./my-custom-template
 ```
-
-### Events
-
-#### Setup
-
-- `setup:start` at the start of the app setup
-- `setup:end` at the end of the app setup
-- `setup:error` if an error occurs during the app setup
-
-#### Build
-
-- `build:start` at the start of the app build
-- `build:end` at the end of the app build
-- `build:error` if an error occurs during the app build
-
-#### Installation
-
-- `installation:start` at the start of the app installation
-- `installation:end` at the end of the app installation
-- `installation:error` if an error occurs during the app installation
-
-#### Clean
-
-- `clean:start` at the start of the app clean up if case the app creation is aborted
-- `clean:end` at the end of the app clean up if case the app creation is aborted
-
-#### Teardown
-
-- `teardown:start` at the start of the app teardown
-- `teardown:end` at the end of the app teardown
-- `teardown:error` if an error occurs during the app teardown
 
 ## License
 

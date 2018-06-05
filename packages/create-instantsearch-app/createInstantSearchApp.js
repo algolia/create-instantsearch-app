@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const EventEmitter = require('events');
+const buildTask = require('../tasks/common/build');
+const cleanTask = require('../tasks/common/clean');
 
 const {
   checkAppName,
@@ -56,82 +57,58 @@ function checkConfig(config) {
   });
 }
 
-class CreateInstantSearchApp extends EventEmitter {
-  constructor(appPath, options, tasks) {
-    super();
+function noop() {}
 
-    this.config = {
-      ...options,
-      template: allTemplates.includes(options.template)
-        ? path.resolve('templates', options.template)
-        : options.template,
-      name: options.name || path.basename(appPath),
-      installation: options.installation !== false,
-      silent: options.silent === true,
-      path: appPath ? path.resolve(appPath) : '',
-    };
-    this.tasks = tasks;
+function createInstantSearchApp(appPath, options = {}, tasks = {}) {
+  const config = {
+    ...options,
+    template: allTemplates.includes(options.template)
+      ? path.resolve('templates', options.template)
+      : options.template,
+    name: options.name || path.basename(appPath),
+    installation: options.installation !== false,
+    silent: options.silent === true,
+    path: appPath ? path.resolve(appPath) : '',
+  };
 
-    checkConfig(this.config);
-  }
+  checkConfig(config);
 
-  async create() {
-    const config = this.config;
-    const noop = () => {};
-    const {
-      setup = noop,
-      build = require('../tasks/common/build'),
-      install = noop,
-      clean = require('../tasks/common/clean'),
-      teardown = noop,
-    } = this.tasks;
+  const {
+    setup = noop,
+    build = buildTask,
+    install = noop,
+    clean = cleanTask,
+    teardown = noop,
+  } = tasks;
 
+  async function create() {
     try {
-      this.emit('setup:start', { config });
       await setup(config);
-      this.emit('setup:end', { config });
     } catch (err) {
-      this.emit('setup:error', { err, config });
-
       return;
     }
 
     try {
-      this.emit('build:start', { config });
       await build(config);
 
       if (config.installation) {
         try {
-          this.emit('installation:start', { config });
           await install(config);
-          this.emit('installation:end', { config });
         } catch (err) {
-          this.emit('installation:error', { err, config });
-
-          this.emit('clean:start', { config });
           await clean(config);
-          this.emit('clean:end', { config });
-
           return;
         }
       }
-      this.emit('build:end', { config });
     } catch (err) {
-      this.emit('build:error', { err, config });
-
       return;
     }
 
-    try {
-      this.emit('teardown:start', { config });
-      await teardown(config);
-      this.emit('teardown:end', { config });
-    } catch (err) {
-      this.emit('teardown:error', { err, config });
-
-      return;
-    }
+    await teardown(config);
   }
+
+  return {
+    create,
+  };
 }
 
-module.exports = CreateInstantSearchApp;
+module.exports = createInstantSearchApp;
