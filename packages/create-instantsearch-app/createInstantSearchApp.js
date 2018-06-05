@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const buildTask = require('../tasks/common/build');
+const cleanTask = require('../tasks/common/clean');
 
 const {
   checkAppName,
@@ -73,9 +75,9 @@ function createInstantSearchApp(appPath, options = {}, tasks = {}) {
 
   const {
     setup = noop,
-    build = require('../tasks/common/build'),
+    build = buildTask,
     install = noop,
-    clean = require('../tasks/common/clean'),
+    clean = cleanTask,
     teardown = noop,
   } = tasks;
 
