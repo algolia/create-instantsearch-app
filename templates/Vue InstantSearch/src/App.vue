@@ -19,12 +19,14 @@
         index-name="{{indexName}}"
       >
         <div class="container-app">
+          {{#if attributesForFaceting.length}}
           <div class="filters">
             {{#each attributesForFaceting}}
             <ais-refinement-list attribute-name="{{this}}"></ais-refinement-list>
             {{/each}}
           </div>
 
+          {{/if}}
           <div class="search-container">
             <ais-search-box
               placeholder="{{searchPlaceholder}}"
