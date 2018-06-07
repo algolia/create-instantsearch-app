@@ -37,12 +37,14 @@ class App extends Component {
             indexName="{{indexName}}"
           >
             <div className="container-app">
+              {{#if attributesForFaceting.length}}
               <div className="filters">
                 {{#each attributesForFaceting}}
                 <RefinementList attribute="{{this}}" />
                 {{/each}}
               </div>
 
+              {{/if}}
               <div className="search-container">
                 <SearchBox className="searchBox" placeholder="{{searchPlaceholder}}" />
                 <Hits hitComponent={Hit} />
