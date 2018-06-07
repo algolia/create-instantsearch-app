@@ -16,7 +16,7 @@ module.exports = function build(config) {
         rename([
           [/\.html$/, '.html.hbs'],
           [/\.css$/, '.css.hbs'],
-          [/^((?!.eslintrc).)*.js$/, '.js.hbs'],
+          [/\.js$/, '.js.hbs'],
           [/\.ts$/, '.ts.hbs'],
           [/\.vue$/, '.vue.hbs'],
           [/\.md$/, '.md.hbs'],
@@ -26,6 +26,7 @@ module.exports = function build(config) {
           // when requiring the file `.template.js` in end-to-end tests
           // and rename it `.babelrc` afterwards
           ['.babelrc.template', '.babelrc'],
+          ['.eslintrc.js.hbs', '.eslintrc.js'],
         ])
       )
       .use(inPlace())
