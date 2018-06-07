@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "parcel index.html --port 3000",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
