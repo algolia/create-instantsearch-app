@@ -13,12 +13,14 @@
 <div class="container">
   <ais-instantsearch [config]="config">
     <div class="container-app">
+      {{#if attributesForFaceting.length}}
       <div class="filters">
         {{#each attributesForFaceting}}
         <ais-refinement-list attribute="{{this}}"></ais-refinement-list>
         {{/each}}
       </div>
 
+      {{/if}}
       <div class="search-container">
         <div class="searchBox">
           <ais-search-box placeholder="{{searchPlaceholder}}"></ais-search-box>
