@@ -19,9 +19,7 @@
     "format": "prettier --write *.{js,md,json}",
     "release-templates": "node ./scripts/release-templates",
     "release": "release-it",
-    "release:beta": "release-it --preRelease=beta",
-    "release:test": "npm run release -- --dry-run",
-    "release:beta:test": "npm run release:beta -- --dry-run"
+    "release:beta": "release-it --preRelease=beta"
   },
   "files": [
     "index.js",
