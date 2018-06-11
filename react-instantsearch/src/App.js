@@ -32,13 +32,13 @@ class App extends Component {
             apiKey="6be0576ff61c053d5f9a3225e2a90f76"
             indexName="instant_search"
           >
-            <div className="container-app">
-              <div className="filters">
+            <div className="search-panel">
+              <div className="search-panel__filters">
                 <RefinementList attribute="brand" />
               </div>
 
-              <div className="search-container">
-                <SearchBox className="searchBox" placeholder="" />
+              <div className="search-panel__results">
+                <SearchBox className="searchbox" placeholder="" />
                 <Hits hitComponent={Hit} />
 
                 <div className="pagination">

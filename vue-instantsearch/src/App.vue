@@ -18,12 +18,12 @@
         api-key="6be0576ff61c053d5f9a3225e2a90f76"
         index-name="instant_search"
       >
-        <div class="container-app">
-          <div class="filters">
+        <div class="search-panel">
+          <div class="search-panel__filters">
             <ais-refinement-list attribute-name="brand"></ais-refinement-list>
           </div>
 
-          <div class="search-container">
+          <div class="search-panel__results">
             <ais-search-box
               placeholder=""
               class="ais-SearchBox-form"
@@ -118,13 +118,19 @@ em {
   padding: 1rem;
 }
 
-.container-app {
-  display: grid;
-  grid-template-columns: 20% 75%;
-  grid-gap: 5%;
+.search-panel {
+  display: flex;
 }
 
-.searchBox {
+.search-panel__filters {
+  flex: 1;
+}
+
+.search-panel__results {
+  flex: 3;
+}
+
+.searchbox {
   margin-bottom: 2rem;
 }
 

@@ -8,7 +8,7 @@ const search = instantsearch({
 
 search.addWidget(
   instantsearch.widgets.searchBox({
-    container: '#searchBox',
+    container: '#searchbox',
   })
 );
 
