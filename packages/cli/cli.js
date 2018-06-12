@@ -89,26 +89,6 @@ const optionsFromArguments = getOptionsFromArguments(options.rawArgs);
 
 const questions = [
   {
-    type: 'input',
-    name: 'appId',
-    message: 'Application ID',
-  },
-  {
-    type: 'input',
-    name: 'apiKey',
-    message: 'Search API key',
-  },
-  {
-    type: 'input',
-    name: 'indexName',
-    message: 'Index name',
-  },
-  {
-    type: 'input',
-    name: 'mainAttribute',
-    message: 'Main searchable attribute',
-  },
-  {
     type: 'list',
     name: 'template',
     message: 'InstantSearch template',
@@ -159,6 +139,21 @@ const questions = [
         ];
       }
     },
+  },
+  {
+    type: 'input',
+    name: 'appId',
+    message: 'Application ID',
+  },
+  {
+    type: 'input',
+    name: 'apiKey',
+    message: 'Search API key',
+  },
+  {
+    type: 'input',
+    name: 'indexName',
+    message: 'Index name',
   },
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
