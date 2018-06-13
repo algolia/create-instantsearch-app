@@ -1,6 +1,4 @@
 const algoliasearch = require('algoliasearch');
-const latestSemver = require('latest-semver');
-const { fetchLibraryVersions } = require('../shared/utils');
 
 function camelCase(string) {
   return string.replace(/-([a-z])/g, str => str[1].toUpperCase());
