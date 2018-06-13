@@ -1,4 +1,12 @@
 const algoliasearch = require('algoliasearch');
+const latestSemver = require('latest-semver');
+const loadJsonFile = require('load-json-file');
+
+const {
+  getAppTemplateConfig,
+  fetchLibraryVersions,
+  getTemplatePath,
+} = require('../shared/utils');
 
 function camelCase(string) {
   return string.replace(/-([a-z])/g, str => str[1].toUpperCase());
@@ -69,9 +77,41 @@ function isQuestionAsked({ question, args }) {
   return true;
 }
 
+async function getConfiguration({
+  options = {},
+  answers = {},
+  loadJsonFileFn = loadJsonFile,
+} = {}) {
+  const config = options.config
+    ? await loadJsonFileFn(options.config) // From configuration file given as an argument
+    : { ...options, ...answers }; // From the arguments and the prompt
+
+  if (!config.template) {
+    throw new Error('The template is required in the config.');
+  }
+
+  const templatePath = getTemplatePath(config.template);
+  let { libraryVersion } = config;
+
+  if (!libraryVersion) {
+    const templateConfig = getAppTemplateConfig(templatePath);
+
+    libraryVersion = await fetchLibraryVersions(
+      templateConfig.libraryName
+    ).then(latestSemver);
+  }
+
+  return {
+    ...config,
+    libraryVersion,
+    template: templatePath,
+  };
+}
+
 module.exports = {
   camelCase,
   getOptionsFromArguments,
   getAttributesFromAnswers,
   isQuestionAsked,
+  getConfiguration,
 };

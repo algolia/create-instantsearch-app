@@ -4,7 +4,6 @@ const program = require('commander');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
-const loadJsonFile = require('load-json-file');
 
 const createInstantSearchApp = require('../create-instantsearch-app');
 const {
@@ -19,6 +18,7 @@ const {
   getOptionsFromArguments,
   getAttributesFromAnswers,
   isQuestionAsked,
+  getConfiguration,
 } = require('./utils');
 const { version } = require('../../package.json');
 
@@ -171,44 +171,17 @@ const questions = [
   },
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
 
-async function getConfig() {
-  let config;
-
-  if (optionsFromArguments.config) {
-    // Get config from configuration file given as an argument
-    config = await loadJsonFile(optionsFromArguments.config);
-  } else {
-    // Get config from the arguments and the prompt
-    config = {
-      ...optionsFromArguments,
-      ...(await inquirer.prompt(questions)),
-    };
-  }
-
-  const templatePath = getTemplatePath(config.template);
-  let libraryVersion = config.libraryVersion;
-
-  if (!libraryVersion) {
-    const templateConfig = getAppTemplateConfig(templatePath);
-
-    libraryVersion = await fetchLibraryVersions(
-      templateConfig.libraryName
-    ).then(latestSemver);
-  }
-
-  return {
-    ...config,
-    libraryVersion,
-    name: config.name || appName,
-    template: templatePath,
-  };
-}
-
 async function run() {
   console.log(`Creating a new InstantSearch app in ${chalk.green(appPath)}.`);
 
   const config = {
-    ...(await getConfig()),
+    ...(await getConfiguration({
+      options: {
+        ...optionsFromArguments,
+        name: appName,
+      },
+      answers: await inquirer.prompt(questions),
+    })),
     installation: program.installation,
   };
 
