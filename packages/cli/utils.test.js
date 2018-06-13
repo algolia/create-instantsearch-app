@@ -79,7 +79,52 @@ describe('getOptionsFromArguments', () => {
   });
 });
 
-describe('isQuestionAsked', () => {
+describe('getAttributesFromAnswers', () => {
+  const algoliasearchSuccessFn = () => ({
+    search: jest.fn(() => ({
+      hits: [
+        {
+          _highlightResult: {
+            brand: 'brand',
+            description: 'description',
+            name: 'name',
+            title: 'title',
+          },
+        },
+      ],
+    })),
+  });
+
+  const algoliasearchFailureFn = () => ({
+    search: jest.fn(() => {
+      throw new Error();
+    }),
+  });
+
+  test('with search success should fetch attributes', async () => {
+    const attributes = await utils.getAttributesFromAnswers({
+      appId: 'appId',
+      apiKey: 'apiKey',
+      indexName: 'indexName',
+      algoliasearchFn: algoliasearchSuccessFn,
+    });
+
+    expect(attributes).toEqual(['title', 'name', 'description', 'brand']);
+  });
+
+  test('with search failure should return default attributes', async () => {
+    const attributes = await utils.getAttributesFromAnswers({
+      appId: 'appId',
+      apiKey: 'apiKey',
+      indexName: 'indexName',
+      algoliasearchFn: algoliasearchFailureFn,
+    });
+
+    expect(attributes).toEqual(['title', 'name', 'description']);
+  });
+});
+
+test('isQuestionAsked', () => {
   expect(
     utils.isQuestionAsked({
       question: { name: 'appId', validate: input => Boolean(input) },
