@@ -62,6 +62,10 @@ async function getAttributesFromAnswers({
 }
 
 function isQuestionAsked({ question, args }) {
+  if (args.config) {
+    return false;
+  }
+
   for (const optionName in args) {
     if (question.name === optionName) {
       // Skip if the arg in the command is valid
