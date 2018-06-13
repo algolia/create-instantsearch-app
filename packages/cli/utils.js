@@ -1,3 +1,7 @@
+const algoliasearch = require('algoliasearch');
+const latestSemver = require('latest-semver');
+const { fetchLibraryVersions } = require('../shared/utils');
+
 function camelCase(string) {
   return string.replace(/-([a-z])/g, str => str[1].toUpperCase());
 }
@@ -22,6 +26,35 @@ function getOptionsFromArguments(rawArgs) {
   }, {});
 }
 
+async function getAttributesFromAnswers({
+  appId,
+  apiKey,
+  indexName,
+  algoliasearchFn = algoliasearch,
+} = {}) {
+  const client = algoliasearchFn(appId, apiKey);
+  const defaultAttributes = ['title', 'name', 'description'];
+  let attributes = [];
+
+  try {
+    const { hits } = await client.search({ indexName, hitsPerPage: 1 });
+    const [firstHit] = hits;
+    const highlightedAttributes = Object.keys(firstHit._highlightResult);
+    attributes = [
+      ...new Set([
+        ...defaultAttributes.map(
+          attribute => highlightedAttributes.includes(attribute) && attribute
+        ),
+        ...highlightedAttributes,
+      ]),
+    ];
+  } catch (err) {
+    attributes = defaultAttributes;
+  }
+
+  return attributes;
+}
+
 function isQuestionAsked({ question, args }) {
   for (const optionName in args) {
     if (question.name === optionName) {
@@ -41,5 +74,6 @@ function isQuestionAsked({ question, args }) {
 module.exports = {
   camelCase,
   getOptionsFromArguments,
+  getAttributesFromAnswers,
   isQuestionAsked,
 };

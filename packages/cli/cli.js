@@ -5,7 +5,6 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
 const loadJsonFile = require('load-json-file');
-const algoliasearch = require('algoliasearch');
 
 const createInstantSearchApp = require('../create-instantsearch-app');
 const {
@@ -16,7 +15,11 @@ const {
   getAllTemplates,
   getTemplatePath,
 } = require('../shared/utils');
-const { getOptionsFromArguments, isQuestionAsked } = require('./utils');
+const {
+  getOptionsFromArguments,
+  getAttributesFromAnswers,
+  isQuestionAsked,
+} = require('./utils');
 const { version } = require('../../package.json');
 
 let appPath;
@@ -74,7 +77,8 @@ if (!appPath) {
   process.exit(1);
 }
 
-const appName = path.basename(appPath);
+const optionsFromArguments = getOptionsFromArguments(options.rawArgs);
+const appName = optionsFromArguments.name || path.basename(appPath);
 
 try {
   checkAppPath(appPath);
@@ -85,8 +89,6 @@ try {
 
   process.exit(1);
 }
-
-const optionsFromArguments = getOptionsFromArguments(options.rawArgs);
 
 const questions = [
   {
@@ -164,24 +166,7 @@ const questions = [
     type: 'list',
     name: 'mainAttribute',
     message: 'Attribute to display',
-    choices: async answers => {
-      const client = algoliasearch(answers.appId, answers.apiKey);
-      const index = client.initIndex(answers.indexName);
-      const defaultAttributes = ['title', 'name', 'description'];
-      let attributes = [];
-
-      try {
-        const { hits } = await index.search({ hitsPerPage: 1 });
-        const [firstHit] = hits;
-        attributes = Object.keys(firstHit._highlightResult).sort(
-          value => !defaultAttributes.includes(value)
-        );
-      } catch (err) {
-        attributes = defaultAttributes;
-      }
-
-      return attributes;
-    },
+    choices: async answers => await getAttributesFromAnswers(answers),
     when: ({ appId, apiKey, indexName }) => appId && apiKey && indexName,
   },
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
