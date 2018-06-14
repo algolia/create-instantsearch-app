@@ -85,6 +85,7 @@ function createInstantSearchApp(appPath, options = {}, tasks = {}) {
     try {
       await setup(config);
     } catch (err) {
+      console.error(err);
       return;
     }
 
@@ -95,11 +96,13 @@ function createInstantSearchApp(appPath, options = {}, tasks = {}) {
         try {
           await install(config);
         } catch (err) {
+          console.error(err);
           await clean(config);
           return;
         }
       }
     } catch (err) {
+      console.error(err);
       return;
     }
 
