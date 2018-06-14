@@ -166,8 +166,16 @@ const questions = [
   {
     type: 'list',
     name: 'mainAttribute',
-    message: 'Attribute to display',
-    choices: async answers => await getAttributesFromAnswers(answers),
+    message: 'Attribute to highlight',
+    choices: async answers => [
+      {
+        name: 'None',
+        value: undefined,
+      },
+      new inquirer.Separator(),
+      new inquirer.Separator('From your index'),
+      ...(await getAttributesFromAnswers(answers)),
+    ],
     when: ({ appId, apiKey, indexName }) => appId && apiKey && indexName,
   },
 ].filter(question => isQuestionAsked({ question, args: optionsFromArguments }));
