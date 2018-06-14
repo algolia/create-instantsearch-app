@@ -111,17 +111,24 @@ const app = createInstantSearchApp('~/lab/my-app', {
 app.create().then(() => console.log('App generated!'));
 ```
 
-### Tasks
+### Lifecycle
 
 The app generation follows this lifecycle:
+
+![Lifecycle](https://user-images.githubusercontent.com/6137112/41421858-f838c2a6-6ff7-11e8-8cef-4cc07f1f4f44.png)
+
+<details>
+  <summary>Alternative text</summary>
 
 1.  **Setup**
 2.  **Build**
 3.  **Install**
-4.  (**Clean**) _if the project generation fails_
+4.  (**Clean**) _if the installation fails_
 5.  **Teardown**
 
-Each task can be plugged to the third argument of the call `createInstantSearchApp(path, options?, tasks?)`.
+</details>
+
+Each task can be plugged to the third argument of `createInstantSearchApp(path, options?, tasks?)` and is passed the configuration of the app.
 
 <h6 align="center">Tasks example</h6>
 
