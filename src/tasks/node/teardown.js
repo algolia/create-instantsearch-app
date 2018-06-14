@@ -1,6 +1,6 @@
 const path = require('path');
 const chalk = require('chalk');
-const { isYarnAvailable } = require('../../shared/utils');
+const { isYarnAvailable } = require('../../utils');
 
 module.exports = function teardown(config) {
   if (!config.silent) {

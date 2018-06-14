@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const validateProjectName = require('validate-npm-package-name');
 const algoliasearch = require('algoliasearch');
 
-const TEMPLATES_FOLDER = path.join(__dirname, '../../templates');
+const TEMPLATES_FOLDER = path.join(__dirname, '../templates');
 
 const algoliaConfig = {
   appId: 'OFCNCOG2CU',

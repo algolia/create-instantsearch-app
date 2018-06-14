@@ -6,7 +6,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
 
-const createInstantSearchApp = require('../create-instantsearch-app');
+const createInstantSearchApp = require('../api');
 const {
   checkAppPath,
   checkAppName,
@@ -14,7 +14,7 @@ const {
   fetchLibraryVersions,
   getAllTemplates,
   getTemplatePath,
-} = require('../shared/utils');
+} = require('../utils');
 const {
   getOptionsFromArguments,
   getAttributesFromAnswers,

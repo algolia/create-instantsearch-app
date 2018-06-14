@@ -3,11 +3,7 @@ const path = require('path');
 const buildTask = require('../tasks/common/build');
 const cleanTask = require('../tasks/common/clean');
 
-const {
-  checkAppName,
-  checkAppPath,
-  getAllTemplates,
-} = require('../shared/utils');
+const { checkAppName, checkAppPath, getAllTemplates } = require('../utils');
 
 const allTemplates = getAllTemplates();
 
@@ -63,7 +59,7 @@ function createInstantSearchApp(appPath, options = {}, tasks = {}) {
   const config = {
     ...options,
     template: allTemplates.includes(options.template)
-      ? path.resolve('templates', options.template)
+      ? path.resolve('src/templates', options.template)
       : options.template,
     name: options.name || path.basename(appPath),
     installation: options.installation !== false,
@@ -85,7 +81,6 @@ function createInstantSearchApp(appPath, options = {}, tasks = {}) {
     try {
       await setup(config);
     } catch (err) {
-      console.error(err);
       return;
     }
 
@@ -96,13 +91,11 @@ function createInstantSearchApp(appPath, options = {}, tasks = {}) {
         try {
           await install(config);
         } catch (err) {
-          console.error(err);
           await clean(config);
           return;
         }
       }
     } catch (err) {
-      console.error(err);
       return;
     }
 

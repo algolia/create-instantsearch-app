@@ -6,7 +6,7 @@ const {
   getAppTemplateConfig,
   fetchLibraryVersions,
   getTemplatePath,
-} = require('../shared/utils');
+} = require('../utils');
 
 function camelCase(string) {
   return string.replace(/-([a-z])/g, str => str[1].toUpperCase());
@@ -39,18 +39,21 @@ async function getAttributesFromAnswers({
   algoliasearchFn = algoliasearch,
 } = {}) {
   const client = algoliasearchFn(appId, apiKey);
+  const index = client.initIndex(indexName);
   const defaultAttributes = ['title', 'name', 'description'];
   let attributes = [];
 
   try {
-    const { hits } = await client.search({ indexName, hitsPerPage: 1 });
+    const { hits } = await index.search({ hitsPerPage: 1 });
     const [firstHit] = hits;
     const highlightedAttributes = Object.keys(firstHit._highlightResult);
     attributes = [
       ...new Set([
-        ...defaultAttributes.map(
-          attribute => highlightedAttributes.includes(attribute) && attribute
-        ),
+        ...defaultAttributes
+          .map(
+            attribute => highlightedAttributes.includes(attribute) && attribute
+          )
+          .filter(Boolean),
         ...highlightedAttributes,
       ]),
     ];

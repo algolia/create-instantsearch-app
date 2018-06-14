@@ -1,5 +1,5 @@
 const path = require('path');
-const createInstantSearchAppFactory = require('./createInstantSearchApp');
+const createInstantSearchAppFactory = require('../');
 
 let setupSpy;
 let buildSpy;
@@ -57,7 +57,7 @@ describe('Options', () => {
   test('with correct template path does not throw', () => {
     expect(() => {
       createInstantSearchApp('/tmp/test-app', {
-        template: path.resolve('./templates/InstantSearch.js'),
+        template: path.resolve('src/templates/InstantSearch.js'),
       });
     }).not.toThrow();
   });
@@ -96,7 +96,7 @@ describe('Tasks', () => {
       expect(buildSpy).toHaveBeenCalledWith({
         path: '/tmp/test-app',
         name: 'test-app',
-        template: path.resolve('./templates/InstantSearch.js'),
+        template: path.resolve('src/templates/InstantSearch.js'),
         installation: true,
         libraryVersion: '2.0.0',
         silent: false,

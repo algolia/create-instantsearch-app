@@ -1,7 +1,7 @@
 const process = require('process');
 const { execSync } = require('child_process');
 const chalk = require('chalk');
-const { isYarnAvailable } = require('../../shared/utils');
+const { isYarnAvailable } = require('../../utils');
 
 module.exports = function install(config) {
   const logger = config.silent ? { log() {}, error() {} } : console;

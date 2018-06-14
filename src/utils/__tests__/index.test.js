@@ -8,7 +8,7 @@ jest.mock('fs', () => ({
   readdirSync: mockReaddirSync,
 }));
 
-const utils = require('./utils');
+const utils = require('../');
 
 describe('checkAppName', () => {
   test('does not throw when valid', () => {

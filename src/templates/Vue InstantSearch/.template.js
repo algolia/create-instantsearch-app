@@ -1,5 +1,5 @@
-const install = require('../../packages/tasks/node/install');
-const teardown = require('../../packages/tasks/node/teardown');
+const install = require('../../tasks/node/install');
+const teardown = require('../../tasks/node/teardown');
 
 module.exports = {
   libraryName: 'vue-instantsearch',

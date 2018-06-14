@@ -1,5 +1,5 @@
 const path = require('path');
-const utils = require('./utils');
+const utils = require('../utils');
 
 describe('getOptionsFromArguments', () => {
   test('with a single option', () => {
@@ -202,7 +202,7 @@ describe('getConfiguration', () => {
 
     expect(configuration).toEqual(
       expect.objectContaining({
-        template: path.resolve('templates/InstantSearch.js'),
+        template: path.resolve('src/templates/InstantSearch.js'),
       })
     );
   });
