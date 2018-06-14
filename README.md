@@ -63,6 +63,7 @@ Supported templates are:
 
 - [`InstantSearch.js`][instantsearchjs-github]
 - [`React InstantSearch`][react-instantsearch-github]
+- [`React InstantSearch Native`][react-instantsearch-github]
 - [`Vue InstantSearch`][vue-instantsearch-github]
 - [`Angular InstantSearch`][angular-instantsearch-github]
 
