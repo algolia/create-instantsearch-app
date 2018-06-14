@@ -36,6 +36,7 @@
     "jstransformer-handlebars": "^1.1.0",
     "latest-semver": "^1.0.0",
     "load-json-file": "^5.0.0",
+    "lodash.camelcase": "^4.3.0",
     "metalsmith": "^2.3.0",
     "metalsmith-ignore": "^0.1.2",
     "metalsmith-in-place": "^4.1.1",

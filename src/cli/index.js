@@ -15,12 +15,10 @@ const {
   getAllTemplates,
   getTemplatePath,
 } = require('../utils');
-const {
-  getOptionsFromArguments,
-  getAttributesFromAnswers,
-  isQuestionAsked,
-  getConfiguration,
-} = require('./utils');
+const getOptionsFromArguments = require('./getOptionsFromArguments');
+const getAttributesFromIndex = require('./getAttributesFromIndex');
+const isQuestionAsked = require('./isQuestionAsked');
+const getConfiguration = require('./getConfiguration');
 const { version } = require('../../package.json');
 
 let appPath;
@@ -174,7 +172,7 @@ const questions = [
       },
       new inquirer.Separator(),
       new inquirer.Separator('From your index'),
-      ...(await getAttributesFromAnswers(answers)),
+      ...(await getAttributesFromIndex(answers)),
     ],
     when: ({ appId, apiKey, indexName }) => appId && apiKey && indexName,
   },
