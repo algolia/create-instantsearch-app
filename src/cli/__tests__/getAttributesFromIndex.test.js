@@ -6,7 +6,7 @@ jest.mock('algoliasearch');
 test('with search success should fetch attributes', async () => {
   algoliasearch.mockImplementationOnce(() => ({
     initIndex: () => ({
-      search: jest.fn(() => ({
+      search: () => ({
         hits: [
           {
             _highlightResult: {
@@ -17,7 +17,7 @@ test('with search success should fetch attributes', async () => {
             },
           },
         ],
-      })),
+      }),
     }),
   }));
 
@@ -33,9 +33,9 @@ test('with search success should fetch attributes', async () => {
 test('with search failure should return default attributes', async () => {
   algoliasearch.mockImplementationOnce(() => ({
     initIndex: () => ({
-      search: jest.fn(() => {
+      search: () => {
         throw new Error();
-      }),
+      },
     }),
   }));
 
