@@ -1,7 +1,6 @@
 ---
 name: Bug report
 about: Did something not work?
-
 ---
 
 ## Bug description

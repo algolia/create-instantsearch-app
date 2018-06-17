@@ -1,7 +1,6 @@
 ---
 name: Feature request
 about: Would you like to add something?
-
 ---
 
 ## The problem
