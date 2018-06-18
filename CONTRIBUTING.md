@@ -4,6 +4,30 @@ Thank you for wanting to get involved in Create InstantSearch App!
 
 The goal of the package is to enable users to create InstantSearch applications quickly.
 
+## Core concepts
+
+### Folder structure
+
+```
+▸ src
+  ▸ api               The source code of the module `createInstantSearchApp()`
+  ▸ cli               The source code of the CLI `create-instantsearch-app`
+  ▸ tasks             The tasks of the app generation lifecycle
+  ▸ templates         The official templates supported
+  ▸ utils             The utility functions for the package
+▸ scripts             The end-to-end tests and release scripts
+  CHANGELOG.md
+  CONTRIBUTING.md
+  LICENSE
+  README.md
+  index.js
+  package.json
+```
+
+### Creating a template
+
+When [creating a template](README.md#templates), you will need to run end-to-end tests (`yarn run test:e2e:templates`) to update all the [snapshots](https://facebook.github.io/jest/docs/en/snapshot-testing.html). These snapshots are meant to avoid regressions that can potentially happen when we unintentionally update a behavior in the source code.
+
 ## Requirements
 
 - [Node](https://nodejs.org) ≥ 8
@@ -28,6 +52,11 @@ You will need to follow these steps:
   - `fix/issue-number` for a fix
   - `feat/name-of-the-feature` for a feature
   - `docs/what-you-changed` for documentation
+- Apply your changes
+- Run tests:
+  - `yarn lint`
+  - `yarn test`
+  - `yarn test:e2e`
 - [Create a pull request](https://help.github.com/articles/creating-a-pull-request/)
 
 We will then review your pull request!
@@ -53,12 +82,6 @@ type(scope): description
 ```
 
 These commits are then used to generate the [changelog](CHANGELOG.md).
-
-## Core concepts
-
-### Creating a template
-
-When [creating a template](README.md#templates), you will need to run end-to-end tests (`yarn run test:e2e:templates`) to update all the [snapshots](https://facebook.github.io/jest/docs/en/snapshot-testing.html). These snapshots are meant to avoid regressions that can potentially happen when we unintentionally update a behavior in the source code.
 
 ---
 
