@@ -9,6 +9,7 @@
   },
   "github": {
     "release": true,
-    "releaseName": "%s"
+    "releaseName": "%s",
+    "tokenRef": "GITHUB_TOKEN_CISA"
   }
 }
