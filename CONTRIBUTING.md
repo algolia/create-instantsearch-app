@@ -66,7 +66,7 @@ We will then review your pull request!
 ### Releases
 
 - [Generate a new GitHub token](https://github.com/settings/tokens/new) with the scope `repo` (necessary for creating GitHub releases)
-- Store this token in an [environment variable](https://en.wikipedia.org/wiki/Environment_variable)
+- Store this token in an [environment variable](https://en.wikipedia.org/wiki/Environment_variable) called `GITHUB_TOKEN_CISA`
 - Make sure you're on the `master` branch
 - Run commands (do not use `yarn` for releasing):
   - `npm run release:beta` for a new beta version
