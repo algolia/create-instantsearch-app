@@ -6,6 +6,8 @@ The goal of the package is to enable users to create InstantSearch applications 
 
 ## Core concepts
 
+The `create-instantsearch-app` CLI is based on the module `createInstantSearchApp(path, options?, tasks?)`.
+
 ### Folder structure
 
 ```
