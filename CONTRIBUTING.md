@@ -4,6 +4,11 @@ Thank you for wanting to get involved in Create InstantSearch App!
 
 The goal of the package is to enable users to create InstantSearch applications quickly.
 
+## Requirements
+
+- [Node](https://nodejs.org) ≥ 8
+- [Yarn](https://yarnpkg.com)
+
 ## Workflow
 
 ### Filing issues
@@ -41,8 +46,7 @@ We will then review your pull request!
 
 ### Commits
 
-This project follows the [conventional changelog](https://conventionalcommits.org/) approach.
-This means that all commit messages should be formatted using the following scheme:
+This project follows the [conventional changelog](https://conventionalcommits.org/) approach. This means that all commit messages should be formatted using the following scheme:
 
 ```
 type(scope): description
