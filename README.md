@@ -19,6 +19,7 @@
 - [API](#api)
   - [Lifecycle](#lifecycle)
   - [Templates](#templates)
+- [Previews](#previews)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
