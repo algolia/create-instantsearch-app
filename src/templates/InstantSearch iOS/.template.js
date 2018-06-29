@@ -21,16 +21,24 @@ module.exports = {
 
         process.exit(1);
       }
+
+      return Promise.resolve();
     },
     install(config) {
       const initialDirectory = process.cwd();
       process.chdir(config.path);
 
-      execSync('pod install', {
-        stdio: config.silent ? 'ignore' : 'inherit',
-      });
+      try {
+        execSync('pod install', {
+          stdio: config.silent ? 'ignore' : 'inherit',
+        });
+      } catch (err) {
+        return Promise.reject(err);
+      }
 
       process.chdir(initialDirectory);
+
+      return Promise.resolve();
     },
     teardown(config) {
       if (!config.silent) {
@@ -51,6 +59,8 @@ module.exports = {
         console.log();
         console.log('⚡️  Start building something awesome!');
       }
+
+      return Promise.resolve();
     },
   },
 };
