@@ -9,6 +9,7 @@ module.exports = {
   tasks: {
     setup(config) {
       const logger = config.silent ? { log() {}, error() {} } : console;
+
       try {
         execSync('pod --version', { stdio: 'ignore' });
       } catch (err) {
@@ -18,15 +19,18 @@ module.exports = {
         );
         logger.log('See: https://cocoapods.org');
         logger.log();
+
         process.exit(1);
       }
     },
     install(config) {
       const initialDirectory = process.cwd();
       process.chdir(config.path);
+
       execSync('pod install', {
         stdio: config.silent ? 'ignore' : 'inherit',
       });
+
       process.chdir(initialDirectory);
     },
     teardown(config) {
@@ -36,6 +40,7 @@ module.exports = {
           path.join(currentDirectory, config.name) === config.path
             ? config.name
             : config.path;
+
         console.log();
         console.log(
           `🎉  Created ${chalk.bold.cyan(config.name)} at ${chalk.green(
