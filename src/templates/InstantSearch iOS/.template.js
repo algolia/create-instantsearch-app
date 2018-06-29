@@ -3,7 +3,6 @@ const { execSync } = require('child_process');
 const chalk = require('chalk');
 
 module.exports = {
-  libraryName: 'instantsearch.js',
   templateName: 'instantsearch-ios',
   appName: 'instantsearch-ios-app',
   tasks: {
