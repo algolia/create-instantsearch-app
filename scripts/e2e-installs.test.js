@@ -41,7 +41,7 @@ describe('Installation', () => {
       });
     });
 
-    describe('Cocoapods', () => {
+    describe('CocoaPods', () => {
       test('get installed by default', () => {
         execSync(
           `yarn start ${appPath} \
