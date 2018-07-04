@@ -7,9 +7,9 @@ import com.example.instantsearch.helpers.Searcher;
 import com.example.instantsearch.helpers.InstantSearch;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String ALGOLIA_APP_ID = "{{appId}}";
-    private static final String ALGOLIA_SEARCH_API_KEY = "{{apiKey}}";
-    private static final String ALGOLIA_INDEX_NAME = "{{indexName}}";
+    private static final String ALGOLIA_APP_ID = "latency";
+    private static final String ALGOLIA_SEARCH_API_KEY = "3d9875e51fbd20c7754e65422f7ce5e1";
+    private static final String ALGOLIA_INDEX_NAME = "bestbuy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

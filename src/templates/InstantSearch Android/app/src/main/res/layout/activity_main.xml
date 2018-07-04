@@ -7,15 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.algolia.instantsearch.app.MainActivity">
+    tools:context="com.example.instantsearch.app.MainActivity">
 
-    <com.algolia.instantsearch.ui.views.SearchBox
+    <com.example.instantsearch.ui.views.SearchBox
         android:id="@+id/search_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"/>
 
-    <com.algolia.instantsearch.ui.views.Hits
+    <com.example.instantsearch.ui.views.Hits
         android:id="@+id/hits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
