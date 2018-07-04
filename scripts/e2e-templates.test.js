@@ -85,9 +85,12 @@ describe('Templates', () => {
             const image = fs.readFileSync(`${templatePath}/${filePath}`);
 
             expect(image).toMatchImageSnapshot({
-              customSnapshotIdentifier: `e2e-installs-${
-                templateConfig.templateName
-              }-${path.basename(filePath)}`,
+              customSnapshotsDir: path.resolve(
+                `./scripts/__image_snapshots__/${
+                  templateConfig.templateName
+                }/${path.dirname(filePath)}`
+              ),
+              customSnapshotIdentifier: path.basename(filePath),
             });
           } else {
             const fileContent = fs
