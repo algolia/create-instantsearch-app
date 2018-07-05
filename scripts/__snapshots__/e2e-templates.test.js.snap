@@ -3468,7 +3468,7 @@ exports[`Templates JavaScript Helper File content: package.json 1`] = `
   },
   \\"dependencies\\": {
     \\"algoliasearch\\": \\"3.29.0\\",
-    \\"algoliasearch-helper\\": \\"^1.0.0\\"
+    \\"algoliasearch-helper\\": \\"1.0.0\\"
   },
   \\"devDependencies\\": {
     \\"babel-eslint\\": \\"8.2.5\\",

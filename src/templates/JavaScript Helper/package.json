@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "algoliasearch": "3.29.0",
-    "algoliasearch-helper": "^{{libraryVersion}}"
+    "algoliasearch-helper": "{{libraryVersion}}"
   },
   "devDependencies": {
     "babel-eslint": "8.2.5",
