@@ -103,10 +103,10 @@ function getTemplatesByCategory() {
       return allTemplates;
     }
 
-    const newAllTemplates = allTemplates;
-    newAllTemplates[category] = [...(newAllTemplates[category] || []), name];
-
-    return newAllTemplates;
+    return {
+      ...allTemplates,
+      [category]: [...(allTemplates[category] || []), name],
+    };
   }, {});
 
   return templates;
