@@ -95,17 +95,15 @@ const questions = [
     message: 'InstantSearch template',
     choices: () => {
       const templatesByCategory = getTemplatesByCategory();
-      const choices = [];
 
-      for (const [category, values] of Object.entries(templatesByCategory)) {
-        choices.push(new inquirer.Separator(category));
-
-        for (const template of values) {
-          choices.push(template);
-        }
-      }
-
-      return choices;
+      return Object.entries(templatesByCategory).reduce(
+        (templates, [category, values]) => [
+          ...templates,
+          new inquirer.Separator(category),
+          ...values,
+        ],
+        []
+      );
     },
     validate(input) {
       return Boolean(input);
