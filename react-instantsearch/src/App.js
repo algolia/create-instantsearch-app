@@ -6,7 +6,7 @@ import {
   RefinementList,
   Pagination,
   Highlight,
-} from 'react-instantsearch/dom';
+} from 'react-instantsearch-dom';
 import PropTypes from 'prop-types';
 import './App.css';
 
