@@ -1,5 +1,12 @@
 const fs = require('fs');
+const path = require('path');
 const { execSync } = require('child_process');
+
+const templatesFolder = path.join(__dirname, '../src/templates');
+const templates = fs
+  .readdirSync(templatesFolder)
+  .map(name => path.join(templatesFolder, name))
+  .filter(source => fs.lstatSync(source).isDirectory());
 
 describe('Installation', () => {
   let temporaryDirectory;
@@ -27,31 +34,33 @@ describe('Installation', () => {
   });
 
   describe('Dependencies', () => {
-    describe('Node', () => {
-      test('get installed by default', () => {
-        execSync(
-          `yarn start ${appPath} \
-            --template "InstantSearch.js"`,
-          { stdio: 'ignore' }
-        );
+    templates
+      .filter(
+        templatePath =>
+          // The Android template relies on Android Studio and
+          // doesn't install dependencies
+          path.basename(templatePath) !== 'InstantSearch Android'
+      )
+      .forEach(templatePath => {
+        const templateName = path.basename(templatePath);
 
-        expect(fs.lstatSync(`${appPath}/node_modules`).isDirectory()).toBe(
-          true
-        );
+        describe(templateName, () => {
+          test('get installed by default', () => {
+            execSync(
+              `yarn start ${appPath} \
+                --template "${templateName}"`,
+              { stdio: 'ignore' }
+            );
+
+            const dependenciesDirectory =
+              templateName === 'InstantSearch iOS' ? 'Pods' : 'node_modules';
+
+            expect(
+              fs.lstatSync(`${appPath}/${dependenciesDirectory}`).isDirectory()
+            ).toBe(true);
+          });
+        });
       });
-    });
-
-    describe('CocoaPods', () => {
-      test('get installed by default', () => {
-        execSync(
-          `yarn start ${appPath} \
-            --template "InstantSearch iOS"`,
-          { stdio: 'ignore' }
-        );
-
-        expect(fs.lstatSync(`${appPath}/Pods`).isDirectory()).toBe(true);
-      });
-    });
 
     test('get skipped with the `no-installation` flag', () => {
       execSync(
