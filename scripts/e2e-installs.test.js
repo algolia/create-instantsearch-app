@@ -2,12 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const templatesFolder = path.join(__dirname, '../src/templates');
-const templates = fs
-  .readdirSync(templatesFolder)
-  .map(name => path.join(templatesFolder, name))
-  .filter(source => fs.lstatSync(source).isDirectory());
-
 describe('Installation', () => {
   let temporaryDirectory;
   let appPath;
@@ -34,33 +28,53 @@ describe('Installation', () => {
   });
 
   describe('Dependencies', () => {
-    templates
-      .filter(
-        templatePath =>
-          // The Android template relies on Android Studio and
-          // doesn't install dependencies
-          path.basename(templatePath) !== 'InstantSearch Android'
-      )
-      .forEach(templatePath => {
+    describe('Web', () => {
+      const templatesFolder = path.join(__dirname, '../src/templates');
+      const templates = [
+        'Angular InstantSearch',
+        'Autocomplete.js',
+        'InstantSearch.js',
+        'JavaScript Client',
+        'JavaScript Helper',
+        'React InstantSearch',
+        'React InstantSearch Native',
+        'Vue InstantSearch',
+      ]
+        .map(name => path.join(templatesFolder, name))
+        .filter(source => fs.lstatSync(source).isDirectory());
+
+      templates.map(templateName => templateName).forEach(templatePath => {
         const templateName = path.basename(templatePath);
 
         describe(templateName, () => {
-          test('get installed by default', () => {
+          test('get installed correctly', () => {
             execSync(
               `yarn start ${appPath} \
-                --template "${templateName}"`,
+                  --template "${templateName}"`,
               { stdio: 'ignore' }
             );
 
-            const dependenciesDirectory =
-              templateName === 'InstantSearch iOS' ? 'Pods' : 'node_modules';
-
-            expect(
-              fs.lstatSync(`${appPath}/${dependenciesDirectory}`).isDirectory()
-            ).toBe(true);
+            expect(fs.lstatSync(`${appPath}/node_modules`).isDirectory()).toBe(
+              true
+            );
           });
         });
       });
+    });
+
+    describe('Mobile', () => {
+      describe('InstantSearch iOS', () => {
+        test('get installed correctly', () => {
+          execSync(
+            `yarn start ${appPath} \
+                --template "InstantSearch iOS"`,
+            { stdio: 'ignore' }
+          );
+
+          expect(fs.lstatSync(`${appPath}/Pods`).isDirectory()).toBe(true);
+        });
+      });
+    });
 
     test('get skipped with the `no-installation` flag', () => {
       execSync(
