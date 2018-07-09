@@ -43,7 +43,7 @@ describe('Installation', () => {
         .map(name => path.join(templatesFolder, name))
         .filter(source => fs.lstatSync(source).isDirectory());
 
-      templates.map(templateName => templateName).forEach(templatePath => {
+      templates.forEach(templatePath => {
         const templateName = path.basename(templatePath);
 
         describe(templateName, () => {
