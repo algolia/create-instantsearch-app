@@ -12,13 +12,13 @@
     "algoliasearch": "3.29.0"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.5",
-    "eslint": "4.19.1",
+    "babel-eslint": "8.2.6",
+    "eslint": "5.1.0",
     "eslint-config-algolia": "13.1.0",
     "eslint-config-prettier": "2.9.0",
     "eslint-plugin-import": "2.13.0",
-    "eslint-plugin-prettier": "2.6.1",
-    "parcel-bundler": "1.9.4",
+    "eslint-plugin-prettier": "2.6.2",
+    "parcel-bundler": "1.9.7",
     "prettier": "1.13.7"
   },
   "keywords": [

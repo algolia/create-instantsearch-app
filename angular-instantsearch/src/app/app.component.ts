@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as algoliasearch from 'algoliasearch';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   config = {
-    appId: 'latency',
-    apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
     indexName: 'instant_search',
+    searchClient: algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76'),
   };
 }
