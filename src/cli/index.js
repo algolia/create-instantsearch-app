@@ -179,7 +179,8 @@ const questions = [
   {
     type: 'list',
     name: 'mainAttribute',
-    message: 'Main searchable attribute – we will use it to generate a basic result template',
+    message: 'Attribute to display',
+    suffix: `\n  ${chalk.gray('Used to generate the default result template')}`,
     choices: async answers => [
       {
         name: 'None',
