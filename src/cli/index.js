@@ -179,7 +179,7 @@ const questions = [
   {
     type: 'list',
     name: 'mainAttribute',
-    message: 'Attribute to highlight',
+    message: 'Main searchable attribute – we will use it to generate a basic result template',
     choices: async answers => [
       {
         name: 'None',
