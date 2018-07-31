@@ -78,7 +78,7 @@ We will then review your pull request!
 
 We rely on [release-it](https://github.com/webpro/release-it) to release new versions of Create InstantSearch App.
 
-###### Release flow
+#### Release flow
 
 1.  Bump the project version in [`package.json`](package.json) based on [the commits](#conventions)
 1.  Generate the changelog
@@ -89,7 +89,7 @@ We rely on [release-it](https://github.com/webpro/release-it) to release new ver
 1.  Publish to npm
 1.  Push the generated templates to the [`templates`](https://github.com/algolia/create-instantsearch-app/tree/templates) branch (usable on CodeSandbox)
 
-###### Release steps
+#### Release steps
 
 To release a new version of the package, you need to:
 
