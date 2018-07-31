@@ -53,7 +53,7 @@ yarn start
 
 ## Usage
 
-This package comes with the module `createInstantSearchApp(path, options?, tasks?)` and the command-line tool `create-instantsearch-app`.
+This package comes with the module `createInstantSearchApp(path, options?)` and the command-line tool `create-instantsearch-app`.
 
 ```
 $ create-instantsearch-app --help
