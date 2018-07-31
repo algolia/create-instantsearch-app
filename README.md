@@ -124,7 +124,7 @@ create-instantsearch-app my-app --config config.json
 
 ## API
 
-`create-instantsearch-app` is based on the module `createInstantSearchApp(path, options?)`.
+`create-instantsearch-app` is based on the module `createInstantSearchApp(path, options?)`. The same [camel cased](https://en.wikipedia.org/wiki/Camel_case) options as the CLI are available.
 
 ```javascript
 const createInstantSearchApp = require('create-instantsearch-app');
