@@ -21,8 +21,6 @@
 - [Get started](#get-started)
 - [Usage](#usage)
 - [API](#api)
-  - [Lifecycle](#lifecycle)
-  - [Templates](#templates)
 - [Tutorials](#tutorials)
 - [Previews](#previews)
 - [License](#license)
