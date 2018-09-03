@@ -17,9 +17,10 @@ search.addWidget(
     container: '#hits',
     templates: {
       item: `
-        <div>
-          <header>{{{_highlightResult.name.value}}}</header>
-        </div>
+        <article>
+          <h1>{{{_highlightResult.name.value}}}</h1>
+          <p>{{{_highlightResult.description.value}}}</p>
+        </article>
       `,
     },
   })

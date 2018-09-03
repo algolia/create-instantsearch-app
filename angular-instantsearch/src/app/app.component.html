@@ -22,7 +22,27 @@
           <ais-search-box placeholder=""></ais-search-box>
         </div>
 
-        <ais-hits></ais-hits>
+        <ais-hits>
+          <ng-template let-hits="hits" let-results="results">
+            <div *ngIf="hits.length === 0">
+              No results found matching <strong></strong>.
+            </div>
+
+            <ol class="ais-Hits-list">
+              <li class="ais-Hits-item" *ngFor="let hit of hits">
+                <article>
+                  <h1>
+                    <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+                  </h1>
+
+                  <p>
+                    <ais-highlight attribute="description" [hit]="hit"></ais-highlight>
+                  </p>
+                </article>
+              </li>
+            </ol>
+          </ng-template>
+        </ais-hits>
 
         <div class="pagination">
           <ais-pagination></ais-pagination>

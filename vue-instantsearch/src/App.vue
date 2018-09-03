@@ -39,9 +39,14 @@
 
             <ais-results class="ais-Hits-list">
               <template slot-scope="{ result }">
-                <div class="ais-Hits-item">
-                  <ais-highlight :result="result" attribute-name="name"></ais-highlight>
-                </div>
+                <article class="ais-Hits-item">
+                  <h1>
+                    <ais-highlight :result="result" attribute-name="name"></ais-highlight>
+                  </h1>
+                  <p>
+                    <ais-highlight :result="result" attribute-name="description"></ais-highlight>
+                  </p>
+                </article>
               </template>
             </ais-results>
 

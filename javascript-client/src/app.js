@@ -10,11 +10,19 @@ function renderHits(query) {
   index.search(query).then(result => {
     // Please sanitize user-provided data when using `innerHTML` to avoid XSS
     $hits.innerHTML = `
-      <ul class="ais-hits">
+      <ol class="ais-hits">
         ${result.hits
-          .map(hit => `<li class="ais-hits--item">${hit._highlightResult.name.value}</li>`)
+          .map(
+            hit =>
+              `<li class="ais-hits--item">
+                <article>
+                  <h1>${hit._highlightResult.name.value}</h1>
+                  <p>${hit._highlightResult.description.value}</p>
+                </article>
+              </li>`
+          )
           .join('')}
-      </ul>`;
+      </ol>`;
   });
 }
 

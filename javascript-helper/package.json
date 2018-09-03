@@ -9,18 +9,18 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "algoliasearch": "3.29.0",
+    "algoliasearch": "3.30.0",
     "algoliasearch-helper": "2.26.1"
   },
   "devDependencies": {
     "babel-eslint": "8.2.6",
-    "eslint": "5.2.0",
-    "eslint-config-algolia": "13.1.0",
-    "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-import": "2.13.0",
+    "eslint": "5.5.0",
+    "eslint-config-algolia": "13.2.3",
+    "eslint-config-prettier": "3.0.1",
+    "eslint-plugin-import": "2.14.0",
     "eslint-plugin-prettier": "2.6.2",
     "parcel-bundler": "1.9.7",
-    "prettier": "1.13.7"
+    "prettier": "1.14.2"
   },
   "keywords": [
     "algolia",

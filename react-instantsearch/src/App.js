@@ -57,9 +57,14 @@ class App extends Component {
 
 function Hit(props) {
   return (
-    <div>
-      <Highlight attribute="name" hit={props.hit} />
-    </div>
+    <article>
+      <h1>
+        <Highlight attribute="name" hit={props.hit} />
+      </h1>
+      <p>
+        <Highlight attribute="description" hit={props.hit} />
+      </p>
+    </article>
   );
 }
 
