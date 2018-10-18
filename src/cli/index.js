@@ -181,6 +181,7 @@ const questions = [
     type: 'input',
     name: 'indexName',
     message: 'Index name',
+    default: 'instant_search',
   },
   {
     type: 'checkbox',
