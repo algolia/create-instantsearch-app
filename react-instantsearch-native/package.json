@@ -12,21 +12,21 @@
   },
   "dependencies": {
     "algoliasearch": "3.30.0",
-    "expo": "29.0.0",
+    "expo": "30.0.1",
     "prop-types": "15.6.2",
-    "react": "16.4.2",
-    "react-instantsearch-native": "5.2.3",
+    "react": "16.5.2",
+    "react-instantsearch-native": "5.3.1",
     "react-native": "0.55.4"
   },
   "devDependencies": {
-    "eslint": "5.5.0",
+    "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
-    "eslint-config-prettier": "3.0.1",
+    "eslint-config-prettier": "3.1.0",
     "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-prettier": "2.6.2",
+    "eslint-plugin-prettier": "3.0.0",
     "eslint-plugin-react": "7.11.1",
-    "prettier": "1.14.2",
-    "react-native-scripts": "1.14.0"
+    "prettier": "1.14.3",
+    "react-native-scripts": "1.14.1"
   },
   "keywords": [
     "algolia",

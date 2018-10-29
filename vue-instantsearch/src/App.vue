@@ -35,16 +35,22 @@
                 'ais-search-box__submit': 'ais-SearchBox-submit',
                 'ais-search-box__loading-indicator': 'ais-SearchBox-loadingIndicator',
               }"
-            ></ais-search-box>
+            />
 
             <ais-results class="ais-Hits-list">
               <template slot-scope="{ result }">
                 <article class="ais-Hits-item">
                   <h1>
-                    <ais-highlight :result="result" attribute-name="name"></ais-highlight>
+                    <ais-highlight
+                      :result="result"
+                      attribute-name="name"
+                    />
                   </h1>
                   <p>
-                    <ais-highlight :result="result" attribute-name="description"></ais-highlight>
+                    <ais-highlight
+                      :result="result"
+                      attribute-name="description"
+                    />
                   </p>
                 </article>
               </template>
@@ -62,7 +68,7 @@
                   'ais-pagination__item--last': 'ais-Pagination-item--last',
                   'ais-pagination__link': 'ais-Pagination-link',
                 }"
-              ></ais-pagination>
+              />
             </div>
           </div>
         </div>
