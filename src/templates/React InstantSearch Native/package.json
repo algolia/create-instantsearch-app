@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "algoliasearch": "3.30.0",
-    "expo": "30.0.1",
+    "expo": "30.0.2",
     "prop-types": "15.6.2",
     "react": "16.5.2",
     "react-instantsearch-native": "{{libraryVersion}}",
