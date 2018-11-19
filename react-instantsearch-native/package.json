@@ -15,7 +15,7 @@
     "expo": "30.0.1",
     "prop-types": "15.6.2",
     "react": "16.5.2",
-    "react-instantsearch-native": "5.3.1",
+    "react-instantsearch-native": "5.3.2",
     "react-native": "0.55.4"
   },
   "devDependencies": {
