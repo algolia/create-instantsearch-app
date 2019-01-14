@@ -14,18 +14,18 @@
     "algoliasearch": "3.30.0",
     "expo": "30.0.1",
     "prop-types": "15.6.2",
-    "react": "16.5.2",
+    "react": "16.6.3",
     "react-instantsearch-native": "5.3.2",
     "react-native": "0.55.4"
   },
   "devDependencies": {
     "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
-    "eslint-config-prettier": "3.1.0",
+    "eslint-config-prettier": "3.3.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-prettier": "3.0.0",
     "eslint-plugin-react": "7.11.1",
-    "prettier": "1.14.3",
+    "prettier": "1.15.3",
     "react-native-scripts": "1.14.1"
   },
   "keywords": [

@@ -10,17 +10,17 @@
   },
   "dependencies": {
     "algoliasearch": "3.30.0",
-    "autocomplete.js": "0.33.0"
+    "autocomplete.js": "0.35.0"
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",
     "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
-    "eslint-config-prettier": "3.1.0",
+    "eslint-config-prettier": "3.3.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-prettier": "3.0.0",
     "parcel-bundler": "1.10.3",
-    "prettier": "1.14.3"
+    "prettier": "1.15.3"
   },
   "keywords": [
     "algolia",
