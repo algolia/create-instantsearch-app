@@ -15,7 +15,7 @@ describe('resolveTemplate', () => {
     ).toBe('../unknown-template');
   });
 
-  test('selects the default templatewith known template', () => {
+  test('selects the default template with known template', () => {
     expect(
       resolveTemplate(
         {
