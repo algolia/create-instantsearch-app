@@ -5,7 +5,9 @@ const { getAppTemplateConfig } = require('../utils');
 function getTemplateNameByLibraryVersion(templateName, libraryVersion = '') {
   if (
     templateName === 'InstantSearch.js' &&
-    semver.satisfies(libraryVersion, '>= 2.0.0 < 3.0.0')
+    semver.satisfies(libraryVersion, '>= 2.0.0 < 3.0.0', {
+      includePrerelease: true,
+    })
   ) {
     return 'InstantSearch.js 2';
   }
@@ -32,7 +34,9 @@ module.exports = function resolveTemplate(options, { supportedTemplates }) {
   if (
     supportedVersion &&
     options.libraryVersion &&
-    !semver.satisfies(options.libraryVersion, supportedVersion)
+    !semver.satisfies(options.libraryVersion, supportedVersion, {
+      includePrerelease: true,
+    })
   ) {
     throw new Error(
       `The template "${path.basename(
