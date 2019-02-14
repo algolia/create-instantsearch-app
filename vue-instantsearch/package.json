@@ -9,7 +9,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "vue": "2.5.17",
+    "vue": "2.6.2",
     "vue-instantsearch": "1.7.0"
   },
   "devDependencies": {
@@ -24,13 +24,13 @@
     "eslint-config-algolia": "13.2.3",
     "eslint-config-prettier": "3.3.0",
     "eslint-plugin-html": "4.0.6",
-    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-import": "2.16.0",
     "eslint-plugin-prettier": "3.0.0",
     "eslint-plugin-vue": "4.7.1",
     "file-loader": "2.0.0",
     "prettier": "1.15.3",
     "vue-loader": "14.2.3",
-    "vue-template-compiler": "2.5.17",
+    "vue-template-compiler": "2.6.2",
     "webpack": "3.12.0",
     "webpack-dev-server": "2.11.3"
   },
