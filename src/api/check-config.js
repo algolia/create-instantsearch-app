@@ -17,10 +17,7 @@ function getOptions({ supportedTemplates }) {
     },
     template: {
       validate(input) {
-        return (
-          supportedTemplates.includes(input) ||
-          fs.existsSync(`${input}/.template.js`)
-        );
+        return fs.existsSync(`${input}/.template.js`);
       },
       getErrorMessage() {
         return `The template directory must contain a configuration file \`.template.js\` or must be one of those: ${supportedTemplates.join(
