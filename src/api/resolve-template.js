@@ -11,6 +11,14 @@ function getTemplateNameByLibraryVersion({ template, libraryVersion = '' }) {
   ) {
     return 'InstantSearch.js 2';
   }
+  if (
+    template === 'Vue InstantSearch' &&
+    semver.satisfies(libraryVersion, '>= 1.0.0 < 2.0.0', {
+      includePrerelease: true,
+    })
+  ) {
+    return 'Vue InstantSearch 1';
+  }
 
   return template;
 }
