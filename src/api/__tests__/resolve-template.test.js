@@ -76,8 +76,7 @@ describe('resolveTemplate', () => {
     expect(
       resolveTemplate(
         {
-          template:
-            '/Users/haroen/git/create-instantsearch-app/src/templates/InstantSearch.js',
+          template: './src/templates/InstantSearch.js',
         },
         {
           supportedTemplates: ['InstantSearch.js'],
