@@ -13,61 +13,69 @@
     </header>
 
     <div class="container">
-      <ais-instant-search
-        :search-client="searchClient"
+      <ais-index
+        app-id="latency"
+        api-key="6be0576ff61c053d5f9a3225e2a90f76"
         index-name="instant_search"
       >
         <div class="search-panel">
           <div class="search-panel__filters">
-            <ais-refinement-list attribute="brand" />
+            <ais-refinement-list attribute-name="brand"></ais-refinement-list>
           </div>
 
           <div class="search-panel__results">
-            <ais-search-box placeholder="" />
-            <ais-hits>
-              <template slot="item" slot-scope="{ item }">
-                <article>
+            <ais-search-box
+              placeholder=""
+              class="ais-SearchBox-form"
+              :class-names="{
+                'ais-search-box': 'ais-SearchBox',
+                'ais-input': 'ais-SearchBox-input',
+                'ais-clear': 'ais-SearchBox-reset',
+                'ais-clear--disabled': 'ais-SearchBox-reset--disabled',
+                'ais-search-box__submit': 'ais-SearchBox-submit',
+                'ais-search-box__loading-indicator': 'ais-SearchBox-loadingIndicator',
+              }"
+            />
+
+            <ais-results class="ais-Hits-list">
+              <template slot-scope="{ result }">
+                <article class="ais-Hits-item">
                   <h1>
                     <ais-highlight
-                      :hit="item"
-                      attribute="name"
+                      :result="result"
+                      attribute-name="name"
                     />
                   </h1>
                   <p>
                     <ais-highlight
-                      :hit="item"
-                      attribute="description"
+                      :result="result"
+                      attribute-name="description"
                     />
                   </p>
                 </article>
               </template>
-            </ais-hits>
+            </ais-results>
 
             <div class="pagination">
-              <ais-pagination />
+              <ais-pagination
+                :class-names="{
+                  'ais-pagination': 'ais-Pagination-list',
+                  'ais-pagination__item': 'ais-Pagination-item',
+                  'ais-pagination__item--next': 'ais-Pagination-item--next',
+                  'ais-pagination__item--previous': 'ais-Pagination-item--previous',
+                  'ais-pagination__item--disabled': 'ais-Pagination-item--disabled',
+                  'ais-pagination__item--first': 'ais-Pagination-item--first',
+                  'ais-pagination__item--last': 'ais-Pagination-item--last',
+                  'ais-pagination__link': 'ais-Pagination-link',
+                }"
+              />
             </div>
           </div>
         </div>
-      </ais-instant-search>
+      </ais-index>
     </div>
   </div>
 </template>
-
-<script>
-import algoliasearch from 'algoliasearch/lite';
-
-export default {
-  data() {
-    return {
-      searchClient: algoliasearch(
-        'latency',
-        '6be0576ff61c053d5f9a3225e2a90f76'
-      ),
-    };
-  },
-};
-</script>
-
 
 <style>
 body,
