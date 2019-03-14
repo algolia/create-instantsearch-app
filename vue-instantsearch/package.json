@@ -11,7 +11,7 @@
   "dependencies": {
     "algoliasearch": "3.32.0",
     "vue": "2.6.2",
-    "vue-instantsearch": "2.0.0"
+    "vue-instantsearch": "2.0.1"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
@@ -23,14 +23,14 @@
     "css-loader": "0.28.11",
     "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
-    "eslint-config-prettier": "3.3.0",
+    "eslint-config-prettier": "3.6.0",
     "eslint-plugin-html": "4.0.6",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-vue": "4.7.1",
     "file-loader": "2.0.0",
-    "prettier": "1.15.3",
-    "vue-loader": "14.2.3",
+    "prettier": "1.16.4",
+    "vue-loader": "14.2.4",
     "vue-template-compiler": "2.6.2",
     "webpack": "3.12.0",
     "webpack-dev-server": "2.11.3"
