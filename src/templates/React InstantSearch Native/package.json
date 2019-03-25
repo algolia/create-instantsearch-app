@@ -16,7 +16,7 @@
     "prop-types": "15.7.2",
     "react": "16.6.3",
     "react-instantsearch-native": "{{libraryVersion}}",
-    "react-native": "0.55.4"
+    "react-native": "0.59.2"
   },
   "devDependencies": {
     "eslint": "5.7.0",
