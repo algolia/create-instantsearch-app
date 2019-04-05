@@ -2,6 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
+const TEMPLATES = [
+  'Angular InstantSearch',
+  'Autocomplete.js',
+  'InstantSearch.js',
+  'JavaScript Client',
+  'JavaScript Helper',
+  'React InstantSearch',
+  'Vue InstantSearch',
+];
+
 describe('Installation', () => {
   let temporaryDirectory;
   let appPath;
@@ -30,17 +40,9 @@ describe('Installation', () => {
   describe('Dependencies', () => {
     describe('Web', () => {
       const templatesFolder = path.join(__dirname, '../src/templates');
-      const templates = [
-        'Angular InstantSearch',
-        'Autocomplete.js',
-        'InstantSearch.js',
-        'JavaScript Client',
-        'JavaScript Helper',
-        'React InstantSearch',
-        'Vue InstantSearch',
-      ]
-        .map(name => path.join(templatesFolder, name))
-        .filter(source => fs.lstatSync(source).isDirectory());
+      const templates = TEMPLATES.map(name =>
+        path.join(templatesFolder, name)
+      ).filter(source => fs.lstatSync(source).isDirectory());
 
       templates.forEach(templatePath => {
         const templateName = path.basename(templatePath);
