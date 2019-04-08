@@ -1,6 +1,6 @@
 # Create InstantSearch App
 
-> ⚡️ Build InstantSearch apps at speed of thoughts
+> ⚡️ Build InstantSearch apps at the speed of thought.
 
 [![Version][version-svg]][package-url] [![License][license-image]][license-url] [![Build Status][ci-svg]][ci-url]
 
