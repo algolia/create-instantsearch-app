@@ -1,16 +1,5 @@
 const fs = require('fs');
-const path = require('path');
 const { execSync } = require('child_process');
-
-const TEMPLATES = [
-  'Angular InstantSearch',
-  'Autocomplete.js',
-  'InstantSearch.js',
-  'JavaScript Client',
-  'JavaScript Helper',
-  'React InstantSearch',
-  'Vue InstantSearch',
-];
 
 describe('Installation', () => {
   let temporaryDirectory;
@@ -38,63 +27,6 @@ describe('Installation', () => {
   });
 
   describe('Dependencies', () => {
-    describe('Web', () => {
-      const templatesFolder = path.join(__dirname, '../src/templates');
-      const templates = TEMPLATES.map(name =>
-        path.join(templatesFolder, name)
-      ).filter(source => fs.lstatSync(source).isDirectory());
-
-      templates.forEach(templatePath => {
-        const templateName = path.basename(templatePath);
-
-        describe(`${templateName}`, () => {
-          test('installs and builds correctly', () => {
-            execSync(
-              `yarn start ${appPath} \
-                  --template "${templateName}"`,
-              { stdio: 'ignore' }
-            );
-
-            expect(fs.lstatSync(`${appPath}/node_modules`).isDirectory()).toBe(
-              true
-            );
-
-            expect(() => {
-              execSync(`cd ${appPath} && yarn build`, { stdio: 'ignore' });
-            }).not.toThrow();
-          });
-        });
-      });
-    });
-
-    describe('Mobile', () => {
-      describe('React InstantSearch Native', () => {
-        test('installs correctly', () => {
-          execSync(
-            `yarn start ${appPath} \
-                --template "React InstantSearch Native"`,
-            { stdio: 'ignore' }
-          );
-
-          expect(fs.lstatSync(`${appPath}/node_modules`).isDirectory()).toBe(
-            true
-          );
-        });
-      });
-
-      describe('InstantSearch iOS', () => {
-        test('installs correctly', () => {
-          execSync(
-            `yarn start ${appPath} \
-                --template "InstantSearch iOS"`,
-            { stdio: 'ignore' }
-          );
-
-          expect(fs.lstatSync(`${appPath}/Pods`).isDirectory()).toBe(true);
-        });
-      });
-    });
-
     test('get skipped with the `no-installation` flag', () => {
       execSync(
         `yarn start ${appPath} \
