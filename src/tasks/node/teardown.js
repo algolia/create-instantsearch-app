@@ -1,18 +1,34 @@
 const path = require('path');
+const { execSync } = require('child_process');
 const chalk = require('chalk');
 const { isYarnAvailable } = require('../../utils');
 
 module.exports = function teardown(config) {
+  const hasYarn = isYarnAvailable();
+  const currentDirectory = process.cwd();
+  const cdPath =
+    path.join(currentDirectory, config.name) === config.path
+      ? config.name
+      : config.path;
+
+  try {
+    const command = hasYarn ? 'yarn' : 'npx';
+
+    execSync(
+      `${command} prettier "${cdPath}/src/**/*.{json,html,css,js,vue,ts,tsx}" --write --config "${cdPath}/.prettierrc"`,
+      {
+        stdio: 'ignore',
+      }
+    );
+  } catch (error) {
+    // Prettier doesn't seem to be installed in Create InstantSearch App.
+  }
+
   if (!config.silent) {
     try {
-      const hasYarn = isYarnAvailable();
-      const installCommand = hasYarn ? 'yarn' : 'npm install';
-      const startCommand = hasYarn ? 'yarn start' : 'npm start';
-      const currentDirectory = process.cwd();
-      const cdPath =
-        path.join(currentDirectory, config.name) === config.path
-          ? config.name
-          : config.path;
+      const command = hasYarn ? 'yarn' : 'npm';
+      const installCommand = `${command} install`;
+      const startCommand = `${command} start`;
 
       console.log();
       console.log(
