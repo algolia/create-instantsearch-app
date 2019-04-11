@@ -14,6 +14,11 @@ module.exports = function teardown(config) {
   try {
     const command = hasYarn ? 'yarn' : 'npx';
 
+    // This runs the Prettier dependency from Create InstantSearch App (not the template itself)
+    // with the template's Prettier configuration.
+    // We use the "global" Prettier dependency because it is installed for sure at this step,
+    // while the template's Prettier dependency might not be installed if `config.installation`
+    // is `false`.
     execSync(
       `${command} prettier "${cdPath}/src/**/*.{json,html,css,js,vue,ts,tsx}" --write --config "${cdPath}/.prettierrc"`,
       {
@@ -21,7 +26,10 @@ module.exports = function teardown(config) {
       }
     );
   } catch (error) {
-    // Prettier doesn't seem to be installed in Create InstantSearch App.
+    // We swallow Prettier's errors because we're not totally in control of what might happen.
+    // Besides, prettifying the files in not necessary in the app generation lifecycle.
+    // Prettier might throw for these known reasons:
+    //  - there's no `.prettierrc` file in the template
   }
 
   if (!config.silent) {
