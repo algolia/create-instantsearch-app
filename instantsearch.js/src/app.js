@@ -21,11 +21,11 @@ search.addWidget(
     container: '#hits',
     templates: {
       item: `
-        <article>
-          <h1>{{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}</h1>
-          <p>{{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}</p>
-        </article>
-      `,
+<article>
+  <h1>{{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}</h1>
+  <p>{{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}</p>
+</article>
+`,
     },
   })
 );
