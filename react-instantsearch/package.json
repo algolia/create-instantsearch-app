@@ -12,7 +12,7 @@
     "algoliasearch": "3.30.0",
     "react": "16.6.3",
     "react-dom": "16.6.3",
-    "react-instantsearch-dom": "5.4.0",
+    "react-instantsearch-dom": "5.5.0",
     "react-scripts": "2.1.1"
   },
   "devDependencies": {

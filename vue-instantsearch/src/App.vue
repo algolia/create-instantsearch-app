@@ -2,7 +2,9 @@
   <div>
     <header class="header">
       <h1 class="header-title">
-        <a href="/">vue-instantsearch-app</a>
+        <a href="/">
+          vue-instantsearch-app
+        </a>
       </h1>
       <p class="header-subtitle">
         using
@@ -23,7 +25,9 @@
           </div>
 
           <div class="search-panel__results">
-            <ais-search-box placeholder="" />
+            <div class="searchbox">
+              <ais-search-box placeholder="" />
+            </div>
             <ais-hits>
               <template slot="item" slot-scope="{ item }">
                 <article>
@@ -67,7 +71,6 @@ export default {
   },
 };
 </script>
-
 
 <style>
 body,
