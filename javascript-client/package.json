@@ -9,15 +9,15 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "algoliasearch": "3.32.1"
+    "algoliasearch": "3.33.0"
   },
   "devDependencies": {
-    "babel-eslint": "10.0.1",
+    "babel-eslint": "10.0.2",
     "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
     "eslint-config-prettier": "3.6.0",
-    "eslint-plugin-import": "2.16.0",
-    "eslint-plugin-prettier": "3.0.1",
+    "eslint-plugin-import": "2.17.3",
+    "eslint-plugin-prettier": "3.1.0",
     "parcel-bundler": "1.12.3",
     "prettier": "1.16.4"
   },
