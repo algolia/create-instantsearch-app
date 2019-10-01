@@ -10,18 +10,18 @@ const search = instantsearch({
   searchClient,
 });
 
-const searchBox = instantsearch.widgets.searchBox({
-  container: '#searchbox',
-  {{#if searchPlaceholder}}
-  placeholder: '{{searchPlaceholder}}',
-  {{/if}}
-});
-
-const hits = instantsearch.widgets.hits({
-  container: '#hits',
-  {{#if attributesToDisplay}}
-  templates: {
-    item: `
+search.addWidgets([
+  instantsearch.widgets.searchBox({
+    container: '#searchbox',
+    {{#if searchPlaceholder}}
+    placeholder: '{{searchPlaceholder}}',
+    {{/if}}
+  }),
+  instantsearch.widgets.hits({
+    container: '#hits',
+    {{#if attributesToDisplay}}
+    templates: {
+      item: `
 <article>
   <h1>\{{#helpers.highlight}}{ "attribute": "{{attributesToDisplay.[0]}}" }\{{/helpers.highlight}}</h1>
   {{#each attributesToDisplay}}
@@ -31,28 +31,18 @@ const hits = instantsearch.widgets.hits({
   {{/each}}
 </article>
 `,
-  },
-  {{/if}}
-});
-
-{{#each attributesForFaceting}}
-const {{this}}RefinementList = instantsearch.widgets.refinementList({
-  container: '#{{this}}-list',
-  attribute: '{{this}}',
-});
-
-{{/each}}
-const pagination = instantsearch.widgets.pagination({
-  container: '#pagination',
-});
-
-search.addWidgets([
-  searchBox,
-  hits,
+    },
+    {{/if}}
+  }),
   {{#each attributesForFaceting}}
-  {{this}}RefinementList,
+  instantsearch.widgets.refinementList({
+    container: '#{{this}}-list',
+    attribute: '{{this}}',
+  }),
   {{/each}}
-  pagination
+  instantsearch.widgets.pagination({
+    container: '#pagination',
+  })
 ]);
 
 search.start();

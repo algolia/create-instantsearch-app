@@ -3229,43 +3229,33 @@ const search = instantsearch({
   searchClient,
 });
 
-const searchBox = instantsearch.widgets.searchBox({
-  container: '#searchbox',
-  placeholder: 'Search placeholder',
-});
-
-const hits = instantsearch.widgets.hits({
-  container: '#hits',
-  templates: {
-    item: \`
+search.addWidgets([
+  instantsearch.widgets.searchBox({
+    container: '#searchbox',
+    placeholder: 'Search placeholder',
+  }),
+  instantsearch.widgets.hits({
+    container: '#hits',
+    templates: {
+      item: \`
 <article>
   <h1>{{#helpers.highlight}}{ \\"attribute\\": \\"attribute1\\" }{{/helpers.highlight}}</h1>
   <p>{{#helpers.highlight}}{ \\"attribute\\": \\"attribute2\\" }{{/helpers.highlight}}</p>
 </article>
 \`,
-  },
-});
-
-const facet1RefinementList = instantsearch.widgets.refinementList({
-  container: '#facet1-list',
-  attribute: 'facet1',
-});
-
-const facet2RefinementList = instantsearch.widgets.refinementList({
-  container: '#facet2-list',
-  attribute: 'facet2',
-});
-
-const pagination = instantsearch.widgets.pagination({
-  container: '#pagination',
-});
-
-search.addWidgets([
-  searchBox,
-  hits,
-  facet1RefinementList,
-  facet2RefinementList,
-  pagination,
+    },
+  }),
+  instantsearch.widgets.refinementList({
+    container: '#facet1-list',
+    attribute: 'facet1',
+  }),
+  instantsearch.widgets.refinementList({
+    container: '#facet2-list',
+    attribute: 'facet2',
+  }),
+  instantsearch.widgets.pagination({
+    container: '#pagination',
+  }),
 ]);
 
 search.start();"
