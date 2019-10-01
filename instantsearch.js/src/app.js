@@ -10,13 +10,10 @@ const search = instantsearch({
   searchClient,
 });
 
-search.addWidget(
+search.addWidgets([
   instantsearch.widgets.searchBox({
     container: '#searchbox',
-  })
-);
-
-search.addWidget(
+  }),
   instantsearch.widgets.hits({
     container: '#hits',
     templates: {
@@ -27,20 +24,14 @@ search.addWidget(
 </article>
 `,
     },
-  })
-);
-
-search.addWidget(
+  }),
   instantsearch.widgets.refinementList({
     container: '#brand-list',
     attribute: 'brand',
-  })
-);
-
-search.addWidget(
+  }),
   instantsearch.widgets.pagination({
     container: '#pagination',
   })
-);
+]);
 
 search.start();
