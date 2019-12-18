@@ -15,10 +15,7 @@
     </header>
 
     <div class="container">
-      <ais-instant-search
-        :search-client="searchClient"
-        index-name="instant_search"
-      >
+      <ais-instant-search :search-client="searchClient" index-name="instant_search">
         <div class="search-panel">
           <div class="search-panel__filters">
             <ais-refinement-list attribute="brand" />
@@ -32,16 +29,10 @@
               <template slot="item" slot-scope="{ item }">
                 <article>
                   <h1>
-                    <ais-highlight
-                      :hit="item"
-                      attribute="name"
-                    />
+                    <ais-highlight :hit="item" attribute="name" />
                   </h1>
                   <p>
-                    <ais-highlight
-                      :hit="item"
-                      attribute="description"
-                    />
+                    <ais-highlight :hit="item" attribute="description" />
                   </p>
                 </article>
               </template>
@@ -63,10 +54,7 @@ import algoliasearch from 'algoliasearch/lite';
 export default {
   data() {
     return {
-      searchClient: algoliasearch(
-        'latency',
-        '6be0576ff61c053d5f9a3225e2a90f76'
-      ),
+      searchClient: algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76'),
     };
   },
 };

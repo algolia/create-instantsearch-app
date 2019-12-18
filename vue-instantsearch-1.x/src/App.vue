@@ -13,11 +13,7 @@
     </header>
 
     <div class="container">
-      <ais-index
-        app-id="latency"
-        api-key="6be0576ff61c053d5f9a3225e2a90f76"
-        index-name="instant_search"
-      >
+      <ais-index app-id="latency" api-key="6be0576ff61c053d5f9a3225e2a90f76" index-name="instant_search">
         <div class="search-panel">
           <div class="search-panel__filters">
             <ais-refinement-list attribute-name="brand"></ais-refinement-list>
@@ -34,7 +30,8 @@
                   'ais-clear': 'ais-SearchBox-reset',
                   'ais-clear--disabled': 'ais-SearchBox-reset--disabled',
                   'ais-search-box__submit': 'ais-SearchBox-submit',
-                  'ais-search-box__loading-indicator': 'ais-SearchBox-loadingIndicator',
+                  'ais-search-box__loading-indicator':
+                    'ais-SearchBox-loadingIndicator',
                 }"
               />
             </div>
@@ -63,10 +60,13 @@
                 :class-names="{
                   'ais-pagination': 'ais-Pagination-list',
                   'ais-pagination__item': 'ais-Pagination-item',
-                  'ais-pagination__item--active': 'ais-Pagination-item--selected',
+                  'ais-pagination__item--active':
+                    'ais-Pagination-item--selected',
                   'ais-pagination__item--next': 'ais-Pagination-item--next',
-                  'ais-pagination__item--previous': 'ais-Pagination-item--previous',
-                  'ais-pagination__item--disabled': 'ais-Pagination-item--disabled',
+                  'ais-pagination__item--previous':
+                    'ais-Pagination-item--previous',
+                  'ais-pagination__item--disabled':
+                    'ais-Pagination-item--disabled',
                   'ais-pagination__item--first': 'ais-Pagination-item--first',
                   'ais-pagination__item--last': 'ais-Pagination-item--last',
                   'ais-pagination__link': 'ais-Pagination-link',
