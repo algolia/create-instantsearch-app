@@ -2,6 +2,7 @@
   "name": "vue-instantsearch-app",
   "version": "1.0.0",
   "private": true,
+  "main": "src/App.vue",
   "scripts": {
     "start": "vue-cli-service serve --port 3000",
     "build": "vue-cli-service build",
