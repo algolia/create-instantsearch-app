@@ -20,7 +20,7 @@ const searchClient = algoliasearch('{{appId}}', '{{apiKey}}');
 function App() {
   return (
     <div>
-      <header className="header">
+      <header className="header flex items-center">
         <h1 className="header-title">
           <a href="/">{{name}}</a>
         </h1>
@@ -32,54 +32,54 @@ function App() {
         </p>
       </header>
 
-      <div className="container">
-        <InstantSearch searchClient={searchClient} indexName="{{indexName}}">
-          <div className="search-panel">
-            {{#if attributesForFaceting}}
-            <div className="search-panel__filters">
+      <InstantSearch searchClient={searchClient} indexName="{{indexName}}">
+        <div className="flex max-w-5xl m-auto">
+          {{#if attributesForFaceting}}
+          <aside className="w-1/3 sm:w-1/4 px-4">
+            <div className="filters sticky overflow-y-auto h-screen px-1 -mx-1">
               {{#each attributesForFaceting}}
               <RefinementList attribute="{{this}}" />
               {{/each}}
             </div>
+          </aside>
 
-            {{/if}}
-            <div className="search-panel__results">
-              <SearchBox
-                className="searchbox"
-                translations=\{{
-                  placeholder: '{{searchPlaceholder}}',
-                }}
-              />
-              <Hits hitComponent={Hit} />
+          {{/if}}
+          <main className="{{#if attributesForFaceting}}w-2/3 sm:w-3/4 {{/if}}px-4">
+            <SearchBox
+              className="mb-4"
+              translations=\{{
+                placeholder: '{{searchPlaceholder}}',
+              }}
+            />
+            <Hits hitComponent={Hit} />
 
-              <div className="pagination">
-                <Pagination />
-              </div>
+            <div className="flex justify-center my-8">
+              <Pagination />
             </div>
-          </div>
-        </InstantSearch>
-      </div>
+          </main>
+        </div>
+      </InstantSearch>
     </div>
   );
 }
 
-function Hit(props) {
+function Hit({ hit }) {
   return (
     <article>
       {{#if attributesToDisplay}}
       <h1>
-        <Highlight attribute="{{attributesToDisplay.[0]}}" hit={props.hit} />
+        <Highlight attribute="{{attributesToDisplay.[0]}}" hit={hit} />
       </h1>
       {{#each attributesToDisplay}}
       {{#unless @first}}
       <p>
-        <Highlight attribute="{{this}}" hit={props.hit} />
+        <Highlight attribute="{{this}}" hit={hit} />
       </p>
       {{/unless}}
       {{/each}}
       {{else}}
       <p>
-        <code>{JSON.stringify(props.hit).slice(0, 100)}...</code>
+        <code>{JSON.stringify(hit).slice(0, 100)}...</code>
       </p>
       {{/if}}
     </article>
