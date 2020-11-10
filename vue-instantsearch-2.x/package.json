@@ -9,10 +9,10 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "algoliasearch": "4.6.0",
+    "algoliasearch": "3.32.0",
     "core-js": "2.6.9",
     "vue": "2.6.10",
-    "vue-instantsearch": "3.4.2"
+    "vue-instantsearch": "2.7.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.6.0",
