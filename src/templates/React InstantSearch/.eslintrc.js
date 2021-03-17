@@ -1,3 +1,8 @@
 module.exports = {
-  extends: 'algolia/react',
+  extends: ['algolia/react'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 };
