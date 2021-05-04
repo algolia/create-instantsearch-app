@@ -1,11 +1,25 @@
 const latestSemver = require('latest-semver');
 const loadJsonFile = require('load-json-file');
+const camelCase = require('lodash.camelcase');
 
 const {
   getAppTemplateConfig,
   fetchLibraryVersions,
   getTemplatePath,
 } = require('../utils');
+
+function capitalize(str) {
+  return str.substr(0, 1).toUpperCase() + str.substr(1);
+}
+
+function createNameAlternatives({ organization, name }) {
+  return {
+    packageName: `@${organization}/${name}`,
+    widgetType: `${organization}.${name}`,
+    camelCaseName: camelCase(name),
+    pascalCaseName: capitalize(camelCase(name)),
+  };
+}
 
 module.exports = async function getConfiguration({
   options = {},
@@ -28,7 +42,7 @@ module.exports = async function getConfiguration({
       templateConfig.libraryName
     ).then(
       versions =>
-        // Return the lastest available version when
+        // Return the latest available version when
         // the stable version is not available
         latestSemver(versions) || versions[0]
     );
@@ -36,6 +50,7 @@ module.exports = async function getConfiguration({
 
   return {
     ...config,
+    ...createNameAlternatives(config),
     libraryVersion,
     template: templatePath,
   };
