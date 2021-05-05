@@ -18,7 +18,11 @@ const {
 const getOptionsFromArguments = require('./getOptionsFromArguments');
 const getAttributesFromIndex = require('./getAttributesFromIndex');
 const isQuestionAsked = require('./isQuestionAsked');
-const getConfiguration = require('./getConfiguration');
+const {
+  getConfiguration,
+  getLibraryVersion,
+  createNameAlternatives,
+} = require('./getConfiguration');
 const { version } = require('../../package.json');
 
 let appPath;
@@ -244,35 +248,48 @@ async function run() {
     optionsFromArguments
   );
 
-  const templatePath = getTemplatePath(template);
+  const configuration = await getConfiguration({
+    options: {
+      ...optionsFromArguments,
+      name: appName,
+      attributesToDisplay,
+    },
+    answers: { template },
+  });
+
+  const templatePath = getTemplatePath(configuration.template);
   const templateConfig = getAppTemplateConfig(templatePath);
 
   const implementationType = (templateConfig.category || '').includes('Widget')
     ? 'widget'
     : 'application';
 
-  const config = {
-    ...(await getConfiguration({
-      options: {
-        ...optionsFromArguments,
-        name: appName,
-        attributesToDisplay,
-      },
-      answers: await inquirer.prompt(
-        questions[implementationType].filter(question =>
-          isQuestionAsked({ question, args: optionsFromArguments })
-        ),
-        {
-          ...optionsFromArguments,
-          template,
-        }
-      ),
-    })),
-    installation: program.installation,
-  };
+  const answers = await inquirer.prompt(
+    questions[implementationType].filter(question =>
+      isQuestionAsked({ question, args: optionsFromArguments })
+    ),
+    optionsFromArguments
+  );
 
-  const { tasks } = getAppTemplateConfig(templatePath);
-  const app = createInstantSearchApp(appPath, config, tasks);
+  const alternativeNames = createNameAlternatives(configuration);
+
+  const libraryVersion = await getLibraryVersion(
+    { ...configuration, ...answers },
+    templateConfig
+  );
+
+  const app = createInstantSearchApp(
+    appPath,
+    {
+      ...configuration,
+      ...answers,
+      ...alternativeNames,
+      libraryVersion,
+      template: templatePath,
+      installation: program.installation,
+    },
+    templateConfig.tasks
+  );
 
   await app.create();
 }
