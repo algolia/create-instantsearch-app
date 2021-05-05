@@ -260,9 +260,8 @@ async function run() {
   const templatePath = getTemplatePath(configuration.template);
   const templateConfig = getAppTemplateConfig(templatePath);
 
-  const implementationType = (templateConfig.category || '').includes('Widget')
-    ? 'widget'
-    : 'application';
+  const implementationType =
+    templateConfig.category === 'Web - Widget' ? 'widget' : 'application';
 
   const answers = await inquirer.prompt(
     questions[implementationType].filter(question =>
@@ -271,7 +270,10 @@ async function run() {
     optionsFromArguments
   );
 
-  const alternativeNames = createNameAlternatives(configuration);
+  const alternativeNames = createNameAlternatives({
+    ...configuration,
+    ...answers,
+  });
 
   const libraryVersion = await getLibraryVersion(
     { ...configuration, ...answers },
