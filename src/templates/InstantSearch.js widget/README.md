@@ -6,17 +6,10 @@ _This project was generated with [create-instantsearch-app](https://github.com/a
 
 ## Install
 
-Using npm:
-
 ```bash
 npm install {{ packageName }}
-```
-
-or using yarn:
-
-```bash
+# or
 yarn add {{ packageName }}
-```
 
 ## Widget
 

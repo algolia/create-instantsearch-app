@@ -193,7 +193,7 @@ const questions = {
     {
       type: 'input',
       name: 'organization',
-      message: 'organization (on npm)',
+      message: 'Organization (on npm)',
       validate(input) {
         return typeof input === 'string';
       },
@@ -201,7 +201,7 @@ const questions = {
     {
       type: 'input',
       name: 'description',
-      message: 'npm and readme description',
+      message: 'Description',
       default() {
         const splitName = appName.split('-').join(' ');
 
@@ -261,7 +261,7 @@ async function run() {
   const templateConfig = getAppTemplateConfig(templatePath);
 
   const implementationType =
-    templateConfig.category === 'Web - Widget' ? 'widget' : 'application';
+    templateConfig.category === 'Widget' ? 'widget' : 'application';
 
   const answers = await inquirer.prompt(
     questions[implementationType].filter(question =>

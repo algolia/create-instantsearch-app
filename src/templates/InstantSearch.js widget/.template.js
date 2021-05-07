@@ -2,7 +2,7 @@ const install = require('../../tasks/node/install');
 const teardown = require('../../tasks/node/teardown');
 
 module.exports = {
-  category: 'Web - Widget',
+  category: 'Widget',
   libraryName: 'instantsearch.js',
   supportedVersion: '>= 4.21.0 < 5.0.0',
   templateName: 'instantsearch.js widget',
