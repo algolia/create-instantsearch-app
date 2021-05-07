@@ -267,7 +267,7 @@ async function run() {
     questions[implementationType].filter(question =>
       isQuestionAsked({ question, args: optionsFromArguments })
     ),
-    optionsFromArguments
+    { ...optionsFromArguments, template }
   );
 
   const alternativeNames = createNameAlternatives({
