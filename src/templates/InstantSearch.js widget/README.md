@@ -16,11 +16,15 @@ yarn add {{ packageName }}
 ### Usage
 
 ```js
+import instantsearch from 'instantsearch.js/es';
+import algoliasearch from 'algoliasearch/lite';
 import { {{ camelCaseName }} } from '{{ packageName }}';
+
+const searchClient = algoliasearch('appId', 'apiKey');
 
 const search = instantsearch({
   indexName: 'indexName',
-  searchClient: algoliasearch('appId', 'apiKey'),
+  searchClient,
 });
 
 search.addWidgets([
@@ -36,9 +40,7 @@ search.start();
 
 #### container
 
-type: string | Element
-
-required: true
+> `string | Element` | **required**
 
 The element to insert the widget into.
 
@@ -63,9 +65,7 @@ or an `HTMLElement`:
 
 #### option1
 
-type: ...
-
-required: true
+> `...` | **required**
 
 REPLACE WITH THE DESCRIPTION FOR THIS OPTION
 
@@ -106,7 +106,7 @@ search.addWidgets([
 
 #### option1
 
-type: ...
+> `...`
 
 REPLACE WITH THE DESCRIPTION FOR THIS RENDERING ITEM
 
@@ -129,7 +129,7 @@ search.addWidgets([
 
 #### widgetParams
 
-type: object
+> `object`
 
 All original widget options forwarded to the render function.
 
