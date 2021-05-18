@@ -3566,16 +3566,14 @@ exports[`Templates InstantSearch.js widget File content: package.json 1`] = `
     \\"test\\": \\"npm run lint && npm run test:types && npm run test:unit\\",
     \\"test:unit\\": \\"jest\\",
     \\"test:types\\": \\"tsc\\",
-    \\"lint\\": \\"eslint --ext .js,.ts .\\"
+    \\"lint\\": \\"eslint --ext .js,.ts .\\",
+    \\"release\\": \\"standard-version\\"
   },
   \\"files\\": [
     \\"dist\\"
   ],
   \\"peerDependencies\\": {
     \\"instantsearch.js\\": \\"^4.0.0\\"
-  },
-  \\"engines\\": {
-    \\"node\\": \\">=12.17.0\\"
   },
   \\"browserslist\\": [
     \\"last 2 chrome versions\\",
@@ -3833,7 +3831,7 @@ export type InstantsearchJsAppRendererCreator = (
   widgetParams: InstantsearchJsAppWidgetParams
 ) => {
   render: Renderer<
-    InstantsearchJsAppWidgetDescription,
+    InstantsearchJsAppWidgetDescription['renderState'],
     InstantsearchJsAppConnectorParams
   >;
   dispose: () => void;
