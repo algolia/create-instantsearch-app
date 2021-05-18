@@ -3329,13 +3329,14 @@ _This project was generated with [create-instantsearch-app](https://github.com/a
 npm install @algolia/instantsearch.js-app
 # or
 yarn add @algolia/instantsearch.js-app
+\`\`\`
 
 ## Widget
 
 ### Usage
 
 \`\`\`js
-import instantsearch from 'instantsearch.js/es';
+import instantsearch from 'instantsearch.js';
 import algoliasearch from 'algoliasearch/lite';
 import { instantsearchJsApp } from '@algolia/instantsearch.js-app';
 
@@ -3614,7 +3615,6 @@ export const connectInstantsearchJsApp: InstantsearchJsAppConnector = function c
       /*
        * Sets up the widget during the InstantSearch initialization.
        * It is called before the first search and is a good place to call the \`renderFn\` function to set up the initial DOM (a placeholder for example).
-       * See \`init\` documentation https://www.algolia.com/doc/
        */
       init(initOptions) {
         const { instantSearchInstance } = initOptions;
@@ -3631,7 +3631,6 @@ export const connectInstantsearchJsApp: InstantsearchJsAppConnector = function c
       /*
        * Re-render the widget with the new information from the search, including results.
        * This method is called each time we receive results from Algolia.
-       * See \`render\` documentation https://www.algolia.com/doc/
        */
       render(renderOptions) {
         const { instantSearchInstance } = renderOptions;
@@ -3648,7 +3647,6 @@ export const connectInstantsearchJsApp: InstantsearchJsAppConnector = function c
       /*
        * Called when this widget is unmounted.
        * Can be used to remove refinements set by during this widget's initialization and life time.
-       * See \`dispose\` documentation https://www.algolia.com/doc/
        */
       dispose() {
         unmountFn();
@@ -3658,7 +3656,6 @@ export const connectInstantsearchJsApp: InstantsearchJsAppConnector = function c
        * Derive a \`uiState\` for this widget based on the existing \`uiState\` and the search parameters applied.
        * This method is required for a widget to be taken in account for routing.
        * This method can be called internally anytime by InstantSearch and to avoid any issues they must be defined as pure functions.
-       * See \`getWidgetUiState\` documentation https://www.algolia.com/doc/
        */
       getWidgetUiState(uiState, { searchParameters }) {
 
@@ -3672,7 +3669,6 @@ export const connectInstantsearchJsApp: InstantsearchJsAppConnector = function c
        * It receives the current UiState and applied search parameters, and is
        * expected to return a new search parameters.
        * This method is required for a widget to be taken in account for routing.
-       * See \`getWidgetSearchParameters\` documentation https://www.algolia.com/doc/
        */
       getWidgetSearchParameters(searchParameters, { uiState }) {
         // add this widget's search parameters
@@ -3683,7 +3679,6 @@ export const connectInstantsearchJsApp: InstantsearchJsAppConnector = function c
        * Returns IndexRenderState of the current index component tree to build the render state of the whole app.
        * This method is required for a widget to be taken in account for routing.
        * This method can be called internally anytime by InstantSearch and to avoid any issues they must be defined as pure functions.
-       * See \`getRenderState\` documentation https://www.algolia.com/doc/
        */
       getRenderState(renderState, renderOptions) {
         return {
@@ -3696,7 +3691,6 @@ export const connectInstantsearchJsApp: InstantsearchJsAppConnector = function c
        * Returns the render state of the current widget.
        * The render state will be passed to the \`renderFn\` function by the \`init\` and \`render\` methods.
        * This method can be called internally anytime by InstantSearch and to avoid any issues they must be defined as pure functions.
-       * See \`getWidgetRenderState\` documentation https://www.algolia.com/doc/
        */
       getWidgetRenderState({ results }) {
         if (!results) {
@@ -3750,7 +3744,6 @@ export const createInstantsearchJsAppRenderer: InstantsearchJsAppRendererCreator
     render(renderOptions, isFirstRender) {
       /*
        * \`renderOptions\` contains all options passed by the connector to the renderer, it contains everything needed for the rendering of the component
-       * See \`renderOptions\` documentation https://www.algolia.com/doc/
        */
 
       if (isFirstRender) {

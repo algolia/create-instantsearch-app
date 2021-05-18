@@ -10,13 +10,14 @@ _This project was generated with [create-instantsearch-app](https://github.com/a
 npm install {{ packageName }}
 # or
 yarn add {{ packageName }}
+```
 
 ## Widget
 
 ### Usage
 
 ```js
-import instantsearch from 'instantsearch.js/es';
+import instantsearch from 'instantsearch.js';
 import algoliasearch from 'algoliasearch/lite';
 import { {{ camelCaseName }} } from '{{ packageName }}';
 
