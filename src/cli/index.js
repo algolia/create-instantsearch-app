@@ -45,7 +45,7 @@ program
     'The attributes for faceting'
   )
   .option('--template <template>', 'The InstantSearch template to use')
-  .option('--library-version <template>', 'The version of the library')
+  .option('--library-version <version>', 'The version of the library')
   .option('--config <config>', 'The configuration file to get the options from')
   .option('--no-installation', 'Ignore dependency installation')
   .action((dest, opts) => {
@@ -195,7 +195,7 @@ const questions = {
       name: 'organization',
       message: 'Organization (on npm)',
       validate(input) {
-        return typeof input === 'string';
+        return typeof input === 'string' && input.length > 0;
       },
     },
     {

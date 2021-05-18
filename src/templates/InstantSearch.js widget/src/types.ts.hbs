@@ -51,7 +51,7 @@ export type {{ pascalCaseName }}RendererCreator = (
   widgetParams: {{ pascalCaseName }}WidgetParams
 ) => {
   render: Renderer<
-    {{ pascalCaseName }}WidgetDescription,
+    {{ pascalCaseName }}WidgetDescription['renderState'],
     {{ pascalCaseName }}ConnectorParams
   >;
   dispose: () => void;
