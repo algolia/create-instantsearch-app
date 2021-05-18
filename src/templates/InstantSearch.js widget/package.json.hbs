@@ -23,7 +23,7 @@
   "scripts": {
     "start": "parcel example/index.html",
     "prebuild": "rm -rf dist",
-    "build": "npm run build:umd; npm run build:cjs; npm run build:esm; npm run build:types",
+    "build": "npm run build:umd && npm run build:cjs && npm run build:esm && npm run build:types",
     "build:umd": "parcel build src/index.ts --global {{ camelCaseName }} --out-dir dist/umd --out-file index.js --experimental-scope-hoisting",
     "build:cjs": "BABEL_ENV=cjs babel src --extensions '.js,.ts' --out-dir dist/cjs --ignore '**/__tests__' --source-maps && BABEL_ENV=cjs babel src/index.ts --out-file dist/cjs/index.js --source-maps",
     "build:esm": "BABEL_ENV=esm babel src --extensions '.js,.ts' --out-dir dist/esm --ignore '**/__tests__' --source-maps",
