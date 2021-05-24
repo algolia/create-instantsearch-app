@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 // @ts-expect-error
 import { InstantSearch, Hits } from 'react-instantsearch-dom';
@@ -10,7 +10,7 @@ const runAllMicroTasks = (): Promise<void> => new Promise(setImmediate);
 describe('nothing', () => {
   it('tests nothing', async () => {
     const searchClient = {
-      search(requests: any[]) {
+      search(_requests: any[]) {
         return Promise.resolve({
           results: [
             {
