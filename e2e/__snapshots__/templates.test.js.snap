@@ -5736,6 +5736,7 @@ exports[`Templates React InstantSearch widget File content: package.json 1`] = `
     \\"test\\": \\"NODE_OPTIONS=--experimental-vm-modules jest\\",
     \\"test:watch\\": \\"npm test -- --watch\\",
     \\"test:types\\": \\"tsc\\",
+    \\"prerelease\\": \\"npm run build\\",
     \\"release\\": \\"standard-version\\"
   },
   \\"partialDependencies\\": {}
