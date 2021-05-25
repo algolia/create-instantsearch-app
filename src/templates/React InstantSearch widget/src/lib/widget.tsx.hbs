@@ -1,6 +1,14 @@
 import { {{ pascalCaseName }}Component } from './component';
 import { connect{{ pascalCaseName }} } from './connector';
 
-export const {{ pascalCaseName }} = connect{{ pascalCaseName }}(
-  {{ pascalCaseName }}Component
-);
+import type { ElementType } from 'react';
+
+type WidgetParams = {
+  /**
+   * Placeholder text for input element.
+   */
+  placeholder?: string;
+};
+
+export const {{ pascalCaseName }}: ElementType<WidgetParams> =
+  connect{{ pascalCaseName }}({{ pascalCaseName }}Component);
