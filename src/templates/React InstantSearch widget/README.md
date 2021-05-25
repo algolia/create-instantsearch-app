@@ -63,6 +63,14 @@ npm test
 yarn test
 ```
 
+## Build
+
+```bash
+npm run build
+# or
+yarn build
+```
+
 ## Release
 
 ```bash
