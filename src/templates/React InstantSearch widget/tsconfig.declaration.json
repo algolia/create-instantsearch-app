@@ -6,5 +6,5 @@
     "declaration": true,
     "emitDeclarationOnly": true
   },
-  "exclude": ["./src/main.tsx", "**/__tests__"]
+  "exclude": ["example/index.tsx", "**/__tests__"]
 }
