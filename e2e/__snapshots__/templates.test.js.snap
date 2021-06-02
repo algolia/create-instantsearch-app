@@ -5667,7 +5667,7 @@ This will tag a release without bumping the version.
 
 When you are ready, push the git tag and run \`npm publish\`.
 
-If you want to publish it as a public scoped package, run \`npm publish --access public\`.
+If you want to publish it as a public scoped package, run \`npm publish --access public\` the first time.
 
 [To know more about \`standard-version\`, read this →](https://github.com/conventional-changelog/standard-version#cli-usage)"
 `;
@@ -5683,20 +5683,44 @@ module.exports = {
 };"
 `;
 
-exports[`Templates React InstantSearch widget File content: index.html 1`] = `
+exports[`Templates React InstantSearch widget File content: example/index.html 1`] = `
 "<!DOCTYPE html>
 <html lang=\\"en\\">
   <head>
     <meta charset=\\"UTF-8\\" />
-    <link rel=\\"icon\\" type=\\"image/svg+xml\\" href=\\"/src/favicon.svg\\" />
     <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\" />
     <title>@algolia/react-instantsearch-app | example</title>
   </head>
   <body>
     <div id=\\"root\\"></div>
-    <script type=\\"module\\" src=\\"/src/main.tsx\\"></script>
+    <script type=\\"module\\" src=\\"./index.tsx\\"></script>
   </body>
 </html>"
+`;
+
+exports[`Templates React InstantSearch widget File content: example/index.tsx 1`] = `
+"import algoliasearch from 'algoliasearch/lite';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
+
+import { ReactInstantsearchApp } from '../src';
+
+const searchClient = algoliasearch(
+  'latency',
+  '6be0576ff61c053d5f9a3225e2a90f76'
+);
+
+ReactDOM.render(
+  <React.StrictMode>
+    <InstantSearch indexName=\\"instant_search\\" searchClient={searchClient}>
+      <ReactInstantsearchApp />
+      <SearchBox />
+      <Hits />
+    </InstantSearch>
+  </React.StrictMode>,
+  document.getElementById('root')
+);"
 `;
 
 exports[`Templates React InstantSearch widget File content: package.json 1`] = `
@@ -5708,6 +5732,7 @@ exports[`Templates React InstantSearch widget File content: package.json 1`] = `
     \\"instantsearch-widget\\",
     \\"instantsearch\\",
     \\"react-instantsearch\\",
+    \\"react-instantsearch-widget-@algolia/react-instantsearch-app\\",
     \\"widget\\",
     \\"connector\\",
     \\"algolia\\"
@@ -5727,7 +5752,7 @@ exports[`Templates React InstantSearch widget File content: package.json 1`] = `
     \\"dist\\"
   ],
   \\"scripts\\": {
-    \\"start\\": \\"vite\\",
+    \\"start\\": \\"vite example\\",
     \\"prebuild\\": \\"rm -rf dist\\",
     \\"build\\": \\"vite build && npm run build:types\\",
     \\"build:types\\": \\"tsc -p tsconfig.declaration.json\\",
@@ -5752,7 +5777,6 @@ export { ReactInstantsearchApp } from './lib/widget';"
 exports[`Templates React InstantSearch widget File content: src/lib/__tests__/dummy-test.tsx 1`] = `
 "import { render } from '@testing-library/react';
 import React from 'react';
-// @ts-expect-error
 import { InstantSearch, Hits } from 'react-instantsearch-dom';
 
 import { ReactInstantsearchApp } from '../widget';
@@ -5851,85 +5875,6 @@ export const ReactInstantsearchApp: ElementType<WidgetParams> =
   connectReactInstantsearchApp(ReactInstantsearchAppComponent);"
 `;
 
-exports[`Templates React InstantSearch widget File content: src/main.tsx 1`] = `
-"import algoliasearch from 'algoliasearch/lite';
-import React from 'react';
-import ReactDOM from 'react-dom';
-// @ts-expect-error
-import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
-
-import { ReactInstantsearchApp } from '.';
-
-const searchClient = algoliasearch(
-  'latency',
-  '6be0576ff61c053d5f9a3225e2a90f76'
-);
-
-ReactDOM.render(
-  <React.StrictMode>
-    <InstantSearch indexName=\\"instant_search\\" searchClient={searchClient}>
-      <ReactInstantsearchApp />
-      <SearchBox />
-      <Hits />
-    </InstantSearch>
-  </React.StrictMode>,
-  document.getElementById('root')
-);"
-`;
-
-exports[`Templates React InstantSearch widget File content: src/shims.d.ts 1`] = `
-"declare module 'react-instantsearch-dom' {
-  import type { ElementType } from 'react';
-
-  type ConnectorDescription = {
-    displayName: string;
-    /**
-     * A function to filter the local state.
-     */
-    refine?: (props: any, searchState: any, searchResults: any) => any;
-    /**
-     * Function transforming the local state to a SearchParameters.
-     */
-    getSearchParameters?: (
-      searchParameters: any,
-      props: any,
-      searchState: any
-    ) => any;
-    /**
-     * Metadata of the widget (for current refinements).
-     */
-    getMetadata?: (props: any, searchState: any) => any;
-    /**
-     * Hook after the state has changed.
-     */
-    transitionState?: (
-      props: any,
-      prevSearchState: any,
-      nextSearchState: any
-    ) => any;
-    /**
-     * Transform the state into props passed to the wrapped component.
-     * Receives (props, widgetStates, searchState, metadata) and returns the local state.
-     */
-    getProvidedProps: (props: any, searchState: any, searchResults: any) => any;
-    /**
-     * Receives props and return the id that will be used to identify the widget.
-     */
-    getId?: (...args: any[]) => string;
-    /**
-     * Hook when the widget will unmount. Receives (props, searchState) and return a cleaned state.
-     */
-    cleanUp?: (props: any, searchState: any, context: any) => any;
-    searchForFacetValues?: (...args: any[]) => any;
-    shouldComponentUpdate?: (...args: any[]) => boolean;
-  };
-
-  export const createConnector: (
-    connectorDesc: ConnectorDescription
-  ) => (component: ElementType) => ElementType;
-}"
-`;
-
 exports[`Templates React InstantSearch widget File content: tsconfig.declaration.json 1`] = `
 "{
   \\"extends\\": \\"./tsconfig\\",
@@ -5939,7 +5884,7 @@ exports[`Templates React InstantSearch widget File content: tsconfig.declaration
     \\"declaration\\": true,
     \\"emitDeclarationOnly\\": true
   },
-  \\"exclude\\": [\\"./src/main.tsx\\", \\"**/__tests__\\"]
+  \\"exclude\\": [\\"example/index.tsx\\", \\"**/__tests__\\"]
 }"
 `;
 
@@ -5962,7 +5907,7 @@ exports[`Templates React InstantSearch widget File content: tsconfig.json 1`] = 
     \\"noEmit\\": true,
     \\"jsx\\": \\"react\\"
   },
-  \\"include\\": [\\"./src\\"]
+  \\"include\\": [\\"./src\\", \\"example/index.tsx\\"]
 }"
 `;
 
@@ -5994,6 +5939,7 @@ export default defineConfig({
       output: {
         globals: {
           react: 'React',
+          'react-dom': 'ReactDOM',
           'react-instantsearch-dom': 'ReactInstantSearchDOM',
         },
       },
@@ -6010,15 +5956,14 @@ Array [
   ".prettierrc",
   "README.md",
   "babel.config.cjs",
-  "index.html",
+  "example/index.html",
+  "example/index.tsx",
   "package.json",
   "src/index.tsx",
   "src/lib/__tests__/dummy-test.tsx",
   "src/lib/component.tsx",
   "src/lib/connector.ts",
   "src/lib/widget.tsx",
-  "src/main.tsx",
-  "src/shims.d.ts",
   "tsconfig.declaration.json",
   "tsconfig.json",
   "vite.config.ts",
