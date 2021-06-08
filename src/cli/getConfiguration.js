@@ -1,6 +1,7 @@
 const latestSemver = require('latest-semver');
 const loadJsonFile = require('load-json-file');
 const camelCase = require('lodash.camelcase');
+const kebabCase = require('lodash.kebabcase');
 
 const { fetchLibraryVersions } = require('../utils');
 
@@ -14,6 +15,7 @@ function createNameAlternatives({ organization, name }) {
     widgetType: `${organization}.${name}`,
     camelCaseName: camelCase(name),
     pascalCaseName: capitalize(camelCase(name)),
+    kebabCaseName: kebabCase(name),
   };
 }
 

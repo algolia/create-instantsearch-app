@@ -44,6 +44,7 @@
     "latest-semver": "2.0.0",
     "load-json-file": "6.2.0",
     "lodash.camelcase": "4.3.0",
+    "lodash.kebabcase": "4.1.1",
     "metalsmith": "2.3.0",
     "metalsmith-ignore": "1.0.0",
     "metalsmith-in-place": "4.4.1",
