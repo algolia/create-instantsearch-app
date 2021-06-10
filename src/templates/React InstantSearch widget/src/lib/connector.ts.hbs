@@ -1,9 +1,13 @@
 import { createConnector } from 'react-instantsearch-dom';
 
+export type ProvidedProps = {
+  // TODO: fill props that are returned by `getProvidedProps`
+}
+
 export const connect{{ pascalCaseName }} = createConnector({
   displayName: '{{ pascalCaseName }}',
 
-  getProvidedProps(props, searchState, searchResults) {
+  getProvidedProps(props, searchState, searchResults): ProvidedProps {
     return {
       // TODO: return a props for the component
     };
