@@ -5732,7 +5732,7 @@ exports[`Templates React InstantSearch widget File content: package.json 1`] = `
     \\"instantsearch-widget\\",
     \\"instantsearch\\",
     \\"react-instantsearch\\",
-    \\"react-instantsearch-widget-@algolia/react-instantsearch-app\\",
+    \\"react-instantsearch-widget-react-instantsearch-app\\",
     \\"widget\\",
     \\"connector\\",
     \\"algolia\\"
@@ -5818,22 +5818,32 @@ describe('nothing', () => {
 exports[`Templates React InstantSearch widget File content: src/lib/component.tsx 1`] = `
 "import React from 'react';
 
-type Props = {
-  // TODO: this is the object returned by \`getProvidedProps\` from the connector.
+import type { ProvidedProps } from './connector'
+
+type Props = ProvidedProps & {
+  refine: () => {}
 };
 
 export const ReactInstantsearchAppComponent = ({}: Props) => {
-  return <div>{/* TODO: render something */}</div>;
+  return (
+    <div>
+      {/* TODO: render something */}
+    </div>
+  );
 };"
 `;
 
 exports[`Templates React InstantSearch widget File content: src/lib/connector.ts 1`] = `
 "import { createConnector } from 'react-instantsearch-dom';
 
+export type ProvidedProps = {
+  // TODO: fill props that are returned by \`getProvidedProps\`
+};
+
 export const connectReactInstantsearchApp = createConnector({
   displayName: 'ReactInstantsearchApp',
 
-  getProvidedProps(props, searchState, searchResults) {
+  getProvidedProps(props, searchState, searchResults): ProvidedProps {
     return {
       // TODO: return a props for the component
     };
