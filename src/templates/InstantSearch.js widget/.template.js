@@ -6,8 +6,15 @@ module.exports = {
   libraryName: 'instantsearch.js',
   supportedVersion: '>= 4.21.0 < 5.0.0',
   templateName: 'instantsearch.js-widget',
-  appName: 'instantsearch.js-app',
-  keywords: ['algolia', 'InstantSearch', 'Vanilla', 'instantsearch.js', 'widget'],
+  appName: 'test', // only used for test cases
+  packageNamePrefix: 'instantsearch-widget-',
+  keywords: [
+    'algolia',
+    'InstantSearch',
+    'Vanilla',
+    'instantsearch.js',
+    'widget',
+  ],
   tasks: {
     install,
     teardown,
