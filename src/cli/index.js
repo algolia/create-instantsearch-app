@@ -196,7 +196,6 @@ async function run() {
   if (appPath.startsWith('~/')) {
     appPath = path.join(os.homedir(), appPath.slice(2));
   }
-  let appName = optionsFromArguments.name || path.basename(appPath);
   try {
     checkAppPath(appPath);
   } catch (err) {
@@ -206,16 +205,19 @@ async function run() {
     process.exit(1);
   }
 
-  appName = (
-    await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'appName',
-        message: 'The name of the application or widget: ',
-        default: appName,
-      },
-    ])
-  ).appName;
+  let appName = optionsFromArguments.name;
+  if (!appName) {
+    appName = (
+      await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'appName',
+          message: 'The name of the application or widget: ',
+          default: path.basename(appPath),
+        },
+      ])
+    ).appName;
+  }
 
   try {
     checkAppName(appName);

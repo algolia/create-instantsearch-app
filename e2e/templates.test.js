@@ -57,6 +57,7 @@ describe('Templates', () => {
 
         execSync(
           `yarn start ${appPath} \
+              --name ${templateConfig.appName} \
               --config ${configFilePath} \
               --no-installation`,
           { stdio: 'ignore' }
