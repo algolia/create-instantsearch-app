@@ -17,6 +17,10 @@ describe('Templates', () => {
   templates.forEach(templatePath => {
     const templateName = path.basename(templatePath);
     const templateConfig = require(`${templatePath}/.template.js`);
+    if (templateConfig.category === 'Widget') {
+      // `appName` in widget templates is used only in test cases
+      templateConfig.appName = 'date-picker';
+    }
 
     describe(`${templateName}`, () => {
       let temporaryDirectory;
