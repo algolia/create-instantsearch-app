@@ -1,7 +1,5 @@
 # {{name}}
 
-_This project was generated with [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) by [Algolia](https://algolia.com)._
-
 {{ description }}
 
 ## Install
@@ -29,6 +27,18 @@ const App = () => (
   </InstantSearch>
 );
 ```
+
+### Options
+
+| Option | Type | Required | Default | Description |
+| :-- | :-- | :-- | :-- | --- |
+| [`option1`](#option1) | `string` | true | - | REPLACE WITH THE DESCRIPTION FOR THIS OPTION |
+
+#### option1
+
+> `string` | **required**
+
+REPLACE WITH THE DESCRIPTION FOR THIS OPTION
 
 ## Connector
 
@@ -94,3 +104,7 @@ When you are ready, push the git tag and run `npm publish`.
 If you want to publish it as a public scoped package, run `npm publish --access public` the first time.
 
 [To know more about `standard-version`, read this →](https://github.com/conventional-changelog/standard-version#cli-usage)
+
+---
+
+_This project was generated with [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) by [Algolia](https://algolia.com)._
