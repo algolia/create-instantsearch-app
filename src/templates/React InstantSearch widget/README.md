@@ -2,6 +2,10 @@
 
 {{ description }}
 
+---
+
+[![MIT](https://img.shields.io/npm/l/{{ packageName }})](./LICENSE) [![NPM version](http://img.shields.io/npm/v/{{ packageName }}.svg)](https://npmjs.org/package/{{ packageName }})
+
 ## Install
 
 ```bash
