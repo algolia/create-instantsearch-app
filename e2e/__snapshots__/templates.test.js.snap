@@ -3348,10 +3348,54 @@ yarn-error.log
 dist/"
 `;
 
-exports[`Templates InstantSearch.js widget File content: LICENSE 1`] = `
+exports[`Templates InstantSearch.js widget File content: CONTRIBUTING.md 1`] = `
+"# Contribution Guide
+
+## Test
+
+\`\`\`bash
+npm test
+# or
+yarn test
+\`\`\`
+
+## Build
+
+\`\`\`bash
+npm run build
+# or
+yarn build
+\`\`\`
+
+## Release
+
+\`\`\`bash
+npm run release
+# or
+yarn release
+\`\`\`
+
+### First Release
+
+\`\`\`bash
+npm run release -- --first-release
+# or
+yarn release --first-release
+\`\`\`
+
+This will tag a release without bumping the version.
+
+When you are ready, push the git tag and run \`npm publish\`.
+
+If you want to publish it as a public scoped package, run \`npm publish --access public\` the first time.
+
+[To know more about \`standard-version\`, read this →](https://github.com/conventional-changelog/standard-version#cli-usage)"
+`;
+
+exports[`Templates InstantSearch.js widget File content: LICENSE.md 1`] = `
 "The MIT License (MIT)
 
-Copyright (c) 2015-present Algolia, Inc.
+Copyright (c) 2021-present algolia, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the \\"Software\\"), to deal
@@ -3430,7 +3474,12 @@ The element to insert the widget into.
 This can be either a valid CSS Selector:
 
 \`\`\`js
-instantsearchJsApp({
+{
+  {
+    camelCaseName;
+  }
+}
+({
   container: '#instantsearch.js-app',
   // ...
 });
@@ -3439,12 +3488,18 @@ instantsearchJsApp({
 or an \`HTMLElement\`:
 
 \`\`\`js
-instantsearchJsApp({
+{
+  {
+    camelCaseName;
+  }
+}
+({
   container: document.querySelector('#instantsearch.js-app'),
   // ...
 });
 \`\`\`
-\`\`\`
+
+\`\`\`\`
 
 #### option1
 
@@ -3457,8 +3512,7 @@ instantsearchJsApp({
   option1: 'value',
   // ...
 });
-\`\`\`
-
+\`\`\`\`
 
 ## Connector
 
@@ -3492,7 +3546,6 @@ search.addWidgets([
 > \`...\`
 
 REPLACE WITH THE DESCRIPTION FOR THIS RENDERING ITEM
-
 
 \`\`\`js
 const renderInstantsearchJsApp = (renderOptions, isFirstRender) => {
@@ -3534,45 +3587,16 @@ search.addWidgets([
 ]);
 \`\`\`
 
-## Test
+## Contributing
 
-\`\`\`bash
-npm test
-# or
-yarn test
-\`\`\`
+To start contributing to code, you need to:
 
-## Build
+1. [Fork the project](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+2. [Clone the repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository)
+3. Install the dependencies: \`yarn\`
+4. Run the development mode: \`yarn start\`
 
-\`\`\`bash
-npm run build
-# or
-yarn build
-\`\`\`
-
-## Release
-
-\`\`\`bash
-npm run release
-# or
-yarn release
-\`\`\`
-
-### First Release
-
-\`\`\`bash
-npm run release -- --first-release
-# or
-yarn release --first-release
-\`\`\`
-
-This will tag a release without bumping the version.
-
-When you are ready, push the git tag and run \`npm publish\`.
-
-If you want to publish it as a public scoped package, run \`npm publish --access public\` the first time.
-
-[To know more about \`standard-version\`, read this →](https://github.com/conventional-changelog/standard-version#cli-usage)
+Please read [our contribution process](./CONTRIBUTING.md) to learn more.
 
 ---
 
@@ -4030,7 +4054,8 @@ Array [
   ".eslintignore",
   ".eslintrc.cjs",
   ".gitignore",
-  "LICENSE",
+  "CONTRIBUTING.md",
+  "LICENSE.md",
   "README.md",
   "babel.config.cjs",
   "package.json",
@@ -5650,10 +5675,62 @@ exports[`Templates React InstantSearch widget File content: .prettierrc 1`] = `
 }"
 `;
 
-exports[`Templates React InstantSearch widget File content: LICENSE 1`] = `
+exports[`Templates React InstantSearch widget File content: CONTRIBUTING.md 1`] = `
+"# Contribution Guide
+
+## Test
+
+\`\`\`bash
+npm test
+# or
+yarn test
+\`\`\`
+
+## Build
+
+\`\`\`bash
+npm run build
+# or
+yarn build
+\`\`\`
+
+## Run example
+
+\`\`\`bash
+npm start
+# or
+yarn start
+\`\`\`
+
+## Release
+
+\`\`\`bash
+npm run release
+# or
+yarn release
+\`\`\`
+
+### First Release
+
+\`\`\`bash
+npm run release -- --first-release
+# or
+yarn release --first-release
+\`\`\`
+
+This will tag a release without bumping the version.
+
+When you are ready, push the git tag and run \`npm publish\`.
+
+If you want to publish it as a public scoped package, run \`npm publish --access public\` the first time.
+
+[To know more about \`standard-version\`, read this →](https://github.com/conventional-changelog/standard-version#cli-usage)"
+`;
+
+exports[`Templates React InstantSearch widget File content: LICENSE.md 1`] = `
 "The MIT License (MIT)
 
-Copyright (c) 2015-present Algolia, Inc.
+Copyright (c) 2021-present algolia, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the \\"Software\\"), to deal
@@ -5745,6 +5822,17 @@ const App = () => (
   </InstantSearch>
 );
 \`\`\`
+
+## Contributing
+
+To start contributing to code, you need to:
+
+1. [Fork the project](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+2. [Clone the repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository)
+3. Install the dependencies: \`yarn\`
+4. Run the development mode: \`yarn start\`
+
+Please read [our contribution process](./CONTRIBUTING.md) to learn more.
 
 ## Test
 
@@ -6083,7 +6171,8 @@ Array [
   ".eslintrc.cjs",
   ".gitignore",
   ".prettierrc",
-  "LICENSE",
+  "CONTRIBUTING.md",
+  "LICENSE.md",
   "README.md",
   "babel.config.cjs",
   "example/index.html",
