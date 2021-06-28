@@ -188,7 +188,7 @@ async function run() {
       {
         type: 'input',
         name: 'appPath',
-        message: 'Project directory:',
+        message: 'Project directory',
       },
     ]);
     appPath = answers.appPath;
@@ -212,7 +212,7 @@ async function run() {
         {
           type: 'input',
           name: 'appName',
-          message: 'The name of the application or widget: ',
+          message: 'The name of the application or widget',
           default: path.basename(appPath),
         },
       ])
