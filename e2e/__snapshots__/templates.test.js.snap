@@ -4050,6 +4050,7 @@ Array [
   ".eslintignore",
   ".eslintrc.cjs",
   ".gitignore",
+  ".prettierrc",
   "CONTRIBUTING.md",
   "LICENSE.md",
   "README.md",
