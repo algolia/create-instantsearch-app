@@ -23,7 +23,7 @@
     "algoliasearch": "3.30.0",
     "angular-instantsearch": "{{libraryVersion}}",
     "core-js": "2.6.9",
-    "rxjs": "6.3.3",
+    "rxjs": "6.6.7",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
