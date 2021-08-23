@@ -3130,7 +3130,7 @@ exports[`Templates InstantSearch.js File content: index.html 1`] = `
     <div id=\\"pagination\\"></div>
   </div>
 
-  <script src=\\"https://cdn.jsdelivr.net/algoliasearch/3.32.0/algoliasearchLite.min.js\\"></script>
+  <script src=\\"https://cdn.jsdelivr.net/algoliasearch/4.10.4/algoliasearchLite.min.js\\"></script>
   <script src=\\"https://cdn.jsdelivr.net/npm/instantsearch.js@3.0.0\\"></script>
   <script src=\\"./src/app.js\\"></script>
 </body>
@@ -3168,7 +3168,9 @@ exports[`Templates InstantSearch.js File content: package.json 1`] = `
     \\"lint\\": \\"eslint .\\",
     \\"lint:fix\\": \\"npm run lint -- --fix\\"
   },
-  \\"partialDependencies\\": {}
+  \\"partialDependencies\\": {
+    \\"instantsearch.js\\": \\"3.0.0\\"
+  }
 }"
 `;
 
@@ -3277,6 +3279,41 @@ search.addWidgets([
 search.start();"
 `;
 
+exports[`Templates InstantSearch.js File content: src/global.d.ts 1`] = `
+"import algoliasearch from 'algoliasearch/lite';
+
+import instantsearch from 'instantsearch.js/es';
+import * as connectors from 'instantsearch.js/es/connectors';
+import * as widgets from 'instantsearch.js/es/widgets';
+import * as middlewares from 'instantsearch.js/es/middlewares';
+import * as helpers from 'instantsearch.js/es/helpers/index';
+import * as routers from 'instantsearch.js/es/lib/routers/index';
+import * as stateMappings from 'instantsearch.js/es/lib/stateMappings/index';
+import { createInfiniteHitsSessionStorageCache } from 'instantsearch.js/es/lib/infiniteHitsCache/index';
+
+declare global {
+  interface Window {
+    algoliasearch: typeof algoliasearch;
+
+    instantsearch: typeof instantsearch & {
+      connectors: typeof connectors;
+      widgets: typeof widgets;
+      middlewares: typeof middlewares;
+
+      routers: typeof routers;
+      stateMappings: typeof stateMappings;
+
+      createInfiniteHitsSessionStorageCache: typeof createInfiniteHitsSessionStorageCache;
+      highlight: typeof helpers.highlight;
+      reverseHighlight: typeof helpers.reverseHighlight;
+      snippet: typeof helpers.snippet;
+      reverseSnippet: typeof helpers.reverseSnippet;
+      insights: typeof helpers.insights;
+    };
+  }
+}"
+`;
+
 exports[`Templates InstantSearch.js File content: src/index.css 1`] = `
 "body,
 h1 {
@@ -3287,6 +3324,27 @@ h1 {
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}"
+`;
+
+exports[`Templates InstantSearch.js File content: tsconfig.json 1`] = `
+"{
+  \\"compilerOptions\\": {
+    \\"module\\": \\"commonjs\\",
+    \\"esModuleInterop\\": true,
+    \\"sourceMap\\": true,
+    \\"allowJs\\": true,
+    \\"lib\\": [
+      \\"es6\\",
+      \\"dom\\"
+    ],
+    \\"rootDir\\": \\"src\\",
+    \\"moduleResolution\\": \\"node\\"
+  },
+  \\"include\\": [
+    \\"src\\",
+    \\"src/global.d.ts\\"
+  ]
 }"
 `;
 
@@ -3304,7 +3362,9 @@ Array [
   "package.json",
   "src/app.css",
   "src/app.js",
+  "src/global.d.ts",
   "src/index.css",
+  "tsconfig.json",
 ]
 `;
 

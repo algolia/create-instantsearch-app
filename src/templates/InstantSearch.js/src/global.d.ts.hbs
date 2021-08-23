@@ -1,0 +1,32 @@
+import algoliasearch from 'algoliasearch/lite';
+
+import instantsearch from 'instantsearch.js/es';
+import * as connectors from 'instantsearch.js/es/connectors';
+import * as widgets from 'instantsearch.js/es/widgets';
+import * as middlewares from 'instantsearch.js/es/middlewares';
+import * as helpers from 'instantsearch.js/es/helpers/index';
+import * as routers from 'instantsearch.js/es/lib/routers/index';
+import * as stateMappings from 'instantsearch.js/es/lib/stateMappings/index';
+import { createInfiniteHitsSessionStorageCache } from 'instantsearch.js/es/lib/infiniteHitsCache/index';
+
+declare global {
+  interface Window {
+    algoliasearch: typeof algoliasearch;
+
+    instantsearch: typeof instantsearch & {
+      connectors: typeof connectors;
+      widgets: typeof widgets;
+      middlewares: typeof middlewares;
+
+      routers: typeof routers;
+      stateMappings: typeof stateMappings;
+
+      createInfiniteHitsSessionStorageCache: typeof createInfiniteHitsSessionStorageCache;
+      highlight: typeof helpers.highlight;
+      reverseHighlight: typeof helpers.reverseHighlight;
+      snippet: typeof helpers.snippet;
+      reverseSnippet: typeof helpers.reverseSnippet;
+      insights: typeof helpers.insights;
+    };
+  }
+}
