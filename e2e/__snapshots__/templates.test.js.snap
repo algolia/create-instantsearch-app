@@ -240,7 +240,7 @@ exports[`Templates Angular InstantSearch File content: package.json 1`] = `
   },
   \\"private\\": true,
   \\"partialDependencies\\": {
-    \\"angular-instantsearch\\": \\"1.0.0\\"
+    \\"angular-instantsearch\\": \\"4.0.0\\"
   }
 }"
 `;
