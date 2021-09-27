@@ -787,7 +787,7 @@ autocomplete({
   getSources({ query }) {
     return [
       {
-        sourceId: 'products',
+        sourceId: 'items',
         getItems() {
           return getAlgoliaResults({
             searchClient,
@@ -817,7 +817,7 @@ autocomplete({
             );
           },
           noResults() {
-            return 'No products matching.';
+            return 'No matching items.';
           },
         },
       },
@@ -835,7 +835,7 @@ exports[`Templates Autocomplete File content: index.html 1`] = `
     <link rel=\\"shortcut icon\\" href=\\"favicon.png\\" type=\\"image/x-icon\\" />
     <link rel=\\"stylesheet\\" href=\\"style.css\\" />
 
-    <title>Algolia Starter | Autocomplete</title>
+    <title>autocomplete-app</title>
   </head>
 
   <body>
