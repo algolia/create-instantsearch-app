@@ -71,11 +71,13 @@ async function build() {
         appId: 'latency',
         apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
         indexName:
-          libraryName === 'autocomplete'
+          libraryName === 'autocomplete.js'
             ? 'instant_search_demo_query_suggestions'
             : 'instant_search',
         attributesToDisplay:
-          libraryName === 'autocomplete' ? ['query'] : ['name', 'description'],
+          libraryName === 'autocomplete.js'
+            ? ['query']
+            : ['name', 'description'],
         attributesForFaceting: ['brand'],
         installation: false,
         silent: true,
