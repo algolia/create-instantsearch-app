@@ -14,7 +14,7 @@ autocomplete({
   getSources({ query }) {
     return [
       {
-        sourceId: 'products',
+        sourceId: 'items',
         getItems() {
           return getAlgoliaResults({
             searchClient,
@@ -44,7 +44,7 @@ autocomplete({
             );
           },
           noResults() {
-            return 'No products matching.';
+            return 'No matching items.';
           },
         },
       },
