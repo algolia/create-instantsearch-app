@@ -6,7 +6,7 @@ module.exports = {
   libraryName: '@algolia/autocomplete-js',
   templateName: 'autocomplete',
   appName: 'autocomplete-app',
-  keywords: ['algolia', 'Autocomplete', 'autocomplete'],
+  keywords: ['algolia', 'autocomplete'],
   tasks: {
     install,
     teardown,
