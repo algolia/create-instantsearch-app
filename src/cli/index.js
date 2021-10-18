@@ -280,7 +280,15 @@ async function run() {
     getQuestions({ appName })[implementationType].filter(question =>
       isQuestionAsked({ question, args: optionsFromArguments })
     ),
-    { ...optionsFromArguments, template }
+    {
+      ...optionsFromArguments,
+      template,
+      attributesToDisplay:
+        configuration.attributesToDisplay &&
+        configuration.attributesToDisplay.length > 0
+          ? configuration.attributesToDisplay
+          : undefined,
+    }
   );
 
   const alternativeNames = createNameAlternatives({
