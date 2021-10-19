@@ -18,6 +18,7 @@ const {
 } = require('../utils');
 const getOptionsFromArguments = require('./getOptionsFromArguments');
 const getAttributesFromIndex = require('./getAttributesFromIndex');
+const getAnswersDefaultValues = require('./getAnswersDefaultValues');
 const isQuestionAsked = require('./isQuestionAsked');
 const {
   getConfiguration,
@@ -280,15 +281,7 @@ async function run() {
     getQuestions({ appName })[implementationType].filter(question =>
       isQuestionAsked({ question, args: optionsFromArguments })
     ),
-    {
-      ...optionsFromArguments,
-      template,
-      attributesToDisplay:
-        configuration.attributesToDisplay &&
-        configuration.attributesToDisplay.length > 0
-          ? configuration.attributesToDisplay
-          : undefined,
-    }
+    getAnswersDefaultValues(optionsFromArguments, configuration, template)
   );
 
   const alternativeNames = createNameAlternatives({
