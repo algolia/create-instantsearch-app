@@ -31,12 +31,32 @@ search.addWidgets([
     },
     {{/if}}
   }),
+  {{#if dynamicWidgets}}
+  instantsearch.widgets.dynamicWidgets({
+    container: '#dynamic-widgets',
+    fallbackWidget({ container, attribute }) {
+      return instantsearch.widgets.refinementList({
+        container,
+        attribute,
+      });
+    },
+    widgets: [
+      {{#each attributesForFaceting}}
+      container => instantsearch.widgets.refinementList({
+          container,
+          attribute: '{{this}}',
+        }),
+      {{/each}}
+    ],
+  }),
+  {{#else}}
   {{#each attributesForFaceting}}
   instantsearch.widgets.refinementList({
     container: '#{{this}}-list',
     attribute: '{{this}}',
   }),
   {{/each}}
+  {{/if}}
   instantsearch.widgets.pagination({
     container: '#pagination',
   }),

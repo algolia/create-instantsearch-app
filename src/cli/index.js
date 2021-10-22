@@ -18,6 +18,7 @@ const {
 } = require('../utils');
 const getOptionsFromArguments = require('./getOptionsFromArguments');
 const getAttributesFromIndex = require('./getAttributesFromIndex');
+const getFacetsFromIndex = require('./getFacetsFromIndex');
 const getAnswersDefaultValues = require('./getAnswersDefaultValues');
 const isQuestionAsked = require('./isQuestionAsked');
 const {
@@ -58,6 +59,10 @@ program
 
 const optionsFromArguments = getOptionsFromArguments(options.rawArgs || []);
 const attributesToDisplay = (optionsFromArguments.attributesToDisplay || '')
+  .split(',')
+  .filter(Boolean)
+  .map(x => x.trim());
+const attributesForFaceting = (optionsFromArguments.attributesForFaceting || '')
   .split(',')
   .filter(Boolean)
   .map(x => x.trim());
@@ -155,6 +160,27 @@ const getQuestions = ({ appName }) => ({
       filter: attributes => attributes.filter(Boolean),
       when: ({ appId, apiKey, indexName }) =>
         !attributesToDisplay.length > 0 && appId && apiKey && indexName,
+    },
+    {
+      type: 'checkbox',
+      name: 'attributesForFaceting',
+      message: 'Attributes to display',
+      suffix: `\n  ${chalk.gray('Used for filtering the search interface')}`,
+      pageSize: 10,
+      choices: async answers => [
+        // TODO: add this option only if the lib supports it
+        {
+          name: 'Dynamic widgets',
+          value: 'ais.dynamicWidgets',
+        },
+        new inquirer.Separator(),
+        new inquirer.Separator('From your index'),
+        ...(await getFacetsFromIndex(answers)),
+        new inquirer.Separator(),
+      ],
+      filter: attributes => attributes.filter(Boolean),
+      when: ({ appId, apiKey, indexName }) =>
+        !attributesForFaceting.length > 0 && appId && apiKey && indexName,
     },
   ],
   widget: [
@@ -301,6 +327,9 @@ async function run() {
       ...configuration,
       ...answers,
       ...alternativeNames,
+      dynamicWidgets:
+        answers.attributesForFaceting &&
+        answers.attributesForFaceting.includes('ais.dynamicWidgets'),
       libraryVersion,
       template: templatePath,
       installation: program.installation,
