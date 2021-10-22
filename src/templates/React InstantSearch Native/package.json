@@ -18,7 +18,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
   },
   "devDependencies": {
-    "babel-preset-expo": "5.2.0",
+    "babel-preset-expo": "8.5.1",
     "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
     "eslint-config-prettier": "3.6.0",
