@@ -41,6 +41,7 @@ function App() {
             {{#if attributesForFaceting}}
             <div className="search-panel__filters">
               {{#if dynamicWidgets}}
+              <Configure facets={['*']} maxValuesPerFacet={20} />
               <ExperimentalDynamicWidgets fallbackWidget={RefinementList}>
                 {{#each attributesForFaceting}}
                 <RefinementList attribute="{{this}}" />
