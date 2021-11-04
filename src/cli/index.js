@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 const path = require('path');
 const process = require('process');
+const os = require('os');
 const program = require('commander');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const latestSemver = require('latest-semver');
-const os = require('os');
+const semver = require('semver');
 
 const createInstantSearchApp = require('../api');
 const {
@@ -167,17 +168,34 @@ const getQuestions = ({ appName }) => ({
       message: 'Attributes to display',
       suffix: `\n  ${chalk.gray('Used for filtering the search interface')}`,
       pageSize: 10,
-      choices: async answers => [
-        // TODO: add this option only if the lib supports it
-        {
-          name: 'Dynamic widgets',
-          value: 'ais.dynamicWidgets',
-        },
-        new inquirer.Separator(),
-        new inquirer.Separator('From your index'),
-        ...(await getFacetsFromIndex(answers)),
-        new inquirer.Separator(),
-      ],
+      choices: async answers => {
+        const templatePath = getTemplatePath(answers.template);
+        const templateConfig = getAppTemplateConfig(templatePath);
+
+        const dynamicWidgets =
+          answers.libraryVersion &&
+          templateConfig.includesDynamicWidgets &&
+          semver.gte(
+            answers.libraryVersion,
+            templateConfig.includesDynamicWidgets,
+            { includePrerelease: true }
+          )
+            ? [
+                {
+                  name: 'Dynamic widgets',
+                  value: 'ais.dynamicWidgets',
+                },
+              ]
+            : [];
+
+        return [
+          ...dynamicWidgets,
+          new inquirer.Separator(),
+          new inquirer.Separator('From your index'),
+          ...(await getFacetsFromIndex(answers)),
+          new inquirer.Separator(),
+        ];
+      },
       filter: attributes => attributes.filter(Boolean),
       when: ({ appId, apiKey, indexName }) =>
         !attributesForFaceting.length > 0 && appId && apiKey && indexName,
