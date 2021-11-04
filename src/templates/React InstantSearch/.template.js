@@ -5,7 +5,7 @@ module.exports = {
   category: 'Web',
   libraryName: 'react-instantsearch-dom',
   supportedVersion: '>= 5.0.0 < 7.0.0',
-  includesDynamicWidgets: "6.12",
+  includesDynamicWidgets: '6.12',
   templateName: 'react-instantsearch',
   appName: 'react-instantsearch-app',
   keywords: ['algolia', 'InstantSearch', 'React', 'react-instantsearch'],
