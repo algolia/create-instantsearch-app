@@ -53,7 +53,7 @@ search.addWidgets([
       {{/each}}
     ],
   }),
-  {{#else}}
+  {{else}}
   {{#each attributesForFaceting}}
   instantsearch.widgets.refinementList({
     container: '#{{this}}-list',

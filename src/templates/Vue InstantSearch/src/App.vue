@@ -26,7 +26,7 @@
               <ais-refinement-list attribute="{{this}}" />
               {{/each}}
             </ais-experimental-dynamic-widgets>
-            {{/else}}
+            {{else}}
             {{#each attributesForFaceting}}
             <ais-refinement-list attribute="{{this}}" />
             {{/each}}

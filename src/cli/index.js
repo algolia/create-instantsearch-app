@@ -346,7 +346,7 @@ async function run() {
       ...answers,
       ...alternativeNames,
       dynamicWidgets:
-        answers.attributesForFaceting &&
+        Array.isArray(answers.attributesForFaceting) &&
         answers.attributesForFaceting.includes('ais.dynamicWidgets'),
       libraryVersion,
       template: templatePath,
