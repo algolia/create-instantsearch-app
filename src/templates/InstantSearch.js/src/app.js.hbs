@@ -31,7 +31,7 @@ search.addWidgets([
     },
     {{/if}}
   }),
-  {{#if dynamicWidgets}}
+  {{#if flags.dynamicWidgets}}
   instantsearch.widgets.configure({
     facets: ['*'],
     maxValuesPerFacet: 20,

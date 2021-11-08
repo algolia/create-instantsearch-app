@@ -174,23 +174,25 @@ const getQuestions = ({ appName }) => ({
 
         const dynamicWidgets =
           answers.libraryVersion &&
-          templateConfig.includesDynamicWidgets &&
-          semver.gte(
+          templateConfig.flags &&
+          templateConfig.flags.dynamicWidgets &&
+          semver.satisfies(
             answers.libraryVersion,
-            templateConfig.includesDynamicWidgets,
+            templateConfig.flags.dynamicWidgets,
             { includePrerelease: true }
           )
             ? [
                 {
                   name: 'Dynamic widgets',
                   value: 'ais.dynamicWidgets',
+                  checked: true,
                 },
+                new inquirer.Separator(),
               ]
             : [];
 
         return [
           ...dynamicWidgets,
-          new inquirer.Separator(),
           new inquirer.Separator('From your index'),
           ...(await getFacetsFromIndex(answers)),
           new inquirer.Separator(),
@@ -345,9 +347,11 @@ async function run() {
       ...configuration,
       ...answers,
       ...alternativeNames,
-      dynamicWidgets:
-        Array.isArray(answers.attributesForFaceting) &&
-        answers.attributesForFaceting.includes('ais.dynamicWidgets'),
+      flags: {
+        dynamicWidgets:
+          Array.isArray(answers.attributesForFaceting) &&
+          answers.attributesForFaceting.includes('ais.dynamicWidgets'),
+      },
       libraryVersion,
       template: templatePath,
       installation: program.installation,

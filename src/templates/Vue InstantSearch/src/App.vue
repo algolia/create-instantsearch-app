@@ -19,7 +19,7 @@
         <div class="search-panel">
           {{#if attributesForFaceting.length}}
           <div class="search-panel__filters">
-            {{#if dynamicWidgets}}
+            {{#if flags.dynamicWidgets}}
             <ais-configure :facets="['*']" :max-values-per-facet.camel="20" />
             <ais-experimental-dynamic-widgets>
               {{#each attributesForFaceting}}
