@@ -12,9 +12,6 @@ module.exports = function isQuestionAsked({ question, args }) {
       ) {
         return false;
       }
-    } else if (!question.validate) {
-      // Skip if the question is optional and not given in the command
-      return false;
     }
   }
 
