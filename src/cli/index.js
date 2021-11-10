@@ -166,7 +166,7 @@ const getQuestions = ({ appName }) => ({
       type: 'checkbox',
       name: 'attributesForFaceting',
       message: 'Attributes to display',
-      suffix: `\n  ${chalk.gray('Used for filtering the search interface')}`,
+      suffix: `\n  ${chalk.gray('Used to filter the search interface')}`,
       pageSize: 10,
       choices: async answers => {
         const templatePath = getTemplatePath(answers.template);
