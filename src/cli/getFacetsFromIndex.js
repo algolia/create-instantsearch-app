@@ -1,15 +1,16 @@
-const algoliasearch = require('algoliasearch');
+const getInformationFromIndex = require('./getInformationFromIndex');
 
 module.exports = async function getFacetsFromIndex({
   appId,
   apiKey,
   indexName,
 } = {}) {
-  const client = algoliasearch(appId, apiKey);
-  const index = client.initIndex(indexName);
-
   try {
-    const { facets } = await index.search({ hitsPerPage: 0, facets: '*' });
+    const { facets } = await getInformationFromIndex({
+      appId,
+      apiKey,
+      indexName,
+    });
     return Object.keys(facets);
   } catch (err) {
     return [];
