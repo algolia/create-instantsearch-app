@@ -172,24 +172,26 @@ const getQuestions = ({ appName }) => ({
         const templatePath = getTemplatePath(answers.template);
         const templateConfig = getAppTemplateConfig(templatePath);
 
-        const dynamicWidgets =
-          answers.libraryVersion &&
-          templateConfig.flags &&
-          templateConfig.flags.dynamicWidgets &&
-          semver.satisfies(
-            answers.libraryVersion,
-            templateConfig.flags.dynamicWidgets,
-            { includePrerelease: true }
-          )
-            ? [
-                {
-                  name: 'Dynamic widgets',
-                  value: 'ais.dynamicWidgets',
-                  checked: true,
-                },
-                new inquirer.Separator(),
-              ]
-            : [];
+        const selectedLibraryVersion = answers.libraryVersion;
+        const requiredLibraryVersion =
+          templateConfig.flags && templateConfig.flags.dynamicWidgets;
+        const supportsDynamicWidgets =
+          selectedLibraryVersion &&
+          requiredLibraryVersion &&
+          semver.satisfies(selectedLibraryVersion, requiredLibraryVersion, {
+            includePrerelease: true,
+          });
+
+        const dynamicWidgets = supportsDynamicWidgets
+          ? [
+              {
+                name: 'Dynamic widgets',
+                value: 'ais.dynamicWidgets',
+                checked: true,
+              },
+              new inquirer.Separator(),
+            ]
+          : [];
 
         return [
           ...dynamicWidgets,
