@@ -5720,7 +5720,6 @@ import {
   InstantSearch,
   Hits,
   SearchBox,
-  Configure,
   RefinementList,
   Pagination,
   Highlight,
