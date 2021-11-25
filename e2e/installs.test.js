@@ -1,9 +1,11 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
+const { getEarliestLibraryVersion } = require('../src/utils');
 
 describe('Installation', () => {
   let temporaryDirectory;
   let appPath;
+  let configFilePath;
   const appName = 'test-app';
 
   beforeAll(() => {
@@ -18,13 +20,37 @@ describe('Installation', () => {
     execSync(`rm -rf "${temporaryDirectory}"`);
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     appPath = `${temporaryDirectory}/${appName}`;
     execSync(`mkdir ${appPath}`);
+
+    const templateConfig = require('../src/templates/InstantSearch.js/.template.js');
+
+    const config = {
+      template: 'InstantSearch.js',
+      // We fetch the earliest supported version in order to not change
+      // the test output every time we release a new version of a library.
+      libraryVersion: await getEarliestLibraryVersion({
+        libraryName: templateConfig.libraryName,
+        supportedVersion: templateConfig.supportedVersion,
+      }),
+      appId: 'appId',
+      apiKey: 'apiKey',
+      indexName: 'indexName',
+      searchPlaceholder: 'Search placeholder',
+      attributesToDisplay: ['attribute1', 'attribute2'],
+      attributesForFaceting: ['facet1', 'facet2'],
+      organization: 'algolia',
+    };
+
+    configFilePath = `${temporaryDirectory}/config.json`;
+
+    fs.writeFileSync(configFilePath, JSON.stringify(config));
   });
 
   afterEach(() => {
     execSync(`rm -rf "${appPath}"`);
+    execSync(`rm -f "${configFilePath}"`);
   });
 
   describe('Dependencies', () => {
@@ -32,7 +58,7 @@ describe('Installation', () => {
       execSync(
         `yarn start ${appPath} \
           --name ${appName} \
-          --template "InstantSearch.js" \
+          --config ${configFilePath} \
           --no-installation`,
         { stdio: 'ignore' }
       );
@@ -46,9 +72,9 @@ describe('Installation', () => {
       execSync(
         `yarn start ${appPath} \
           --name ${appName} \
-          --template "InstantSearch.js" \
-          --no-installation`,
-        { stdio: 'ignore' }
+          --config ${configFilePath} \
+          --no-installation`
+        // {stdio: 'ignore'}
       );
 
       expect(fs.existsSync(`${appPath}/package.json`)).toBe(true);
@@ -61,7 +87,7 @@ describe('Installation', () => {
         execSync(
           `yarn start ${appPath} \
           --name ${appName} \
-          --template "InstantSearch.js" \
+          --config ${configFilePath} \
           --no-installation`,
           { stdio: 'ignore' }
         );
@@ -81,7 +107,7 @@ describe('Installation', () => {
         execSync(
           `yarn start ${appPath}/file \
           --name ${appName} \
-          --template "InstantSearch.js" \
+          --config ${configFilePath} \
           --no-installation`,
           { stdio: 'ignore' }
         );
