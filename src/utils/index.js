@@ -126,7 +126,9 @@ function getTemplatePath(templateName) {
 }
 
 async function fetchLibraryVersions(libraryName) {
-  const library = await index.getObject(libraryName);
+  const library = await index.getObject(libraryName, {
+    attributesToRetrieve: ['versions'],
+  });
 
   return Object.keys(library.versions).reverse();
 }

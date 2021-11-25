@@ -22,11 +22,8 @@ const getAttributesFromIndex = require('./getAttributesFromIndex');
 const getFacetsFromIndex = require('./getFacetsFromIndex');
 const getAnswersDefaultValues = require('./getAnswersDefaultValues');
 const isQuestionAsked = require('./isQuestionAsked');
-const {
-  getConfiguration,
-  getLibraryVersion,
-  createNameAlternatives,
-} = require('./getConfiguration');
+const getConfiguration = require('./getConfiguration');
+const postProcessAnswers = require('./postProcessAnswers');
 const { version } = require('../../package.json');
 
 let appPathFromArgument;
@@ -252,24 +249,27 @@ async function run() {
     process.exit(1);
   }
 
-  const { appName = optionsFromArguments.name } = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'appName',
-      message: 'The name of the application or widget',
-      default: path.basename(appPath),
-      validate(input) {
-        try {
-          checkAppName(input);
-          return true;
-        } catch (err) {
-          console.log();
-          console.error(err.message);
-          return false;
-        }
+  let appName = optionsFromArguments.name;
+  if (!appName) {
+    ({ appName } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'appName',
+        message: 'The name of the application or widget',
+        default: path.basename(appPath),
+        validate(input) {
+          try {
+            checkAppName(input);
+            return true;
+          } catch (err) {
+            console.log();
+            console.error(err.message);
+            return false;
+          }
+        },
       },
-    },
-  ]);
+    ]));
+  }
 
   try {
     checkAppName(appName);
@@ -335,33 +335,15 @@ async function run() {
     getAnswersDefaultValues(optionsFromArguments, configuration, template)
   );
 
-  const alternativeNames = createNameAlternatives({
-    ...configuration,
-    ...answers,
-    templateConfig,
-  });
-
-  const libraryVersion = await getLibraryVersion(
-    { ...configuration, ...answers },
-    templateConfig
-  );
-
   const app = createInstantSearchApp(
     appPath,
-    {
-      ...configuration,
-      ...answers,
-      ...alternativeNames,
-      flags: {
-        dynamicWidgets: answers.attributesForFaceting.includes(
-          'ais.dynamicWidgets'
-        ),
-      },
-      libraryVersion,
-      template: templatePath,
-      installation: program.installation,
-      currentYear: new Date().getFullYear(),
-    },
+    await postProcessAnswers({
+      configuration,
+      answers,
+      optionsFromArguments,
+      templatePath,
+      templateConfig,
+    }),
     templateConfig.tasks
   );
 
