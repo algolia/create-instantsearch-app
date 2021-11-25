@@ -147,6 +147,12 @@ async function getEarliestLibraryVersion(...args) {
   return await getLibraryVersion(...args)(semver.minSatisfying);
 }
 
+const splitArray = string =>
+  string
+    .split(',')
+    .filter(Boolean)
+    .map(x => x.trim());
+
 module.exports = {
   checkAppName,
   checkAppPath,
@@ -158,4 +164,5 @@ module.exports = {
   getAllTemplates,
   getTemplatePath,
   getTemplatesByCategory,
+  splitArray,
 };

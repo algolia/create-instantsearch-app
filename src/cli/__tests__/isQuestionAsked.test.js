@@ -6,7 +6,7 @@ test('with appId undefined should ask', () => {
       question: { name: 'appId', validate: input => Boolean(input) },
       args: { appId: undefined },
     })
-  ).toBe(true);
+  ).toBe(false);
 });
 
 test('with appId defined should not ask', () => {
@@ -15,7 +15,7 @@ test('with appId defined should not ask', () => {
       question: { name: 'appId', validate: input => Boolean(input) },
       args: { appId: 'APP_ID' },
     })
-  ).toBe(false);
+  ).toBe(true);
 });
 
 test('with unvalid template should ask', () => {
@@ -27,7 +27,7 @@ test('with unvalid template should ask', () => {
       },
       args: { template: 'Unvalid' },
     })
-  ).toBe(true);
+  ).toBe(false);
 });
 
 test('with valid template should not ask', () => {
@@ -39,7 +39,7 @@ test('with valid template should not ask', () => {
       },
       args: { template: 'InstantSearch.js' },
     })
-  ).toBe(false);
+  ).toBe(true);
 });
 
 test('with indexName should ask attributesToDisplay', () => {

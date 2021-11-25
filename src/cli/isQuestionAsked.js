@@ -1,22 +1,15 @@
 module.exports = function isQuestionAsked({ question, args }) {
+  // if there's a config, ask no questions, even if it would be invalid
   if (args.config) {
-    return false;
+    return true;
   }
 
-  for (const optionName in args) {
-    if (question.name === optionName) {
-      // Skip if the arg in the command is valid
-      if (
-        !question.validate ||
-        (question.validate && question.validate(args[optionName]))
-      ) {
-        return false;
-      }
-    } else if (!question.validate) {
-      // Skip if the question is optional and not given in the command
-      return false;
-    }
+  const argument = args[question.name];
+
+  // Skip if the arg in the command is valid
+  if (question.validate) {
+    return question.validate(argument);
   }
 
-  return true;
+  return argument !== undefined;
 };
