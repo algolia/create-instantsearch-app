@@ -81,7 +81,7 @@ describe('Templates', () => {
       });
 
       afterAll(() => {
-        // execSync(`rm -rf "${temporaryDirectory}"`);
+        execSync(`rm -rf "${temporaryDirectory}"`);
       });
 
       test('Folder structure', () => {
