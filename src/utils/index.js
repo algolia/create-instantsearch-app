@@ -56,6 +56,10 @@ function checkAppPath(appPath) {
     }
   }
 
+  if (!appPath) {
+    throw new Error('Could not create project without directory');
+  }
+
   return true;
 }
 
