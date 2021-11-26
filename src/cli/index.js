@@ -226,57 +226,53 @@ const getQuestions = ({ appName }) => ({
 });
 
 async function run() {
+  const appPathQuestion = {
+    type: 'input',
+    name: 'appPath',
+    message: 'Project directory',
+    validate(input) {
+      try {
+        return checkAppPath(input);
+      } catch (err) {
+        console.log();
+        console.error(err.message);
+        return false;
+      }
+    },
+  };
+
   let appPath = appPathFromArgument;
   if (!appPath) {
-    const answers = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'appPath',
-        message: 'Project directory',
-      },
-    ]);
-    appPath = answers.appPath;
+    ({ appPath } = await inquirer.prompt([appPathQuestion]));
   }
   if (appPath.startsWith('~/')) {
     appPath = path.join(os.homedir(), appPath.slice(2));
   }
-  try {
-    checkAppPath(appPath);
-  } catch (err) {
-    console.error(err.message);
-    console.log();
-
+  if (!appPathQuestion.validate(appPath)) {
     process.exit(1);
   }
 
+  const appNameQuestion = {
+    type: 'input',
+    name: 'appName',
+    message: 'The name of the application or widget',
+    default: path.basename(appPath),
+    validate(input) {
+      try {
+        return checkAppName(input);
+      } catch (err) {
+        console.log();
+        console.error(err.message);
+        return false;
+      }
+    },
+  };
   let appName = optionsFromArguments.name;
   if (!appName) {
-    ({ appName } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'appName',
-        message: 'The name of the application or widget',
-        default: path.basename(appPath),
-        validate(input) {
-          try {
-            checkAppName(input);
-            return true;
-          } catch (err) {
-            console.log();
-            console.error(err.message);
-            return false;
-          }
-        },
-      },
-    ]));
+    ({ appName } = await inquirer.prompt([appNameQuestion]));
   }
 
-  try {
-    checkAppName(appName);
-  } catch (err) {
-    console.error(err.message);
-    console.log();
-
+  if (!appNameQuestion.validate(appName)) {
     process.exit(1);
   }
 
