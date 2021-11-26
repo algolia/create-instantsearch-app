@@ -29,14 +29,12 @@ const { version } = require('../../package.json');
 let appPathFromArgument;
 
 program
+  .storeOptionsAsProperties(false)
   .version(version, '-v, --version')
   .name('create-instantsearch-app')
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
-  // name is a special case in Commander:
-  // if it doesn't have a non-undefined default and the value is not given,
-  // the value becomes a program.name, since the option values are stored as keys on `program`.
-  .option('--name <name>', 'The name of the application or widget', '')
+  .option('--name <name>', 'The name of the application or widget')
   .option('--app-id <appId>', 'The application ID')
   .option('--api-key <apiKey>', 'The Algolia search API key')
   .option('--index-name <indexName>', 'The main index of your search')

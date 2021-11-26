@@ -32,20 +32,6 @@ async function getLibraryVersion(config, templateConfig) {
   return libraryVersion;
 }
 
-// same as Object.assign, but skips overriding with undefined values
-function merge(...sources) {
-  return sources.reduce((acc, source) => {
-    Object.keys(source).forEach(key => {
-      const value = source[key];
-      if (value !== undefined) {
-        // eslint-disable-next-line no-param-reassign
-        acc[key] = value;
-      }
-    });
-    return acc;
-  }, Object.create(null));
-}
-
 async function postProcessAnswers({
   configuration,
   answers,
@@ -53,7 +39,10 @@ async function postProcessAnswers({
   templatePath,
   templateConfig,
 }) {
-  const combinedAnswers = merge(configuration, answers);
+  const combinedAnswers = {
+    ...configuration,
+    ...answers,
+  };
 
   const alternativeNames = createNameAlternatives({
     ...combinedAnswers,
