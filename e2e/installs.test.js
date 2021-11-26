@@ -73,8 +73,8 @@ describe('Installation', () => {
         `yarn start ${appPath} \
           --name ${appName} \
           --config ${configFilePath} \
-          --no-installation`
-        // {stdio: 'ignore'}
+          --no-installation`,
+        { stdio: 'ignore' }
       );
 
       expect(fs.existsSync(`${appPath}/package.json`)).toBe(true);
