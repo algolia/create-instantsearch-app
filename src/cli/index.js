@@ -240,7 +240,7 @@ const getQuestions = ({ appName }) => ({
       },
       when(answers) {
         try {
-          return !checkAppPath(answers.appPath);
+          return !answers.config && !checkAppPath(answers.appPath);
         } catch (err) {
           return true;
         }
@@ -265,7 +265,7 @@ const getQuestions = ({ appName }) => ({
       },
       when(answers) {
         try {
-          return !checkAppName(answers.appName);
+          return !answers.config && !checkAppName(answers.appName);
         } catch (err) {
           return true;
         }
@@ -278,6 +278,7 @@ async function run() {
   const args = {
     appPath: appPathFromArgument,
     appName: optionsFromArguments.name,
+    config: optionsFromArguments.config,
   };
   const initialQuestions = getQuestions({}).initial;
   const initialAnswers = {
