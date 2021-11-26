@@ -160,7 +160,7 @@ const getQuestions = ({ appName }) => ({
     {
       type: 'checkbox',
       name: 'attributesForFaceting',
-      message: 'Attributes to display',
+      message: 'Attributes for faceting',
       suffix: `\n  ${chalk.gray('Used to filter the search interface')}`,
       pageSize: 10,
       choices: async answers => {
@@ -223,57 +223,72 @@ const getQuestions = ({ appName }) => ({
       },
     },
   ],
+  initial: [
+    {
+      type: 'input',
+      name: 'appPath',
+      message: 'Project directory',
+      askAnswered: true,
+      validate(input) {
+        try {
+          return checkAppPath(input);
+        } catch (err) {
+          console.log();
+          console.error(err.message);
+          return false;
+        }
+      },
+      when(answers) {
+        try {
+          return !checkAppPath(answers.appPath);
+        } catch (err) {
+          return true;
+        }
+      },
+    },
+    {
+      type: 'input',
+      name: 'appName',
+      message: 'The name of the application or widget',
+      askAnswered: true,
+      default(answers) {
+        return path.basename(answers.appPath);
+      },
+      validate(input) {
+        try {
+          return checkAppName(input);
+        } catch (err) {
+          console.log();
+          console.error(err.message);
+          return false;
+        }
+      },
+    },
+  ],
 });
 
 async function run() {
-  const appPathQuestion = {
-    type: 'input',
-    name: 'appPath',
-    message: 'Project directory',
-    validate(input) {
-      try {
-        return checkAppPath(input);
-      } catch (err) {
-        console.log();
-        console.error(err.message);
-        return false;
-      }
-    },
+  const args = {
+    appPath: appPathFromArgument,
+    appName: optionsFromArguments.name,
+  };
+  const initialQuestions = getQuestions({}).initial;
+  const initialAnswers = {
+    ...args,
+    ...(await inquirer.prompt(initialQuestions, args)),
   };
 
-  let appPath = appPathFromArgument;
-  if (!appPath) {
-    ({ appPath } = await inquirer.prompt([appPathQuestion]));
-  }
+  initialQuestions.forEach(question => {
+    const value = initialAnswers[question.name];
+    if (!question.validate(value)) {
+      process.exit(1);
+    }
+  });
+
+  // eslint-disable-next-line prefer-const
+  let { appPath, appName } = initialAnswers;
   if (appPath.startsWith('~/')) {
     appPath = path.join(os.homedir(), appPath.slice(2));
-  }
-  if (!appPathQuestion.validate(appPath)) {
-    process.exit(1);
-  }
-
-  const appNameQuestion = {
-    type: 'input',
-    name: 'appName',
-    message: 'The name of the application or widget',
-    default: path.basename(appPath),
-    validate(input) {
-      try {
-        return checkAppName(input);
-      } catch (err) {
-        console.log();
-        console.error(err.message);
-        return false;
-      }
-    },
-  };
-  let appName = optionsFromArguments.name;
-  if (!appName) {
-    ({ appName } = await inquirer.prompt([appNameQuestion]));
-  }
-
-  if (!appNameQuestion.validate(appName)) {
-    process.exit(1);
   }
 
   console.log();
@@ -313,7 +328,6 @@ async function run() {
     options: {
       ...optionsFromArguments,
       name: appName,
-      attributesToDisplay,
     },
     answers: { template },
   });
