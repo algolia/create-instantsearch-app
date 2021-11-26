@@ -263,6 +263,13 @@ const getQuestions = ({ appName }) => ({
           return false;
         }
       },
+      when(answers) {
+        try {
+          return !checkAppName(answers.appName);
+        } catch (err) {
+          return true;
+        }
+      },
     },
   ],
 });
