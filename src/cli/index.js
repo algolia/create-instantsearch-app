@@ -52,6 +52,7 @@ program
   .option('--library-version <version>', 'The version of the library')
   .option('--config <config>', 'The configuration file to get the options from')
   .option('--no-installation', 'Ignore dependency installation')
+  .option('--no-interactive', 'Ask no interactive questions')
   .action(dest => {
     appPathFromArgument = dest;
   })
@@ -240,7 +241,11 @@ const getQuestions = ({ appName }) => ({
       },
       when(answers) {
         try {
-          return !answers.config && !checkAppPath(answers.appPath);
+          return (
+            answers.interactive &&
+            !answers.config &&
+            !checkAppPath(answers.appPath)
+          );
         } catch (err) {
           return true;
         }
@@ -265,7 +270,11 @@ const getQuestions = ({ appName }) => ({
       },
       when(answers) {
         try {
-          return !answers.config && !checkAppName(answers.appName);
+          return (
+            answers.interactive &&
+            !answers.config &&
+            !checkAppName(answers.appName)
+          );
         } catch (err) {
           return true;
         }
