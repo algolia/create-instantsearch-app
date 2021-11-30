@@ -40,12 +40,12 @@ program
   .option('--index-name <indexName>', 'The main index of your search')
   .option(
     '--attributes-to-display <attributesToDisplay>',
-    'The attributes of your index to display',
+    'The attributes of your index to display in hits',
     splitArray
   )
   .option(
     '--attributes-for-faceting <attributesForFaceting>',
-    'The attributes for faceting',
+    'The attributes to display as filters',
     splitArray
   )
   .option('--template <template>', 'The InstantSearch template to use')
@@ -161,7 +161,7 @@ const getQuestions = ({ appName }) => ({
     {
       type: 'checkbox',
       name: 'attributesForFaceting',
-      message: 'Attributes for faceting',
+      message: 'Attributes to display',
       suffix: `\n  ${chalk.gray('Used to filter the search interface')}`,
       pageSize: 10,
       choices: async answers => {
