@@ -288,6 +288,7 @@ async function run() {
     appPath: appPathFromArgument,
     appName: optionsFromArguments.name,
     config: optionsFromArguments.config,
+    interactive: optionsFromArguments.interactive,
   };
   const initialQuestions = getQuestions({}).initial;
   const initialAnswers = {
