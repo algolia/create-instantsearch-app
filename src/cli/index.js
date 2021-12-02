@@ -299,6 +299,11 @@ const getQuestions = ({ appName }) => ({
         );
       },
       validate(input) {
+        // if a config is given, path is optional
+        if (optionsFromArguments.config) {
+          return true;
+        }
+
         const isValid = Boolean(input);
         if (!isValid) {
           console.log('template is required');
