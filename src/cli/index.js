@@ -280,15 +280,43 @@ const getQuestions = ({ appName }) => ({
         }
       },
     },
+    {
+      type: 'list',
+      pageSize: 10,
+      name: 'template',
+      message: 'InstantSearch template',
+      askAnswered: true,
+      choices: () => {
+        const templatesByCategory = getTemplatesByCategory();
+
+        return Object.entries(templatesByCategory).reduce(
+          (templates, [category, values]) => [
+            ...templates,
+            new inquirer.Separator(category),
+            ...values,
+          ],
+          []
+        );
+      },
+      validate(input) {
+        const isValid = Boolean(input);
+        if (!isValid) {
+          console.log('template is required');
+        }
+        return isValid;
+      },
+      when(answers) {
+        return answers.interactive && !answers.config && !answers.template;
+      },
+    },
   ],
 });
 
 async function run() {
   const args = {
+    ...optionsFromArguments,
     appPath: appPathFromArgument,
     appName: optionsFromArguments.name,
-    config: optionsFromArguments.config,
-    interactive: optionsFromArguments.interactive,
   };
   const initialQuestions = getQuestions({}).initial;
   const initialAnswers = {
@@ -307,51 +335,25 @@ async function run() {
     }
   });
 
-  // eslint-disable-next-line prefer-const
-  let { appPath, appName } = initialAnswers;
-  if (appPath.startsWith('~/')) {
-    appPath = path.join(os.homedir(), appPath.slice(2));
+  if (initialAnswers.appPath.startsWith('~/')) {
+    initialAnswers.appPath = path.join(
+      os.homedir(),
+      initialAnswers.appPath.slice(2)
+    );
   }
+
+  const { appPath, appName, template } = initialAnswers;
 
   console.log();
   console.log(`Creating a new InstantSearch app in ${chalk.green(appPath)}.`);
   console.log();
-
-  const { template = optionsFromArguments.template } = await inquirer.prompt(
-    [
-      {
-        type: 'list',
-        pageSize: 10,
-        name: 'template',
-        message: 'InstantSearch template',
-        choices: () => {
-          const templatesByCategory = getTemplatesByCategory();
-
-          return Object.entries(templatesByCategory).reduce(
-            (templates, [category, values]) => [
-              ...templates,
-              new inquirer.Separator(category),
-              ...values,
-            ],
-            []
-          );
-        },
-        validate(input) {
-          return Boolean(input);
-        },
-      },
-    ].filter(
-      question => !isQuestionAsked({ question, args: optionsFromArguments })
-    ),
-    optionsFromArguments
-  );
 
   const configuration = await getConfiguration({
     options: {
       ...optionsFromArguments,
       name: appName,
     },
-    answers: { template },
+    answers: initialAnswers,
   });
 
   const templatePath = getTemplatePath(configuration.template);
