@@ -3108,8 +3108,7 @@ exports[`Templates InstantSearch.js File content: index.html 1`] = `
   <div class=\\"container\\">
     <div class=\\"search-panel\\">
       <div class=\\"search-panel__filters\\">
-        <div id=\\"facet1-list\\"></div>
-        <div id=\\"facet2-list\\"></div>
+        <div id=\\"dynamic-widgets\\"></div>
       </div>
 
       <div class=\\"search-panel__results\\">
