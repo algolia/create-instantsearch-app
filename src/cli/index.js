@@ -297,8 +297,12 @@ async function run() {
   };
 
   initialQuestions.forEach(question => {
-    const value = initialAnswers[question.name];
-    if (!question.validate(value)) {
+    // .default doesn't get executed when "when" returns false
+    if (!initialAnswers[question.name] && question.default) {
+      const defaultValue = question.default(initialAnswers);
+      initialAnswers[question.name] = defaultValue;
+    }
+    if (!question.validate(initialAnswers[question.name])) {
       process.exit(1);
     }
   });
