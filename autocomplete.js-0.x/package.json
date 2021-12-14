@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "algoliasearch": "3.35.1",
-    "autocomplete.js": "0.38.0"
+    "autocomplete.js": "0.38.1"
   },
   "devDependencies": {
     "babel-eslint": "10.0.2",
