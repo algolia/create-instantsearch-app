@@ -5904,7 +5904,7 @@ exports[`Templates React InstantSearch Native File content: .watchmanconfig 1`] 
 exports[`Templates React InstantSearch Native File content: App.js 1`] = `
 "import React from 'react';
 import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
-import algoliasearch from 'algoliasearch/reactnative';
+import algoliasearch from 'algoliasearch';
 import { InstantSearch } from 'react-instantsearch-native';
 import SearchBox from './src/SearchBox';
 import InfiniteHits from './src/InfiniteHits';
@@ -5925,34 +5925,19 @@ const styles = StyleSheet.create({
   },
 });
 
-class App extends React.Component {
-  root = {
-    Root: View,
-    props: {
-      style: {
-        flex: 1,
-      },
-    },
-  };
-
-  render() {
-    return (
-      <SafeAreaView style={styles.safe}>
-        <StatusBar barStyle=\\"light-content\\" />
-        <View style={styles.container}>
-          <InstantSearch
-            searchClient={searchClient}
-            indexName=\\"indexName\\"
-            root={this.root}
-          >
-            <SearchBox />
-            <InfiniteHits />
-          </InstantSearch>
-        </View>
-      </SafeAreaView>
-    );
-  }
-}
+const App = () => {
+  return (
+    <SafeAreaView style={styles.safe}>
+      <StatusBar barStyle=\\"light-content\\" />
+      <View style={styles.container}>
+        <InstantSearch searchClient={searchClient} indexName=\\"indexName\\">
+          <SearchBox />
+          <InfiniteHits />
+        </InstantSearch>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 export default App;"
 `;
@@ -5983,8 +5968,7 @@ exports[`Templates React InstantSearch Native File content: app.json 1`] = `
 "{
   \\"expo\\": {
     \\"name\\": \\"react-instantsearch-native-app\\",
-    \\"slug\\": \\"react-instantsearch-native-app\\",
-    \\"sdkVersion\\": \\"32.0.0\\"
+    \\"slug\\": \\"react-instantsearch-native-app\\"
   }
 }"
 `;
@@ -6011,7 +5995,7 @@ exports[`Templates React InstantSearch Native File content: package.json 1`] = `
     \\"eject\\": \\"expo eject\\"
   },
   \\"partialDependencies\\": {
-    \\"react-instantsearch-native\\": \\"5.2.0\\"
+    \\"react-instantsearch-native\\": \\"6.18.0\\"
   }
 }"
 `;
