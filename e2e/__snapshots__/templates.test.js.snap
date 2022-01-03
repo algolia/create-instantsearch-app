@@ -3451,7 +3451,7 @@ If you want to publish it as a public scoped package, run \`npm publish --access
 exports[`Templates InstantSearch.js widget File content: LICENSE.md 1`] = `
 "The MIT License (MIT)
 
-Copyright (c) 2021-present algolia.
+Copyright (c) 2022-present algolia.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the \\"Software\\"), to deal
@@ -5968,7 +5968,8 @@ exports[`Templates React InstantSearch Native File content: app.json 1`] = `
 "{
   \\"expo\\": {
     \\"name\\": \\"react-instantsearch-native-app\\",
-    \\"slug\\": \\"react-instantsearch-native-app\\"
+    \\"slug\\": \\"react-instantsearch-native-app\\",
+    \\"sdkVersion\\": \\"44.0.0\\"
   }
 }"
 `;
@@ -5995,7 +5996,7 @@ exports[`Templates React InstantSearch Native File content: package.json 1`] = `
     \\"eject\\": \\"expo eject\\"
   },
   \\"partialDependencies\\": {
-    \\"react-instantsearch-native\\": \\"6.18.0\\"
+    \\"react-instantsearch-native\\": \\"5.2.0\\"
   }
 }"
 `;
@@ -6097,6 +6098,7 @@ import { connectSearchBox } from 'react-instantsearch-native';
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    backgroundColor: '#252b33',
   },
   input: {
     height: 48,
@@ -6242,7 +6244,7 @@ If you want to publish it as a public scoped package, run \`npm publish --access
 exports[`Templates React InstantSearch widget File content: LICENSE.md 1`] = `
 "The MIT License (MIT)
 
-Copyright (c) 2021-present algolia.
+Copyright (c) 2022-present algolia.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the \\"Software\\"), to deal
