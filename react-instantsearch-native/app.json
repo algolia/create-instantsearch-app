@@ -2,6 +2,6 @@
   "expo": {
     "name": "react-instantsearch-native-app",
     "slug": "react-instantsearch-native-app",
-    "sdkVersion": "32.0.0"
+    "sdkVersion": "44.0.0"
   }
 }
