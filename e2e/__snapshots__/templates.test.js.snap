@@ -5738,6 +5738,7 @@ import {
   SearchBox,
   Configure,
   DynamicWidgets,
+  RefinementList
   RefinementList,
   Pagination,
   Highlight,
