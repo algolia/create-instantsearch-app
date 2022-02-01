@@ -5739,7 +5739,6 @@ import {
   Configure,
   DynamicWidgets,
   RefinementList
-  RefinementList,
   Pagination,
   Highlight,
 } from 'react-instantsearch-dom';

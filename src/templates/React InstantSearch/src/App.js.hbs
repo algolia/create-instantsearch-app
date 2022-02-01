@@ -8,9 +8,10 @@ import {
   Configure,
   DynamicWidgets,
   RefinementList
-  {{/if}}
+  {{else}}
   {{#if attributesForFaceting}}
   RefinementList,
+  {{/if}}
   {{/if}}
   Pagination,
   {{#if attributesToDisplay}}
