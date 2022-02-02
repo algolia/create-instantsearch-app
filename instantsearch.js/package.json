@@ -20,8 +20,8 @@
     "prettier": "1.19.1"
   },
   "dependencies": {
-    "algoliasearch": "4.10.4",
-    "instantsearch.js": "4.36.0"
+    "algoliasearch": "4",
+    "instantsearch.js": "4.38.0"
   },
   "keywords": [
     "algolia",

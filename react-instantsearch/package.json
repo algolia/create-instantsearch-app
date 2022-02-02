@@ -9,10 +9,10 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "algoliasearch": "3.35.1",
+    "algoliasearch": "4",
     "react": "16.12.0",
     "react-dom": "16.12.0",
-    "react-instantsearch-dom": "6.18.0",
+    "react-instantsearch-dom": "6.22.0",
     "react-scripts": "2.1.1"
   },
   "devDependencies": {
