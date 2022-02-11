@@ -8,7 +8,7 @@ module.exports = {
   flags: {
     dynamicWidgets: '>=4.2.0',
   },
-  templateName: 'vue-instantsearch-vite',
+  templateName: 'vue-instantsearch-vue3',
   appName: 'vue-instantsearch-app',
   keywords: ['algolia', 'InstantSearch', 'Vue', 'vue-instantsearch'],
   tasks: {
