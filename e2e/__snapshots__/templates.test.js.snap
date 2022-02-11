@@ -6008,7 +6008,7 @@ exports[`Templates React InstantSearch Hooks Native File content: babel.config.j
 
 exports[`Templates React InstantSearch Hooks Native File content: package.json 1`] = `
 "{
-  \\"name\\": \\"ais-ecommerce-demo-app\\",
+  \\"name\\": \\"react-instantsearch-hooks-native-app\\",
   \\"version\\": \\"1.0.0\\",
   \\"private\\": true,
   \\"main\\": \\"node_modules/expo/AppEntry.js\\",
@@ -6020,7 +6020,7 @@ exports[`Templates React InstantSearch Hooks Native File content: package.json 1
     \\"eject\\": \\"expo eject\\"
   },
   \\"partialDependencies\\": {
-    \\"react-instantsearch-hooks\\": \\"6.22.0\\"
+    \\"react-instantsearch-hooks\\": \\"6.13.0\\"
   }
 }"
 `;
