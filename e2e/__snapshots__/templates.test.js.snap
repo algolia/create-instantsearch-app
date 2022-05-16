@@ -3132,7 +3132,6 @@ exports[`Templates InstantSearch.js File content: package.json 1`] = `
   \\"name\\": \\"instantsearch.js-app\\",
   \\"version\\": \\"1.0.0\\",
   \\"private\\": true,
-  \\"main\\": \\"src/app.js\\",
   \\"scripts\\": {
     \\"start\\": \\"parcel index.html --port 3000\\",
     \\"build\\": \\"parcel build index.html\\",
