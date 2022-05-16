@@ -99,9 +99,9 @@ jobs:
       - build_app:
           template: 'Autocomplete.js 0'
           app: 'autocomplete.js'
-      - build_app:
-          template: 'InstantSearch.js'
-          app: 'instantsearch.js'
+      # - build_app:
+      #     template: 'InstantSearch.js'
+      #     app: 'instantsearch.js'
       - build_app:
           template: 'JavaScript Client'
           app: 'javascript-client'
