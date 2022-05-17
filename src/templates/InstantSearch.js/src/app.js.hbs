@@ -39,13 +39,7 @@ search.addWidgets([
   instantsearch.widgets.dynamicWidgets({
     container: '#dynamic-widgets',
     fallbackWidget({ container, attribute }) {
-      return instantsearch.widgets.panel({
-        templates: {
-          header({ widgetParams: { attribute } }) {
-            return attribute;
-          },
-        },
-      })(instantsearch.widgets.refinementList)({
+      return instantsearch.widgets.refinementList({
         container,
         attribute,
       });
@@ -53,13 +47,7 @@ search.addWidgets([
     widgets: [
       {{#each attributesForFaceting}}
       container =>
-        instantsearch.widgets.panel({
-          templates: {
-            header({ widgetParams: { attribute } }) {
-              return attribute;
-            },
-          },
-        })(instantsearch.widgets.refinementList)({
+        instantsearch.widgets.refinementList({
           container,
           attribute: '{{this}}',
         }),
