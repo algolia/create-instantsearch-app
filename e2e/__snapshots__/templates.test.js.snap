@@ -6055,6 +6055,8 @@ import {
   SearchBox,
 } from 'react-instantsearch-hooks-web';
 
+import { Panel } from './Panel';
+
 import type { Hit } from 'instantsearch.js';
 
 import './App.css';
@@ -6083,9 +6085,13 @@ export function App() {
         <InstantSearch searchClient={searchClient} indexName=\\"indexName\\">
           <div className=\\"search-panel\\">
             <div className=\\"search-panel__filters\\">
-              <DynamicWidgets>
-                <RefinementList attribute=\\"facet1\\" />
-                <RefinementList attribute=\\"facet2\\" />
+              <DynamicWidgets fallback={RefinementList}>
+                <Panel header=\\"facet1\\">
+                  <RefinementList attribute=\\"facet1\\" />
+                </Panel>
+                <Panel header=\\"facet2\\">
+                  <RefinementList attribute=\\"facet2\\" />
+                </Panel>
               </DynamicWidgets>
             </div>
 
@@ -6122,6 +6128,23 @@ function Hit({ hit }: HitProps) {
 }"
 `;
 
+exports[`Templates React InstantSearch Hooks File content: src/Panel.tsx 1`] = `
+"type PanelProps = React.PropsWithChildren<{
+  header: string;
+}>;
+
+export function Panel({ header, children }: PanelProps) {
+  return (
+    <div className=\\"ais-Panel\\">
+      <div className=\\"ais-Panel-header\\">
+        <span>{header}</span>
+      </div>
+      <div className=\\"ais-Panel-body\\">{children}</div>
+    </div>
+  );
+}"
+`;
+
 exports[`Templates React InstantSearch Hooks File content: src/index.tsx 1`] = `
 "import ReactDOM from 'react-dom';
 
@@ -6141,6 +6164,7 @@ Array [
   "package.json",
   "src/App.css",
   "src/App.tsx",
+  "src/Panel.tsx",
   "src/index.tsx",
 ]
 `;
