@@ -56,13 +56,7 @@ search.addWidgets([
   }),
   {{else}}
   {{#each attributesForFaceting}}
-  instantsearch.widgets.panel({
-    templates: {
-      header({ widgetParams: { attribute } }) {
-        return attribute;
-      },
-    },
-  })(instantsearch.widgets.refinementList)({
+  instantsearch.widgets.refinementList({
     container: '#{{this}}-list',
     attribute: '{{this}}',
   }),
