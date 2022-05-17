@@ -15,6 +15,8 @@ import {
   SearchBox,
 } from 'react-instantsearch-hooks-web';
 
+import { Panel } from './Panel';
+
 import type { Hit } from 'instantsearch.js';
 
 import './App.css';
@@ -46,12 +48,16 @@ export function App() {
               {{#if flags.dynamicWidgets}}
               <DynamicWidgets>
                 {{#each attributesForFaceting}}
-                <RefinementList attribute="{{this}}" />
+                <Panel header="{{this}}">
+                  <RefinementList attribute="{{this}}" />
+                </Panel>
                 {{/each}}
               </DynamicWidgets>
               {{else}}
               {{#each attributesForFaceting}}
-              <RefinementList attribute="{{this}}" />
+              <Panel header="{{this}}">
+                <RefinementList attribute="{{this}}" />
+              </Panel>
               {{/each}}
               {{/if}}
             </div>
