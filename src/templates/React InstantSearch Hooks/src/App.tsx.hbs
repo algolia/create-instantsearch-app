@@ -2,6 +2,9 @@ import algoliasearch from 'algoliasearch/lite';
 import {
   {{#if flags.dynamicWidgets}}
   DynamicWidgets,
+  {{#unless attributesForFaceting}}
+  RefinementList,
+  {{/unless}}
   {{/if}}
   {{#if attributesToDisplay}}
   Highlight,
@@ -46,7 +49,7 @@ export function App() {
           <div className="search-panel">
             <div className="search-panel__filters">
               {{#if flags.dynamicWidgets}}
-              <DynamicWidgets>
+              <DynamicWidgets fallback={RefinementList}>
                 {{#each attributesForFaceting}}
                 <Panel header="{{this}}">
                   <RefinementList attribute="{{this}}" />
