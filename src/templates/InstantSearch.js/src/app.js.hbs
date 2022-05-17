@@ -46,8 +46,7 @@ search.addWidgets([
     },
     widgets: [
       {{#each attributesForFaceting}}
-      container =>
-        instantsearch.widgets.refinementList({
+      container => instantsearch.widgets.refinementList({
           container,
           attribute: '{{this}}',
         }),
