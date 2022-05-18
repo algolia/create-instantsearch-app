@@ -1,0 +1,27 @@
+{
+  "name": "react-instantsearch-hooks-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "parcel build index.html",
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "algoliasearch": "4",
+    "instantsearch.js": "4.40.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-instantsearch-hooks-web": "6.25.0"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.45",
+    "parcel": "2.5.0"
+  },
+  "keywords": [
+    "algolia",
+    "InstantSearch",
+    "React",
+    "Hooks",
+    "react-instantsearch-hooks"
+  ]
+}
