@@ -1,13 +1,25 @@
+import type {
+  ConnectedComponentClass,
+  ConnectorProvided,
+} from 'react-instantsearch-core';
+
 import { createConnector } from 'react-instantsearch-dom';
+
+type Connector<TProvided = {}, TExposed = {}> = ((
+  stateless: React.FunctionComponent<ConnectorProvided<TProvided>>
+) => React.ComponentClass<TExposed>) &
+  (<TProps extends Partial<ConnectorProvided<TProvided>>>(
+    Composed: React.ComponentType<TProps>
+  ) => ConnectedComponentClass<TProps, ConnectorProvided<TProvided>, TExposed>);
 
 export type ProvidedProps = {
   // TODO: fill props that are returned by `getProvidedProps`
 }
 
-export const connect{{ pascalCaseName }} = createConnector({
+export const connect{{ pascalCaseName }}: Connector<ProvidedProps> = createConnector<ProvidedProps>({
   displayName: '{{ pascalCaseName }}',
 
-  getProvidedProps(props, searchState, searchResults): ProvidedProps {
+  getProvidedProps(props, searchState, searchResults) {
     return {
       // TODO: return a props for the component
     };
@@ -19,7 +31,7 @@ export const connect{{ pascalCaseName }} = createConnector({
     };
   },
 
-  cleanUp(props, searchState, context) {
+  cleanUp(props, searchState) {
     return {
       // TODO: return a searchState where this widget is removed from the widget tree
     };
