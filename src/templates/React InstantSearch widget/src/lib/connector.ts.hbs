@@ -1,16 +1,6 @@
-import type {
-  ConnectedComponentClass,
-  ConnectorProvided,
-} from 'react-instantsearch-core';
+import type { Connector } from '../types/connector';
 
 import { createConnector } from 'react-instantsearch-dom';
-
-type Connector<TProvided = {}, TExposed = {}> = ((
-  stateless: React.FunctionComponent<ConnectorProvided<TProvided>>
-) => React.ComponentClass<TExposed>) &
-  (<TProps extends Partial<ConnectorProvided<TProvided>>>(
-    Composed: React.ComponentType<TProps>
-  ) => ConnectedComponentClass<TProps, ConnectorProvided<TProvided>, TExposed>);
 
 export type ProvidedProps = {
   // TODO: fill props that are returned by `getProvidedProps`
@@ -18,7 +8,6 @@ export type ProvidedProps = {
 
 export const connect{{ pascalCaseName }}: Connector<ProvidedProps> = createConnector<ProvidedProps>({
   displayName: '{{ pascalCaseName }}',
-  // @ts-expect-error
   $$type: '{{ organization }}.{{ name }}',
 
   getProvidedProps(props, searchState, searchResults) {

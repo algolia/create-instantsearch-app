@@ -10,6 +10,5 @@ type WidgetParams = {
 
 export const {{ pascalCaseName }}: React.ElementType<WidgetParams> = connect{{ pascalCaseName }}(
   {{ pascalCaseName }}Component,
-  // @ts-expect-error
   { $$widgetType: '{{ organization }}.{{ name }}' }
 );
