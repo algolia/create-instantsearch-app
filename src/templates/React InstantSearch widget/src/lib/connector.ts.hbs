@@ -18,6 +18,8 @@ export type ProvidedProps = {
 
 export const connect{{ pascalCaseName }}: Connector<ProvidedProps> = createConnector<ProvidedProps>({
   displayName: '{{ pascalCaseName }}',
+  // @ts-expect-error
+  $$type: '{{ organization }}.{{ name }}',
 
   getProvidedProps(props, searchState, searchResults) {
     return {
