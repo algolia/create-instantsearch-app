@@ -7260,19 +7260,9 @@ export const DatePickerComponent = ({}: Props) => {
 `;
 
 exports[`Templates React InstantSearch widget File content: src/lib/connector.ts 1`] = `
-"import type {
-  ConnectedComponentClass,
-  ConnectorProvided,
-} from 'react-instantsearch-core';
+"import type { Connector } from '../types/connector';
 
 import { createConnector } from 'react-instantsearch-dom';
-
-type Connector<TProvided = {}, TExposed = {}> = ((
-  stateless: React.FunctionComponent<ConnectorProvided<TProvided>>
-) => React.ComponentClass<TExposed>) &
-  (<TProps extends Partial<ConnectorProvided<TProvided>>>(
-    Composed: React.ComponentType<TProps>
-  ) => ConnectedComponentClass<TProps, ConnectorProvided<TProvided>, TExposed>);
 
 export type ProvidedProps = {
   // TODO: fill props that are returned by \`getProvidedProps\`
@@ -7280,7 +7270,6 @@ export type ProvidedProps = {
 
 export const connectDatePicker: Connector<ProvidedProps> = createConnector<ProvidedProps>({
   displayName: 'DatePicker',
-  // @ts-expect-error
   $$type: 'algolia.date-picker',
 
   getProvidedProps(props, searchState, searchResults) {
@@ -7321,9 +7310,28 @@ type WidgetParams = {
 
 export const DatePicker: React.ElementType<WidgetParams> = connectDatePicker(
   DatePickerComponent,
-  // @ts-expect-error
   { $$widgetType: 'algolia.date-picker' }
 );"
+`;
+
+exports[`Templates React InstantSearch widget File content: src/types/connector.ts 1`] = `
+"import type {
+  ConnectedComponentClass,
+  ConnectorProvided,
+} from 'react-instantsearch-core';
+
+type AdditionalWidgetProperties = {
+  $$widgetType?: string;
+};
+
+export type Connector<TProvided = {}, TExposed = {}> = ((
+  stateless: React.FunctionComponent<ConnectorProvided<TProvided>>,
+  additionalWidgetProperties: AdditionalWidgetProperties
+) => React.ComponentClass<TExposed>) &
+  (<TProps extends Partial<ConnectorProvided<TProvided>>>(
+    Composed: React.ComponentType<TProps>,
+    additionalWidgetProperties: AdditionalWidgetProperties
+  ) => ConnectedComponentClass<TProps, ConnectorProvided<TProvided>, TExposed>);"
 `;
 
 exports[`Templates React InstantSearch widget File content: tsconfig.declaration.json 1`] = `
@@ -7417,6 +7425,7 @@ Array [
   "src/lib/component.tsx",
   "src/lib/connector.ts",
   "src/lib/widget.tsx",
+  "src/types/connector.ts",
   "tsconfig.declaration.json",
   "tsconfig.json",
   "vite.config.ts",
