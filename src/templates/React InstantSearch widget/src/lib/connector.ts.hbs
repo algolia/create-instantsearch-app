@@ -8,7 +8,7 @@ export type ProvidedProps = {
 
 export const connect{{ pascalCaseName }}: Connector<ProvidedProps> = createConnector<ProvidedProps>({
   displayName: '{{ pascalCaseName }}',
-  $$type: '{{ organization }}.{{ name }}',
+  $$type: '{{ widgetType }}',
 
   getProvidedProps(props, searchState, searchResults) {
     return {
