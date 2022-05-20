@@ -26,7 +26,7 @@
             <ais-dynamic-widgets>
               {{#each attributesForFaceting}}
               <ais-panel>
-                <template v-slot:header>{{ this }}</template>
+                <template v-slot:header>{{this}}</template>
                 <ais-refinement-list attribute="{{this}}" />
               </ais-panel>
               {{/each}}
@@ -34,7 +34,7 @@
             {{else}}
             {{#each attributesForFaceting}}
             <ais-panel>
-              <template v-slot:header>{{ this }}</template>
+              <template v-slot:header>{{this}}</template>
               <ais-refinement-list attribute="{{this}}" />
             </ais-panel>
             {{/each}}
