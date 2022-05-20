@@ -6,8 +6,6 @@ module.exports = {
     }
     return true;
   },
-  testCommandBeforeRelease: () =>
-    'yarn run lint && yarn run test && yarn run test:e2e',
   buildCommand: () => null,
   afterPublish: ({ exec }) => exec('yarn run release-templates'),
 };
