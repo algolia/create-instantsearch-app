@@ -100,7 +100,7 @@ We will then review your pull request!
 
 ### Release
 
-We rely on [shipjs](https://github.com/algolia/shipjs) to release new versions of Create InstantSearch App.
+We rely on [Ship.js](https://github.com/algolia/shipjs) to release new versions of Create InstantSearch App.
 
 You need to have `GITHUB_TOKEN` added to your `.env` file. You can create a [personal access token](https://github.com/settings/tokens).
 
@@ -108,7 +108,7 @@ You need to have `GITHUB_TOKEN` added to your `.env` file. You can create a [per
 yarn release
 ```
 
-It will create a pull request for the next release. When it's reviewed, approved and merged, then CircleCI will automatically publish it to npm.
+It will create a pull request for the next release. When it's reviewed, approved and merged, CircleCI will automatically publish it to npm.
 
 ### Updating templates on CodeSandbox
 
