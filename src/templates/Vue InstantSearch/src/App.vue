@@ -3,7 +3,7 @@
     <header class="header">
       <h1 class="header-title">
         <a href="/">
-          {{ name }}
+          {{name}}
         </a>
       </h1>
       <p class="header-subtitle">
