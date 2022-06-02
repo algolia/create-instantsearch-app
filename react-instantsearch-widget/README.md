@@ -19,8 +19,8 @@ yarn add
 ### Usage
 
 ```jsx
-import instantsearch from 'instantsearch.js';
 import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch } from 'react-instantsearch-dom';
 import {  } from '';
 
 const searchClient = algoliasearch('appId', 'apiKey');

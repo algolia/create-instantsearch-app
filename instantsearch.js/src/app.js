@@ -22,7 +22,12 @@ search.addWidgets([
 `,
     },
   }),
-  instantsearch.widgets.refinementList({
+  instantsearch.widgets.configure({
+    hitsPerPage: 8,
+  }),
+  instantsearch.widgets.panel({
+    templates: { header: 'brand' },
+  })(instantsearch.widgets.refinementList)({
     container: '#brand-list',
     attribute: 'brand',
   }),

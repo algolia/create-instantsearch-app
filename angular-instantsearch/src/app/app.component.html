@@ -12,9 +12,12 @@
 
 <div class="container">
   <ais-instantsearch [config]="config">
+    <ais-configure [searchParameters]="{ hitsPerPage: 8 }"></ais-configure>
     <div class="search-panel">
       <div class="search-panel__filters">
-        <ais-refinement-list attribute="brand"></ais-refinement-list>
+        <ais-panel header="brand">
+          <ais-refinement-list attribute="brand"></ais-refinement-list>
+        </ais-panel>
       </div>
 
       <div class="search-panel__results">

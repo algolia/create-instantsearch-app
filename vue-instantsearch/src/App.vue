@@ -15,10 +15,17 @@
     </header>
 
     <div class="container">
-      <ais-instant-search :search-client="searchClient" index-name="instant_search">
+      <ais-instant-search
+        :search-client="searchClient"
+        index-name="instant_search"
+      >
+        <ais-configure :hits-per-page.camel="8" />
         <div class="search-panel">
           <div class="search-panel__filters">
-            <ais-refinement-list attribute="brand" />
+            <ais-panel>
+              <template v-slot:header>brand</template>
+              <ais-refinement-list attribute="brand" />
+            </ais-panel>
           </div>
 
           <div class="search-panel__results">
@@ -29,7 +36,10 @@
               <template slot="item" slot-scope="{ item }">
                 <article>
                   <h1>
-                    <ais-highlight :hit="item" attribute="name" />
+                    <ais-highlight
+                      :hit="item"
+                      attribute="name"
+                    />
                   </h1>
                   <p>
                     <ais-highlight :hit="item" attribute="description" />

@@ -2,8 +2,10 @@ import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
+  Configure,
   Hits,
   SearchBox,
+  Panel,
   RefinementList,
   Pagination,
   Highlight,
@@ -30,9 +32,12 @@ function App() {
 
       <div className="container">
         <InstantSearch searchClient={searchClient} indexName="instant_search">
+          <Configure hitsPerPage={8} />
           <div className="search-panel">
             <div className="search-panel__filters">
-              <RefinementList attribute="brand" />
+              <Panel header="brand">
+                <RefinementList attribute="brand" />
+              </Panel>
             </div>
 
             <div className="search-panel__results">

@@ -1,5 +1,6 @@
 import algoliasearch from 'algoliasearch/lite';
 import {
+  Configure,
   Highlight,
   Hits,
   InstantSearch,
@@ -36,6 +37,7 @@ export function App() {
 
       <div className="container">
         <InstantSearch searchClient={searchClient} indexName="instant_search">
+          <Configure hitsPerPage={8} />
           <div className="search-panel">
             <div className="search-panel__filters">
               <Panel header="brand">

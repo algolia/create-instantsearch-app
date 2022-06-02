@@ -1,13 +1,16 @@
+import type { Connector } from '../types/connector';
+
 import { createConnector } from 'react-instantsearch-dom';
 
 export type ProvidedProps = {
   // TODO: fill props that are returned by `getProvidedProps`
 }
 
-export const connect = createConnector({
+export const connect: Connector<ProvidedProps> = createConnector<ProvidedProps>({
   displayName: '',
+  $$type: '',
 
-  getProvidedProps(props, searchState, searchResults): ProvidedProps {
+  getProvidedProps(props, searchState, searchResults) {
     return {
       // TODO: return a props for the component
     };
@@ -19,7 +22,7 @@ export const connect = createConnector({
     };
   },
 
-  cleanUp(props, searchState, context) {
+  cleanUp(props, searchState) {
     return {
       // TODO: return a searchState where this widget is removed from the widget tree
     };
