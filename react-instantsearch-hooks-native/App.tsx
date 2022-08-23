@@ -40,12 +40,14 @@ type HitProps = {
 
 function Hit({ hit }: HitProps) {
   return (
-    <Text>
-      <Highlight hit={hit} attribute="name" />
-    </Text>
-    <Text>
-      <Highlight hit={hit} attribute="description" />
-    </Text>
+    <>
+      <Text>
+        <Highlight hit={hit} attribute="name" />
+      </Text>
+      <Text>
+        <Highlight hit={hit} attribute="description" />
+      </Text>
+    </>
   );
 }
 

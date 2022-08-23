@@ -17,7 +17,7 @@
     "instantsearch.js": "4.38.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-instantsearch-hooks": "6.30.2",
+    "react-instantsearch-hooks": "6.32.0",
     "react-native": "0.64.3",
     "react-native-web": "0.17.1"
   },
@@ -25,7 +25,7 @@
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
-    "expo-cli": "5.1.1",
+    "expo-cli": "5.5.1",
     "typescript": "~4.3.5"
   },
   "keywords": [
