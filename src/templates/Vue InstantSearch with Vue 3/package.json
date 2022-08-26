@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "algoliasearch": "4.12.1",
+    "algoliasearch": "4.14.2",
     "vue": "3.2.25",
     "vue-instantsearch": "{{libraryVersion}}"
   },
