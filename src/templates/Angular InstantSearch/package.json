@@ -20,7 +20,7 @@
     "@angular/router": "12.2.16",
     "algoliasearch": "4",
     "angular-instantsearch": "{{libraryVersion}}",
-    "rxjs": "6.6.0",
+    "rxjs": "6.6.7",
     "tslib": "2.3.0",
     "zone.js": "0.11.4"
   },
