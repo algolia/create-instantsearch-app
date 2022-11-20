@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "algoliasearch": "4.12.1",
-    "vue": "3.2.25",
+    "vue": "3.2.45",
     "vue-instantsearch": "{{libraryVersion}}"
   },
   "devDependencies": {
