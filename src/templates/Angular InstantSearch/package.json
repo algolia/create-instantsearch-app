@@ -21,7 +21,7 @@
     "algoliasearch": "4",
     "angular-instantsearch": "{{libraryVersion}}",
     "rxjs": "6.6.0",
-    "tslib": "2.3.0",
+    "tslib": "2.4.1",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
