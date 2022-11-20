@@ -18,7 +18,7 @@
     "react-native": "0.64.3"
   },
   "devDependencies": {
-    "@babel/core": "7.16.5",
+    "@babel/core": "7.20.2",
     "babel-preset-expo": "9.0.2",
     "eslint": "8.5.0",
     "eslint-config-algolia": "20.0.0",
