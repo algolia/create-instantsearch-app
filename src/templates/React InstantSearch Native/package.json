@@ -15,7 +15,7 @@
     "prop-types": "15.8.0",
     "react": "17.0.2",
     "react-instantsearch-native": "{{libraryVersion}}",
-    "react-native": "0.64.3"
+    "react-native": "0.70.6"
   },
   "devDependencies": {
     "@babel/core": "7.16.5",
